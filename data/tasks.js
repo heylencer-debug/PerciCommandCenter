@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-26T16:15:20.688Z';
+window.DATA_VERSION = '2026-02-26T16:15:28.369Z';
 
 window.PERCI_STATUS = {
   "status": "active",
   "statusText": "Brigid upgrading Command Center v3",
   "mood": "onfire",
-  "lastUpdated": "2026-02-26T16:15:20.685Z",
+  "lastUpdated": "2026-02-26T16:15:28.368Z",
   "currentTask": "Improve Perci Command Center",
   "currentStep": "Brigid building emoji hero, agent panels, mood system",
   "totalSteps": 5,
