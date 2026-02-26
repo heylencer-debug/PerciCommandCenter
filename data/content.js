@@ -1,0 +1,96 @@
+// Content Calendar Data
+window.CONTENT_POSTS = [
+  {
+    id: 'post-001',
+    title: 'Day 1: The Art of Gifting',
+    type: 'carousel',
+    platform: 'instagram',
+    status: 'ready', // draft, ready, scheduled, posted
+    scheduledDate: '2026-02-27',
+    slides: 7,
+    caption: 'Generic gifts are forgotten in a week. Personalized ones are kept for life...',
+    hashtags: ['#projectperciph', '#cebugifts', '#personalizedgifts'],
+    assets: 'C:\\igup\\day-01-*.jpg'
+  },
+  {
+    id: 'post-002',
+    title: 'Day 2: Why Embroidery Lasts',
+    type: 'carousel',
+    platform: 'instagram',
+    status: 'draft',
+    scheduledDate: '2026-02-28',
+    slides: 5,
+    caption: '',
+    hashtags: [],
+    assets: null
+  },
+  {
+    id: 'post-003',
+    title: 'Day 3: Behind the Stitch',
+    type: 'reel',
+    platform: 'instagram',
+    status: 'draft',
+    scheduledDate: '2026-03-01',
+    duration: '30s',
+    caption: '',
+    hashtags: [],
+    assets: null
+  },
+  {
+    id: 'post-004',
+    title: 'Day 4: Gift Ideas for Birthdays',
+    type: 'carousel',
+    platform: 'instagram',
+    status: 'draft',
+    scheduledDate: '2026-03-02',
+    slides: 6,
+    caption: '',
+    hashtags: [],
+    assets: null
+  },
+  {
+    id: 'post-005',
+    title: 'Day 5: Wedding Souvenirs Preview',
+    type: 'carousel',
+    platform: 'instagram',
+    status: 'draft',
+    scheduledDate: '2026-03-03',
+    slides: 5,
+    caption: '',
+    hashtags: [],
+    assets: null
+  }
+];
+
+window.AGENTS_CONFIG = [
+  {
+    id: 'perci',
+    name: 'Sir Percival',
+    emoji: '⚔️',
+    role: 'Main Assistant',
+    model: 'claude-sonnet-4-6',
+    status: 'active',
+    description: 'Primary AI assistant — handles conversations, routing, and coordination',
+    color: '#FF7A00'
+  },
+  {
+    id: 'brigid',
+    name: 'Brigid',
+    emoji: '🔥',
+    role: 'Forge Master',
+    model: 'claude-opus-4-5',
+    status: 'active',
+    description: 'Coding sub-agent — builds apps, dashboards, and automation',
+    color: '#EF4444'
+  },
+  {
+    id: 'vesper',
+    name: 'Vesper',
+    emoji: '🌌',
+    role: 'Night Agent',
+    model: 'claude-sonnet-4-6',
+    status: 'idle',
+    description: 'Creative assistant — content generation and image work',
+    color: '#9333EA'
+  }
+];

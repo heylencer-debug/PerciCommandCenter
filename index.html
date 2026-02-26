@@ -23,16 +23,24 @@
         <span>Perci Command Center</span>
       </span>
     </div>
+    <div class="topbar-center">
+      <div class="topbar-status-pill" id="topbar-status-pill">
+        <span class="topbar-mood-emoji" id="topbar-mood-emoji">⚔️</span>
+        <span class="topbar-status-text" id="topbar-status-text">Loading...</span>
+      </div>
+    </div>
     <div class="topbar-right">
-      <div class="perci-status" id="perci-status">
-        <div class="status-dot" id="status-dot"></div>
-        <div class="status-info">
-          <span class="status-mood" id="status-mood">⚔️</span>
-          <span class="status-text" id="status-text">Loading...</span>
-        </div>
+      <div class="topbar-agent-badge" id="topbar-agent-badge">0 agents</div>
+      <div class="topbar-live-indicator">
+        <div class="live-dot-topbar"></div>
+        <span id="topbar-live-label">Live</span>
       </div>
       <div class="last-updated" id="last-updated">—</div>
-      <button class="settings-btn" id="settings-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+        <span class="theme-icon" id="theme-icon">🌙</span>
+      </button>
+      <button class="icon-btn" id="shortcuts-btn" onclick="toggleShortcuts()" title="Keyboard Shortcuts">⌨️</button>
+      <button class="icon-btn" id="settings-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
     </div>
   </header>
 
@@ -41,19 +49,22 @@
     <button class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">⚔️ Command</button>
     <button class="nav-tab" data-tab="tasks" onclick="switchTab('tasks')">📋 Tasks</button>
     <button class="nav-tab" data-tab="content" onclick="switchTab('content')">📸 Content</button>
-    <button class="nav-tab" data-tab="system" onclick="switchTab('system')">🤖 Agents</button>
+    <button class="nav-tab" data-tab="agents" onclick="switchTab('agents')">🤖 Agents</button>
     <button class="nav-tab" data-tab="branding" onclick="switchTab('branding')">🎨 Branding</button>
   </nav>
 
-  <!-- PERCI STATUS HERO -->
-  <div class="status-hero" id="status-hero">
-    <div class="status-hero-emoji" id="hero-emoji">⚔️</div>
-    <div class="status-hero-text" id="hero-text">Perci is standing by</div>
-    <div class="status-hero-sub" id="hero-sub">Ready for action</div>
-  </div>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       DASHBOARD VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-dashboard" class="view-container">
+    <!-- PERCI STATUS HERO -->
+    <div class="status-hero" id="status-hero">
+      <div class="hero-glow-ring" id="hero-glow-ring"></div>
+      <div class="status-hero-emoji" id="hero-emoji">⚔️</div>
+      <div class="status-hero-text" id="hero-text">Perci is standing by</div>
+      <div class="status-hero-sub" id="hero-sub">Ready for action</div>
+    </div>
 
-  <!-- DASHBOARD VIEW -->
-  <div id="view-dashboard">
     <div class="app-layout">
       <!-- LEFT SIDEBAR: Projects -->
       <aside class="sidebar">
@@ -69,7 +80,6 @@
 
       <!-- MAIN CONTENT -->
       <main class="main-content">
-
         <!-- MISSION CONTROL -->
         <section class="mission-control" id="mission-control"></section>
 
@@ -94,10 +104,17 @@
 
         <!-- KANBAN BOARD -->
         <section class="kanban-section">
-          <div class="section-title">Task Board</div>
+          <div class="section-header">
+            <div class="section-title">Task Board</div>
+            <div class="quick-filters" id="quick-filters">
+              <button class="filter-chip active" data-filter="all" onclick="setQuickFilter('all')">All</button>
+              <button class="filter-chip" data-filter="needs-carlo" onclick="setQuickFilter('needs-carlo')">🔴 Needs Me</button>
+              <button class="filter-chip" data-filter="high" onclick="setQuickFilter('high')">🔴 High</button>
+              <button class="filter-chip" data-filter="in-progress" onclick="setQuickFilter('in-progress')">⚙️ Active</button>
+            </div>
+          </div>
           <div class="kanban-board" id="kanban-board"></div>
         </section>
-
       </main>
 
       <!-- RIGHT SIDEBAR: Activity Log -->
@@ -106,10 +123,127 @@
         <div id="activity-log"></div>
       </aside>
     </div>
-  </div><!-- /view-dashboard -->
+  </div>
 
-  <!-- BRANDING VIEW -->
-  <div id="view-branding" class="branding-view" style="display:none">
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       TASKS VIEW (Full Task List with Filters)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-tasks" class="view-container" style="display:none">
+    <div class="tasks-view">
+      <div class="tasks-header">
+        <h2 class="view-title">📋 All Tasks</h2>
+        <div class="tasks-controls">
+          <div class="filter-group">
+            <label class="filter-label">Status</label>
+            <select class="filter-select" id="filter-status" onchange="applyTaskFilters()">
+              <option value="all">All</option>
+              <option value="backlog">🧊 Backlog</option>
+              <option value="todo">📌 Todo</option>
+              <option value="in-progress">⚙️ In Progress</option>
+              <option value="blocked">🚫 Blocked</option>
+              <option value="done">✅ Done</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Priority</label>
+            <select class="filter-select" id="filter-priority" onchange="applyTaskFilters()">
+              <option value="all">All</option>
+              <option value="high">🔴 High</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="low">🟢 Low</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Project</label>
+            <select class="filter-select" id="filter-project" onchange="applyTaskFilters()">
+              <option value="all">All Projects</option>
+            </select>
+          </div>
+          <label class="filter-checkbox">
+            <input type="checkbox" id="filter-needs-carlo" onchange="applyTaskFilters()" />
+            <span>🔴 Needs Carlo only</span>
+          </label>
+        </div>
+      </div>
+      <div class="tasks-list" id="tasks-list"></div>
+      <div class="tasks-empty" id="tasks-empty" style="display:none">
+        <div class="empty-icon">📭</div>
+        <div class="empty-text">No tasks match your filters</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       CONTENT VIEW (Calendar & Content Planning)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-content" class="view-container" style="display:none">
+    <div class="content-view">
+      <div class="content-header">
+        <h2 class="view-title">📸 Content Calendar</h2>
+        <div class="content-nav">
+          <button class="content-nav-btn" onclick="prevMonth()">◀</button>
+          <span class="content-month" id="content-month">February 2026</span>
+          <button class="content-nav-btn" onclick="nextMonth()">▶</button>
+        </div>
+      </div>
+      
+      <div class="content-stats" id="content-stats">
+        <div class="content-stat">
+          <span class="content-stat-value" id="stat-scheduled">0</span>
+          <span class="content-stat-label">Scheduled</span>
+        </div>
+        <div class="content-stat">
+          <span class="content-stat-value" id="stat-posted">0</span>
+          <span class="content-stat-label">Posted</span>
+        </div>
+        <div class="content-stat">
+          <span class="content-stat-value" id="stat-drafts">0</span>
+          <span class="content-stat-label">Drafts</span>
+        </div>
+      </div>
+
+      <div class="calendar-grid" id="calendar-grid"></div>
+
+      <div class="content-queue">
+        <div class="queue-header">
+          <span class="queue-title">📅 Upcoming Posts</span>
+        </div>
+        <div class="queue-list" id="queue-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       AGENTS VIEW (Monitor & Control)
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-agents" class="view-container" style="display:none">
+    <div class="agents-view">
+      <div class="agents-header">
+        <h2 class="view-title">🤖 Agent Control</h2>
+      </div>
+
+      <div class="agents-grid" id="agents-grid">
+        <!-- Agent cards rendered by JS -->
+      </div>
+
+      <div class="agents-section">
+        <div class="section-title">Active Sessions</div>
+        <div class="sessions-list" id="sessions-list">
+          <div class="sessions-empty">No active sub-agent sessions</div>
+        </div>
+      </div>
+
+      <div class="agents-section">
+        <div class="section-title">Recent Activity</div>
+        <div class="agent-activity" id="agent-activity"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       BRANDING VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-branding" class="view-container" style="display:none">
     <div class="branding-header">
       <div class="branding-title-row">
         <h2 class="branding-title">🎨 Brand Guidelines</h2>
@@ -132,7 +266,11 @@
     </div>
   </div>
 
-  <!-- TASK MODAL -->
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MODALS
+       ═══════════════════════════════════════════════════════════════════════ -->
+  
+  <!-- Task Detail Modal -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal" id="task-modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -140,7 +278,7 @@
     </div>
   </div>
 
-  <!-- BRIEF MODAL -->
+  <!-- Brief Modal -->
   <div class="modal-overlay" id="brief-overlay">
     <div class="modal" id="brief-modal">
       <button class="modal-close" onclick="closeBriefModal()">✕</button>
@@ -148,7 +286,53 @@
     </div>
   </div>
 
-  <!-- QUICK ADD FORM -->
+  <!-- Keyboard Shortcuts Modal -->
+  <div class="modal-overlay" id="shortcuts-overlay">
+    <div class="modal shortcuts-modal">
+      <button class="modal-close" onclick="toggleShortcuts()">✕</button>
+      <div class="modal-title">⌨️ Keyboard Shortcuts</div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>K</kbd></span>
+          <span class="shortcut-desc">Search tasks</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>N</kbd></span>
+          <span class="shortcut-desc">New task</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>Esc</kbd></span>
+          <span class="shortcut-desc">Close modal</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>1</kbd></span>
+          <span class="shortcut-desc">Command tab</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>2</kbd></span>
+          <span class="shortcut-desc">Tasks tab</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>3</kbd></span>
+          <span class="shortcut-desc">Content tab</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>4</kbd></span>
+          <span class="shortcut-desc">Agents tab</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>5</kbd></span>
+          <span class="shortcut-desc">Branding tab</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-keys"><kbd>D</kbd></span>
+          <span class="shortcut-desc">Toggle dark mode</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Add Form -->
   <div class="quick-add-overlay" id="quick-add-overlay" onclick="closeQuickAdd(event)">
     <div class="quick-add-form" id="quick-add-form">
       <div class="quick-add-title">+ Add Task</div>
@@ -171,10 +355,7 @@
     </div>
   </div>
 
-  <!-- FLOATING ADD BUTTON -->
-  <button class="fab-add" id="fab-add" onclick="openQuickAdd()">+</button>
-
-  <!-- SETTINGS PANEL -->
+  <!-- Settings Panel -->
   <div class="settings-overlay" id="settings-overlay" onclick="closeSettings(event)">
     <div class="settings-panel" id="settings-panel">
       <div class="settings-header">
@@ -185,8 +366,16 @@
         <div class="settings-section">
           <div class="settings-section-title">Display</div>
           <label class="settings-toggle-row">
+            <span>Dark Mode</span>
+            <input type="checkbox" id="setting-dark" onchange="toggleThemeFromSettings()" />
+          </label>
+          <label class="settings-toggle-row">
             <span>Compact View</span>
             <input type="checkbox" id="setting-compact" onchange="toggleCompact()" />
+          </label>
+          <label class="settings-toggle-row">
+            <span>Sound Effects</span>
+            <input type="checkbox" id="setting-sounds" onchange="toggleSounds()" checked />
           </label>
         </div>
         <div class="settings-section">
@@ -199,20 +388,32 @@
             <span>Days Together</span>
             <span class="settings-info-value" id="settings-days">1</span>
           </div>
+          <div class="settings-info-row">
+            <span>Version</span>
+            <span class="settings-info-value">v3.0</span>
+          </div>
         </div>
         <div class="settings-section">
           <div class="settings-section-title">Data</div>
+          <button class="settings-export-btn" onclick="exportData()">📦 Export Data</button>
           <button class="settings-danger-btn" onclick="resetAllData()">🗑️ Reset All Data</button>
-          <p class="settings-warning">This clears tasks, briefs, and streak data.</p>
+          <p class="settings-warning">Export saves your tasks. Reset clears everything.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CONFETTI CANVAS -->
+  <!-- Floating Add Button -->
+  <button class="fab-add" id="fab-add" onclick="openQuickAdd()">+</button>
+
+  <!-- Confetti Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
   <script src="data/tasks.js"></script>
+  <script src="data/content.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

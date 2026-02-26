@@ -201,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
   briefs = loadBriefs();
   streak = loadStreak();
   soundsEnabled = loadSoundsPreference();
-  
+
+  initTheme();
   initBgCanvas();
   initScrollEffect();
   renderStatus();
@@ -220,8 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickAddProjects();
   initCompactMode();
   updateTabBadge();
+  renderCalendar();
+  initFilterProjects();
 
-  // Refresh "X ago" timestamps every 60 seconds
+  // Refresh timestamps every 60 seconds
   setInterval(() => {
     renderKanban();
     renderActivityLog();
@@ -279,7 +282,7 @@ function initBgCanvas() {
   const ctx = canvas.getContext('2d');
   let W = canvas.width = window.innerWidth;
   let H = canvas.height = window.innerHeight;
-  
+
   const dots = Array.from({ length: 40 }, () => ({
     x: Math.random() * W,
     y: Math.random() * H,
@@ -289,24 +292,65 @@ function initBgCanvas() {
     alpha: Math.random() * 0.3 + 0.1
   }));
 
+  // UPGRADE 5: Flame particles for onfire mood
+  const flames = Array.from({ length: 20 }, () => resetFlame({ x: 0, y: 0 }));
+
+  function resetFlame(f) {
+    f.x = Math.random() * W;
+    f.y = H + 10;
+    f.r = Math.random() * 4 + 2;
+    f.vy = -(Math.random() * 2 + 1);
+    f.vx = (Math.random() - 0.5) * 0.5;
+    f.alpha = Math.random() * 0.5 + 0.3;
+    f.life = 0;
+    f.maxLife = 80 + Math.random() * 60;
+    return f;
+  }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    dots.forEach(d => {
-      d.x += d.vx;
-      d.y += d.vy;
-      if (d.x < 0) d.x = W;
-      if (d.x > W) d.x = 0;
-      if (d.y < 0) d.y = H;
-      if (d.y > H) d.y = 0;
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,122,0,${d.alpha})`;
-      ctx.fill();
-    });
+    const mood = document.body.getAttribute('data-mood') || 'focused';
+    const isOffline = mood === 'offline';
+    const speed = mood === 'idle' ? 0.5 : (mood === 'thinking' ? 0.8 : 1);
+
+    // Base dots
+    if (!isOffline) {
+      const dotColor = mood === 'thinking' ? '124,58,237' : '255,122,0';
+      dots.forEach(d => {
+        d.x += d.vx * speed;
+        d.y += d.vy * speed;
+        if (d.x < 0) d.x = W;
+        if (d.x > W) d.x = 0;
+        if (d.y < 0) d.y = H;
+        if (d.y > H) d.y = 0;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${dotColor},${d.alpha})`;
+        ctx.fill();
+      });
+    }
+
+    // Flame particles (onfire only)
+    if (mood === 'onfire') {
+      flames.forEach(f => {
+        f.x += f.vx;
+        f.y += f.vy;
+        f.life++;
+        const progress = f.life / f.maxLife;
+        const alpha = f.alpha * (1 - progress);
+        if (f.life >= f.maxLife || alpha <= 0) resetFlame(f);
+        const r = f.r * (1 - progress * 0.5);
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,${Math.floor(100 + 50 * (1 - progress))},0,${alpha})`;
+        ctx.fill();
+      });
+    }
+
     requestAnimationFrame(draw);
   }
   draw();
-  
+
   window.addEventListener('resize', () => {
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
@@ -319,15 +363,26 @@ function initBgCanvas() {
 
 function renderStatus() {
   const s = window.PERCI_STATUS || {};
-  const dot = document.getElementById('status-dot');
-  const mood = document.getElementById('status-mood');
-  const text = document.getElementById('status-text');
   const updated = document.getElementById('last-updated');
-
-  dot.className = 'status-dot ' + (s.status || 'idle');
-  mood.textContent = MOOD_ICONS[s.mood] || '⚔️';
-  text.textContent = s.statusText || 'Standing by';
   if (s.lastUpdated) updated.textContent = timeAgo(s.lastUpdated);
+
+  // UPGRADE 3: Topbar status pill
+  const pillEmoji = document.getElementById('topbar-mood-emoji');
+  const pillText = document.getElementById('topbar-status-text');
+  if (pillEmoji) pillEmoji.textContent = MOOD_ICONS[s.mood] || '⚔️';
+  if (pillText) pillText.textContent = s.statusText || 'Standing by';
+
+  // UPGRADE 3: Agent count badge
+  const agentBadge = document.getElementById('topbar-agent-badge');
+  const agentCount = (window.SUBAGENTS || []).length;
+  if (agentBadge) {
+    agentBadge.textContent = agentCount > 0 ? `${agentCount} agent${agentCount > 1 ? 's' : ''} running` : '0 agents';
+    agentBadge.classList.toggle('no-agents', agentCount === 0);
+  }
+
+  // UPGRADE 5: Mood on body
+  const mood = s.mood || 'focused';
+  document.body.setAttribute('data-mood', mood);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -355,18 +410,22 @@ function renderStatusHero() {
   if (s.status === 'offline') mood = 'offline';
   if (s.status === 'idle' && !s.mood) mood = 'idle';
 
-  // Set emoji
+  // UPGRADE 1: Giant emoji (120px via CSS)
   emoji.textContent = MOOD_ICONS[mood] || '⚔️';
 
-  // Set mood class for animations
+  // Set mood class for glow ring + animations
   hero.className = 'status-hero mood-' + mood;
 
-  // Set status text
+  // Bold status text with current task
   const label = MOOD_LABELS[mood] || 'is standing by';
-  text.innerHTML = '<span class="hero-accent">Perci</span> ' + escHtml(label);
+  if (s.currentTask && mood !== 'idle' && mood !== 'offline') {
+    text.innerHTML = '<span class="hero-accent">Perci</span> is working on: ' + escHtml(s.currentTask);
+  } else {
+    text.innerHTML = '<span class="hero-accent">Perci</span> ' + escHtml(label);
+  }
 
-  // Set subtitle
-  sub.textContent = s.statusText || s.currentTask || 'Ready for action';
+  // Subtitle: current step
+  sub.textContent = s.currentStep || s.statusText || 'Ready for action';
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -377,15 +436,28 @@ function renderMissionControl() {
   const s = window.PERCI_STATUS || {};
   const el = document.getElementById('mission-control');
   const pct = s.totalSteps ? Math.round((s.currentStepNum / s.totalSteps) * 100) : 0;
-  
+
+  // UPGRADE 6: Determine who is working
+  const agents = window.SUBAGENTS || [];
+  let whoPill = '<span class="mission-who-pill">⚔️ Perci</span>';
+  if (agents.length > 0) {
+    const a = agents[0];
+    const agentConfig = (window.AGENTS_CONFIG || []).find(c => c.id === (a.agentId || a.id));
+    const aEmoji = agentConfig ? agentConfig.emoji : '🤖';
+    const aName = agentConfig ? agentConfig.name : (a.name || 'Agent');
+    whoPill = `<span class="mission-who-pill">${aEmoji} ${escHtml(aName)}</span>`;
+  }
+
   el.innerHTML = `
     <div class="mission-label">Current Mission</div>
     <div class="mission-task">${escHtml(s.currentTask || 'Awaiting your command')}</div>
+    ${whoPill}
     <div class="mission-step">${escHtml(s.currentStep || 'Ready to start')} ${s.totalSteps ? `• Step ${s.currentStepNum} of ${s.totalSteps}` : ''}</div>
     ${s.totalSteps ? `
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" style="width:${pct}%"></div>
       </div>
+      <div class="mission-eta">${pct}% complete</div>
     ` : ''}
   `;
 }
@@ -628,29 +700,59 @@ document.getElementById('brief-overlay').addEventListener('click', e => {
 // SUBAGENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
+// UPGRADE 2: Track elapsed time for subagents
+let subagentTimerInterval = null;
+
 function renderSubagents() {
   const agents = window.SUBAGENTS || [];
   const el = document.getElementById('subagents-panel');
 
+  // Clear any existing timer
+  if (subagentTimerInterval) { clearInterval(subagentTimerInterval); subagentTimerInterval = null; }
+
+  // UPGRADE 2: Always show panel header
   if (!agents.length) {
-    el.innerHTML = '';
+    el.innerHTML = `
+      <div class="subagents-header">🤖 Active Agents</div>
+      <div class="subagent-solo">
+        <span class="subagent-solo-emoji">⚔️</span>
+        Perci is handling it solo
+      </div>
+    `;
     return;
   }
 
   el.innerHTML = `
     <div class="subagents-header">🤖 Active Agents (${agents.length})</div>
-    ${agents.map(a => `
-      <div class="subagent-card">
-        <div class="subagent-spinner"></div>
+    ${agents.map(a => {
+      const agentConfig = (window.AGENTS_CONFIG || []).find(c => c.id === (a.agentId || a.id));
+      const aEmoji = agentConfig ? agentConfig.emoji : '🤖';
+      const aName = agentConfig ? agentConfig.name : (a.name || 'Agent');
+      const aColor = agentConfig ? agentConfig.color : 'var(--orange)';
+      return `
+      <div class="subagent-card" style="border-color:${aColor}">
+        <div class="subagent-avatar">${aEmoji}</div>
         <div class="subagent-info">
-          <div class="subagent-name">${escHtml(a.name)}</div>
-          <div class="subagent-task">${escHtml(a.task)}</div>
-          <div class="subagent-time">Started ${timeAgo(a.startedAt)}</div>
+          <div class="subagent-name">${escHtml(aName)}</div>
+          <div class="subagent-task-desc">${escHtml(a.task || a.description || 'Working...')}</div>
+          <div class="subagent-meta">
+            ${getProjectBadge(a.project)}
+            <div class="subagent-time" data-started="${a.startedAt || ''}">${a.startedAt ? timeAgo(a.startedAt) : ''}</div>
+            <div class="subagent-progress-bar"><div class="subagent-progress-fill" style="background:${aColor}"></div></div>
+          </div>
         </div>
-        ${getProjectBadge(a.project)}
+        <div class="subagent-spinner" style="border-top-color:${aColor}"></div>
       </div>
-    `).join('')}
+    `;}).join('')}
   `;
+
+  // Live-update elapsed time every second
+  subagentTimerInterval = setInterval(() => {
+    document.querySelectorAll('.subagent-time[data-started]').forEach(el => {
+      const started = el.dataset.started;
+      if (started) el.textContent = timeAgo(started);
+    });
+  }, 1000);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -735,7 +837,10 @@ function renderKanban() {
   const board = document.getElementById('kanban-board');
   const filtered = activeProject ? tasks.filter(t => t.project === activeProject) : tasks;
 
+  // UPGRADE 4: needs-carlo floats to top, then by priority
   const sorted = [...filtered].sort((a, b) => {
+    if (a.needsCarlo && !b.needsCarlo) return -1;
+    if (!a.needsCarlo && b.needsCarlo) return 1;
     const p = { high: 0, medium: 1, low: 2 };
     return (p[a.priority] || 1) - (p[b.priority] || 1);
   });
@@ -760,6 +865,20 @@ function renderTaskCard(t) {
   const projectColor = project ? project.color : 'transparent';
   const hasBrief = briefs[t.id] || t.briefAdded;
 
+  // UPGRADE 4: Find which agent is running on this task
+  let subagentBadge = '';
+  if (t.subagentRunning) {
+    const runningAgent = (window.SUBAGENTS || []).find(a => a.taskId === t.id);
+    if (runningAgent) {
+      const agentConfig = (window.AGENTS_CONFIG || []).find(c => c.id === (runningAgent.agentId || runningAgent.id));
+      const aEmoji = agentConfig ? agentConfig.emoji : '🤖';
+      const aName = agentConfig ? agentConfig.name : (runningAgent.name || 'Agent');
+      subagentBadge = `<span class="badge badge-subagent">${aEmoji} ${escHtml(aName)}</span>`;
+    } else {
+      subagentBadge = `<span class="badge badge-subagent">🤖 Agent</span>`;
+    }
+  }
+
   let actionButtons = '';
   if (t.status !== 'done') {
     actionButtons += `<button class="task-action-btn btn-done" onclick="markTaskDone('${t.id}', event)" title="Mark Done">✓ Done</button>`;
@@ -773,6 +892,7 @@ function renderTaskCard(t) {
     <div class="task-card card-sliding ${t.needsCarlo ? 'needs-carlo' : ''} ${t.subagentRunning ? 'has-subagent' : ''}"
          data-task-id="${t.id}"
          style="border-left-color: ${projectColor}"
+         title="${t.notes ? escHtml(t.notes) : ''}"
          onclick="openModal('${t.id}')">
       ${hasBrief ? '<div class="brief-dot"></div>' : ''}
       <div class="task-card-top">
@@ -782,7 +902,7 @@ function renderTaskCard(t) {
       <div class="task-badges">
         ${project ? `<span class="badge badge-project" style="background:${project.color}15;color:${project.color}">${project.emoji} ${escHtml(project.name)}</span>` : ''}
         ${t.needsCarlo ? `<span class="badge badge-carlo">🔴 Needs You</span>` : ''}
-        ${t.subagentRunning ? `<span class="badge badge-subagent">🤖 Agent</span>` : ''}
+        ${subagentBadge}
       </div>
       ${t.notes ? `<div class="task-notes">${escHtml(t.notes)}</div>` : ''}
       <div class="task-footer">
@@ -1154,25 +1274,50 @@ let currentTab = 'dashboard';
 function switchTab(tab) {
   currentTab = tab;
   playSound('pop');
-  
+
   document.querySelectorAll('.nav-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === tab);
   });
 
-  const dashboardView = document.getElementById('view-dashboard');
-  const brandingView = document.getElementById('view-branding');
-  const fab = document.getElementById('fab-add');
+  const views = ['dashboard', 'tasks', 'content', 'agents', 'branding'];
+  views.forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.style.display = (v === tab) ? '' : 'none';
+  });
 
-  if (tab === 'branding') {
-    dashboardView.style.display = 'none';
-    brandingView.style.display = 'block';
-    fab.style.display = 'none';
-    initBrandingPage();
-  } else {
-    dashboardView.style.display = '';
-    brandingView.style.display = 'none';
-    fab.style.display = '';
-  }
+  const fab = document.getElementById('fab-add');
+  fab.style.display = (tab === 'branding') ? 'none' : '';
+
+  if (tab === 'branding') initBrandingPage();
+  if (tab === 'tasks') renderTasksList();
+  if (tab === 'content') renderContentCalendar();
+  if (tab === 'agents') renderAgentsView();
+}
+
+function renderTasksList() {
+  applyTaskFilters();
+}
+
+function renderContentCalendar() {
+  // Already handled by existing calendar code if present
+}
+
+function renderAgentsView() {
+  const grid = document.getElementById('agents-grid');
+  if (!grid) return;
+  const configs = window.AGENTS_CONFIG || [];
+  grid.innerHTML = configs.map(a => `
+    <div class="agent-card" style="border-left: 4px solid ${a.color}">
+      <div style="font-size:36px;margin-bottom:8px">${a.emoji}</div>
+      <div style="font-weight:800;font-size:16px">${escHtml(a.name)}</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">${escHtml(a.role)}</div>
+      <div style="font-size:11px;color:var(--text-secondary);margin-top:8px">${escHtml(a.description)}</div>
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <span class="badge" style="background:${a.status === 'active' ? 'var(--green-soft)' : 'var(--bg3)'};color:${a.status === 'active' ? 'var(--green)' : 'var(--text-muted)'}">${a.status === 'active' ? '🟢 Active' : '😴 Idle'}</span>
+        <span style="font-size:10px;color:var(--text-muted)">${escHtml(a.model)}</span>
+      </div>
+    </div>
+  `).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1365,13 +1510,6 @@ function startLiveSync() {
   const interval = isLocal ? 15000 : 60000;
   let lastVersion = window.DATA_VERSION || '';
 
-  // Add live badge
-  const topLeft = document.querySelector('.topbar-left');
-  if (topLeft && !document.querySelector('.live-badge')) {
-    topLeft.insertAdjacentHTML('beforeend',
-      '<div class="live-badge"><div class="live-dot"></div><span id="live-label">Live</span></div>');
-  }
-
   setInterval(async () => {
     try {
       const res = await fetch('data/tasks.js?t=' + Date.now());
@@ -1384,16 +1522,185 @@ function startLiveSync() {
         document.head.appendChild(script);
         tasks = [...(window.TASKS || [])];
         renderAll();
-        const lbl = document.getElementById('live-label');
+        const lbl = document.getElementById('topbar-live-label');
         if (lbl) {
           lbl.textContent = 'Updated!';
           lbl.style.color = '#FF7A00';
         }
         setTimeout(() => {
-          const l = document.getElementById('live-label');
+          const l = document.getElementById('topbar-live-label');
           if (l) { l.textContent = 'Live'; l.style.color = ''; }
         }, 2000);
       }
     } catch (e) {}
   }, interval);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════════════════════════════════
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  try { localStorage.setItem(LS_KEYS.theme, newTheme); } catch (e) {}
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+}
+
+function toggleThemeFromSettings() {
+  toggleTheme();
+  document.getElementById('setting-dark').checked = document.documentElement.getAttribute('data-theme') === 'dark';
+}
+
+function initTheme() {
+  try {
+    const saved = localStorage.getItem(LS_KEYS.theme);
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = '☀️';
+    }
+  } catch (e) {}
+}
+
+function toggleSounds() {
+  soundsEnabled = document.getElementById('setting-sounds').checked;
+  try { localStorage.setItem(LS_KEYS.sounds, soundsEnabled ? 'true' : 'false'); } catch (e) {}
+}
+
+function exportData() {
+  const data = { tasks, briefs, streak, branding: localStorage.getItem(LS_KEYS.branding) || '' };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'perci-data-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SHORTCUTS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function toggleShortcuts() {
+  document.getElementById('shortcuts-overlay').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// QUICK FILTERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+let activeQuickFilter = 'all';
+
+function setQuickFilter(filter) {
+  activeQuickFilter = filter;
+  document.querySelectorAll('.filter-chip').forEach(el => {
+    el.classList.toggle('active', el.dataset.filter === filter);
+  });
+  renderKanban();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TASKS VIEW FILTERS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function applyTaskFilters() {
+  const status = document.getElementById('filter-status')?.value || 'all';
+  const priority = document.getElementById('filter-priority')?.value || 'all';
+  const project = document.getElementById('filter-project')?.value || 'all';
+  const needsCarlo = document.getElementById('filter-needs-carlo')?.checked || false;
+
+  let filtered = [...tasks];
+  if (status !== 'all') filtered = filtered.filter(t => t.status === status);
+  if (priority !== 'all') filtered = filtered.filter(t => t.priority === priority);
+  if (project !== 'all') filtered = filtered.filter(t => t.project === project);
+  if (needsCarlo) filtered = filtered.filter(t => t.needsCarlo);
+
+  const list = document.getElementById('tasks-list');
+  const empty = document.getElementById('tasks-empty');
+  if (!list) return;
+
+  if (!filtered.length) {
+    list.innerHTML = '';
+    if (empty) empty.style.display = '';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+  list.innerHTML = filtered.map(t => renderTaskCard(t)).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONTENT CALENDAR
+// ═══════════════════════════════════════════════════════════════════════════
+
+let calendarMonth = new Date().getMonth();
+let calendarYear = new Date().getFullYear();
+
+function prevMonth() {
+  calendarMonth--;
+  if (calendarMonth < 0) { calendarMonth = 11; calendarYear--; }
+  renderCalendar();
+}
+
+function nextMonth() {
+  calendarMonth++;
+  if (calendarMonth > 11) { calendarMonth = 0; calendarYear++; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const el = document.getElementById('content-month');
+  if (el) el.textContent = monthNames[calendarMonth] + ' ' + calendarYear;
+
+  const grid = document.getElementById('calendar-grid');
+  if (!grid) return;
+  const posts = window.CONTENT_POSTS || [];
+  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
+
+  let html = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => `<div class="calendar-header">${d}</div>`).join('');
+  for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day empty"></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${calendarYear}-${String(calendarMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayPosts = posts.filter(p => p.scheduledDate === dateStr);
+    html += `<div class="calendar-day${dayPosts.length ? ' has-post' : ''}"><div class="calendar-day-num">${d}</div>${dayPosts.map(p => `<div class="calendar-post status-${p.status}">${p.type === 'reel' ? '🎬' : '📸'} ${escHtml(p.title.substring(0,20))}</div>`).join('')}</div>`;
+  }
+  grid.innerHTML = html;
+
+  // Stats
+  const scheduled = posts.filter(p => p.status === 'ready' || p.status === 'scheduled').length;
+  const posted = posts.filter(p => p.status === 'posted').length;
+  const drafts = posts.filter(p => p.status === 'draft').length;
+  const statScheduled = document.getElementById('stat-scheduled');
+  const statPosted = document.getElementById('stat-posted');
+  const statDrafts = document.getElementById('stat-drafts');
+  if (statScheduled) statScheduled.textContent = scheduled;
+  if (statPosted) statPosted.textContent = posted;
+  if (statDrafts) statDrafts.textContent = drafts;
+
+  // Queue
+  const queue = document.getElementById('queue-list');
+  if (queue) {
+    const upcoming = posts.filter(p => p.status !== 'posted').sort((a,b) => a.scheduledDate.localeCompare(b.scheduledDate));
+    queue.innerHTML = upcoming.map(p => `
+      <div class="queue-item">
+        <span class="queue-date">${p.scheduledDate}</span>
+        <span class="queue-title">${p.type === 'reel' ? '🎬' : '📸'} ${escHtml(p.title)}</span>
+        <span class="badge" style="background:${p.status === 'ready' ? 'var(--green-soft)' : 'var(--yellow-soft)'};color:${p.status === 'ready' ? 'var(--green)' : 'var(--yellow)'}">${p.status}</span>
+      </div>
+    `).join('') || '<div style="color:var(--text-muted);text-align:center;padding:20px">No upcoming posts</div>';
+  }
+}
+
+function initFilterProjects() {
+  const select = document.getElementById('filter-project');
+  if (!select) return;
+  const projects = window.PROJECTS || [];
+  select.innerHTML = '<option value="all">All Projects</option>' +
+    projects.map(p => `<option value="${p.id}">${p.emoji} ${escHtml(p.name)}</option>`).join('');
 }
