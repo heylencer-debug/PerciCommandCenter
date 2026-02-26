@@ -25,6 +25,7 @@
         </div>
       </div>
       <div class="last-updated" id="last-updated">—</div>
+      <button class="settings-btn" id="settings-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
     </div>
   </header>
 
@@ -46,6 +47,19 @@
 
       <!-- MISSION CONTROL -->
       <section class="mission-control" id="mission-control"></section>
+
+      <!-- BRAIN DUMP BOX -->
+      <section class="brain-dump" id="brain-dump">
+        <div class="brain-dump-header">
+          <span class="brain-dump-title">🧠 Carlo's Brain Dump</span>
+          <span class="brain-dump-sub">Drop thoughts here... Perci reads this every heartbeat</span>
+        </div>
+        <textarea class="brain-dump-textarea" id="brain-dump-text" placeholder="What's on your mind, Carlo? Tasks, ideas, links, anything..."></textarea>
+        <div class="brain-dump-actions">
+          <button class="brain-dump-send" id="brain-dump-send" onclick="sendBrainDump()">Send to Perci 📨</button>
+          <div class="brain-dump-last" id="brain-dump-last"></div>
+        </div>
+      </section>
 
       <!-- CARLO ACTION ITEMS -->
       <section class="carlo-actions" id="carlo-actions"></section>
@@ -73,6 +87,69 @@
     <div class="modal" id="task-modal">
       <button class="modal-close" onclick="closeModal()">✕</button>
       <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- BRIEF MODAL -->
+  <div class="modal-overlay" id="brief-overlay">
+    <div class="modal" id="brief-modal">
+      <button class="modal-close" onclick="closeBriefModal()">✕</button>
+      <div id="brief-content"></div>
+    </div>
+  </div>
+
+  <!-- QUICK ADD FORM -->
+  <div class="quick-add-overlay" id="quick-add-overlay" onclick="closeQuickAdd(event)">
+    <div class="quick-add-form" id="quick-add-form">
+      <div class="quick-add-title">+ Add New Task</div>
+      <label class="quick-add-label">Title</label>
+      <input type="text" class="quick-add-input" id="qa-title" placeholder="Task title..." />
+      <label class="quick-add-label">Project</label>
+      <select class="quick-add-select" id="qa-project"></select>
+      <label class="quick-add-label">Priority</label>
+      <select class="quick-add-select" id="qa-priority">
+        <option value="high">🔴 High</option>
+        <option value="medium" selected>🟡 Medium</option>
+        <option value="low">🟢 Low</option>
+      </select>
+      <label class="quick-add-label">Notes</label>
+      <textarea class="quick-add-textarea" id="qa-notes" placeholder="Optional notes..."></textarea>
+      <div class="quick-add-actions">
+        <button class="quick-add-cancel" onclick="closeQuickAdd()">Cancel</button>
+        <button class="quick-add-submit" onclick="submitQuickAdd()">Add Task ⚔️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING ADD BUTTON -->
+  <button class="fab-add" id="fab-add" onclick="openQuickAdd()">+</button>
+
+  <!-- SETTINGS PANEL -->
+  <div class="settings-overlay" id="settings-overlay" onclick="closeSettings(event)">
+    <div class="settings-panel" id="settings-panel">
+      <div class="settings-header">
+        <span>⚙️ Settings</span>
+        <button class="modal-close" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="settings-section">
+          <div class="settings-section-title">Display</div>
+          <label class="settings-toggle-row">
+            <span>Compact View</span>
+            <input type="checkbox" id="setting-compact" onchange="toggleCompact()" />
+          </label>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Config</div>
+          <div class="settings-info-row"><span>Model Tiers</span><span class="settings-info-value">Sonnet / Haiku / Opus</span></div>
+          <div class="settings-info-row"><span>Days Together</span><span class="settings-info-value" id="settings-days">1</span></div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">Data</div>
+          <button class="settings-danger-btn" onclick="resetAllData()">🗑️ Reset All Data to Defaults</button>
+          <p class="settings-warning">This clears all localStorage data and restores original tasks.</p>
+        </div>
+      </div>
     </div>
   </div>
 
