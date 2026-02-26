@@ -1,3 +1,5 @@
+window.DATA_VERSION = '2026-02-26T23:29:00+08:00';
+
 window.PERCI_STATUS = {
   status: 'active',
   statusText: 'Building Perci Command Center dashboard...',
@@ -206,3 +208,4 @@ _Last updated: 2026-02-26_
 
 ## 🔗 Reference Brand
 [Beyond The Vines (BTV)](https://beyondthevines.com) — study their product photography, store layout, and label design`;
+

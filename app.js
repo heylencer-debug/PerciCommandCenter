@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderKanban();
   renderActivityLog();
   checkOnARoll();
+  startLiveSync();
   initBrainDump();
   initQuickAddProjects();
   initCompactMode();
@@ -1049,3 +1050,45 @@ document.addEventListener('keydown', e => {
     openQuickAdd();
   }
 });
+
+// -- LIVE SYNC -----------------------------------------------------------------
+function startLiveSync() {
+  const isLocal = location.hostname === 'localhost' || /^192\.168/.test(location.hostname);
+  const interval = isLocal ? 15000 : 60000;
+  let lastVersion = window.DATA_VERSION || '';
+
+  // Add live badge
+  const topLeft = document.querySelector('.topbar-left');
+  if (topLeft) topLeft.insertAdjacentHTML('beforeend',
+    '<div class="live-badge"><div class="live-dot"></div><span id="live-label">Live</span></div>');
+
+  let syncCount = 0;
+  setInterval(async () => {
+    try {
+      const res = await fetch('data/tasks.js?t=' + Date.now());
+      const text = await res.text();
+      const match = text.match(/DATA_VERSION\s*=\s*'([^']+)'/);
+      if (match && match[1] !== lastVersion) {
+        lastVersion = match[1];
+        // Re-eval the script
+        const script = document.createElement('script');
+        script.textContent = text;
+        document.head.appendChild(script);
+        // Re-render everything
+        tasks = [...(window.TASKS || [])];
+        renderStatus();
+        renderMissionControl();
+        renderCarloActions();
+        renderSubagents();
+        renderKanban();
+        renderActivityLog();
+        renderStats();
+        renderProjects();
+        const lbl = document.getElementById('live-label');
+        if (lbl) { lbl.textContent = 'Updated!'; lbl.style.color = '#FF7A00'; }
+        setTimeout(() => { const l = document.getElementById('live-label'); if(l){l.textContent='Live';l.style.color='';} }, 2000);
+      }
+      syncCount++;
+    } catch(e) {}
+  }, interval);
+}

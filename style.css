@@ -1259,3 +1259,7 @@ body.compact .task-action-btn {
 @media (max-width: 480px) {
   .kanban-board { grid-template-columns: 1fr; }
 }
+
+/* LIVE BADGE */
+.live-badge { display:flex; align-items:center; gap:5px; font-size:11px; color:#22C55E; margin-left:14px; }
+.live-dot { width:7px; height:7px; border-radius:50%; background:#22C55E; animation:pulse 2s infinite; }
