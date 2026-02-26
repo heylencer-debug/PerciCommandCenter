@@ -102,6 +102,9 @@
         <!-- ACTIVE SUBAGENTS -->
         <section class="subagents-panel" id="subagents-panel"></section>
 
+        <!-- PERCI NOTES PANEL -->
+        <section class="perci-notes-panel" id="perci-notes-panel"></section>
+
         <!-- KANBAN BOARD -->
         <section class="kanban-section">
           <div class="section-header">
@@ -244,24 +247,21 @@
        BRANDING VIEW
        ═══════════════════════════════════════════════════════════════════════ -->
   <div id="view-branding" class="view-container" style="display:none">
-    <div class="branding-header">
-      <div class="branding-title-row">
-        <h2 class="branding-title">🎨 Brand Guidelines</h2>
-        <div class="branding-actions">
-          <button class="branding-btn branding-btn-save" onclick="saveBranding()">💾 Save</button>
-          <button class="branding-btn branding-btn-copy" onclick="copyBranding()">📋 Copy</button>
-          <button class="branding-btn branding-btn-reset" onclick="resetBranding()">🔄 Reset</button>
-        </div>
+    <div class="branding-view">
+      <div class="branding-header-new">
+        <h2 class="view-title">🎨 Brand Guidelines</h2>
+        <p class="branding-subtitle">Brand documents and identity guidelines for all projects</p>
       </div>
-    </div>
-    <div class="branding-container">
-      <div class="branding-editor-panel">
-        <div class="branding-panel-label">Editor</div>
-        <textarea class="branding-textarea" id="branding-textarea" spellcheck="false"></textarea>
-      </div>
-      <div class="branding-preview-panel">
-        <div class="branding-panel-label">Preview</div>
-        <div class="branding-preview" id="branding-preview"></div>
+      <div class="branding-layout">
+        <!-- Brand Cards Sidebar -->
+        <aside class="brand-sidebar" id="brand-sidebar"></aside>
+        <!-- Brand Documents Panel -->
+        <main class="brand-docs-panel" id="brand-docs-panel">
+          <div class="brand-docs-empty">
+            <div class="empty-icon">🎨</div>
+            <div class="empty-text">Select a brand to view its documents</div>
+          </div>
+        </main>
       </div>
     </div>
   </div>

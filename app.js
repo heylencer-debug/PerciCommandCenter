@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMissionControl();
   renderCarloActions();
   renderSubagents();
+  renderPerciNotes();
   renderKanban();
   renderActivityLog();
   renderStreakBadge();
@@ -1228,6 +1229,71 @@ function launchConfetti() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// PERCI NOTES PANEL
+// ═══════════════════════════════════════════════════════════════════════════
+
+let perciNotesCollapsed = false;
+
+function renderPerciNotes() {
+  const notes = window.PERCI_NOTES || {};
+  const el = document.getElementById('perci-notes-panel');
+  if (!el) return;
+
+  const reads = notes.confirmedReads || [];
+  const summary = notes.percisNotes || '';
+  const lastUpdated = notes.lastUpdated || '';
+
+  if (!reads.length && !summary) {
+    el.innerHTML = '';
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="perci-notes-header">
+      <div class="perci-notes-title">
+        <span>⚔️</span>
+        <span>Perci's Notes</span>
+      </div>
+      <div class="perci-notes-sync">
+        <span class="sync-dot"></span>
+        <span>Last sync: ${lastUpdated ? timeAgo(lastUpdated) : 'unknown'}</span>
+      </div>
+    </div>
+    ${summary ? `
+      <div class="perci-notes-summary">
+        <span class="perci-notes-summary-icon">📝</span>
+        ${escHtml(summary)}
+      </div>
+    ` : ''}
+    ${reads.length ? `
+      <div class="perci-reads-title">
+        <span>📂 Confirmed Reads (${reads.length})</span>
+        <button class="perci-reads-toggle" onclick="togglePerciNotesCollapse()">
+          ${perciNotesCollapsed ? '▼ Expand' : '▲ Collapse'}
+        </button>
+      </div>
+      <div class="perci-reads-list ${perciNotesCollapsed ? 'collapsed' : ''}">
+        ${reads.map(r => `
+          <div class="perci-read-item">
+            <span class="perci-read-icon">✅</span>
+            <div class="perci-read-content">
+              <div class="perci-read-file">${escHtml(r.file)}</div>
+              ${r.note ? `<div class="perci-read-note">${escHtml(r.note)}</div>` : ''}
+            </div>
+            <span class="perci-read-time">${timeAgo(r.at)}</span>
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+  `;
+}
+
+function togglePerciNotesCollapse() {
+  perciNotesCollapsed = !perciNotesCollapsed;
+  renderPerciNotes();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // RENDER ALL
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1239,6 +1305,7 @@ function renderAll() {
   renderMissionControl();
   renderCarloActions();
   renderSubagents();
+  renderPerciNotes();
   renderKanban();
   renderActivityLog();
   updateTabBadge();
@@ -1332,61 +1399,177 @@ function renderAgentsView() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// BRANDING PAGE
+// BRANDING PAGE (NEW — Brand-based document viewer)
 // ═══════════════════════════════════════════════════════════════════════════
 
-let brandingInitialized = false;
+let activeBrandId = null;
+let expandedDocs = new Set();
 
 function initBrandingPage() {
-  const textarea = document.getElementById('branding-textarea');
-  if (!brandingInitialized) {
-    let content = null;
-    try { content = localStorage.getItem(LS_KEYS.branding); } catch (e) {}
-    textarea.value = content || window.BRANDING_MD || '';
-    textarea.addEventListener('input', () => renderBrandingPreview());
-    brandingInitialized = true;
+  renderBrandSidebar();
+  
+  // Auto-select first brand if none selected
+  const brands = window.BRANDING_DATA || [];
+  if (brands.length > 0 && !activeBrandId) {
+    selectBrand(brands[0].id);
   }
-  renderBrandingPreview();
 }
 
-function renderBrandingPreview() {
-  const textarea = document.getElementById('branding-textarea');
-  const preview = document.getElementById('branding-preview');
-  preview.innerHTML = renderMarkdown(textarea.value);
-}
-
-function saveBranding() {
-  const textarea = document.getElementById('branding-textarea');
-  try { localStorage.setItem(LS_KEYS.branding, textarea.value); } catch (e) {}
-  const btn = document.querySelector('.branding-btn-save');
-  const orig = btn.textContent;
-  btn.textContent = '✅ Saved!';
-  playSound('complete');
-  setTimeout(() => { btn.textContent = orig; }, 2000);
-  addActivityEntry('🎨', 'Branding guidelines saved', 'success');
-}
-
-function copyBranding() {
-  const textarea = document.getElementById('branding-textarea');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(textarea.value).catch(() => fallbackCopy(textarea.value));
-  } else {
-    fallbackCopy(textarea.value);
+function renderBrandSidebar() {
+  const sidebar = document.getElementById('brand-sidebar');
+  if (!sidebar) return;
+  
+  const brands = window.BRANDING_DATA || [];
+  
+  if (!brands.length) {
+    sidebar.innerHTML = `
+      <div class="brand-card" style="text-align:center;cursor:default">
+        <div style="font-size:32px;margin-bottom:8px">🎨</div>
+        <div style="color:var(--text-muted);font-size:13px">No brands configured yet</div>
+      </div>
+    `;
+    return;
   }
-  const btn = document.querySelector('.branding-btn-copy');
-  const orig = btn.textContent;
-  btn.textContent = '✅ Copied!';
+  
+  sidebar.innerHTML = brands.map(brand => `
+    <div class="brand-card ${activeBrandId === brand.id ? 'active' : ''}" 
+         style="--brand-color: ${brand.color}"
+         onclick="selectBrand('${brand.id}')">
+      <div class="brand-card-header">
+        <span class="brand-card-emoji">${brand.emoji}</span>
+        <div class="brand-card-info">
+          <div class="brand-card-name">${escHtml(brand.name)}</div>
+          <div class="brand-card-tagline">${escHtml(brand.tagline || '')}</div>
+        </div>
+      </div>
+      <div class="brand-card-meta">
+        <span class="brand-card-badge">${brand.docs ? brand.docs.length : 0} docs</span>
+        <span class="brand-card-badge">${escHtml(brand.market || '')}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectBrand(brandId) {
+  activeBrandId = brandId;
+  expandedDocs.clear(); // Reset expanded state
+  
   playSound('pop');
-  setTimeout(() => { btn.textContent = orig; }, 2000);
+  renderBrandSidebar();
+  renderBrandDocs();
 }
 
-function resetBranding() {
-  if (!confirm('Reset branding to default?')) return;
-  const textarea = document.getElementById('branding-textarea');
-  textarea.value = window.BRANDING_MD || '';
-  try { localStorage.removeItem(LS_KEYS.branding); } catch (e) {}
-  renderBrandingPreview();
-  addActivityEntry('🎨', 'Branding reset', 'info');
+function renderBrandDocs() {
+  const panel = document.getElementById('brand-docs-panel');
+  if (!panel) return;
+  
+  const brands = window.BRANDING_DATA || [];
+  const brand = brands.find(b => b.id === activeBrandId);
+  
+  if (!brand) {
+    panel.innerHTML = `
+      <div class="brand-docs-empty">
+        <div class="empty-icon">🎨</div>
+        <div class="empty-text">Select a brand to view its documents</div>
+      </div>
+    `;
+    return;
+  }
+  
+  const docs = brand.docs || [];
+  
+  panel.innerHTML = `
+    <div class="brand-docs-header" style="border-left: 4px solid ${brand.color}">
+      <div class="brand-docs-title">
+        <span class="brand-docs-emoji">${brand.emoji}</span>
+        <span class="brand-docs-name">${escHtml(brand.name)}</span>
+      </div>
+      <div class="brand-docs-tagline">${escHtml(brand.tagline || '')}</div>
+      <div class="brand-docs-meta">
+        <span>📦 ${escHtml(brand.category || '')}</span>
+        <span>🌍 ${escHtml(brand.market || '')}</span>
+      </div>
+    </div>
+    <div class="brand-docs-content">
+      ${docs.map(doc => `
+        <div class="doc-card ${expandedDocs.has(doc.id) ? 'expanded' : ''}" 
+             id="doc-${doc.id}"
+             style="--brand-color: ${brand.color}">
+          <div class="doc-card-header" onclick="toggleDocCard('${doc.id}')">
+            <span class="doc-card-title">${escHtml(doc.title)}</span>
+            <span class="doc-card-toggle">▼</span>
+          </div>
+          <div class="doc-card-body">
+            ${renderDocContent(doc.content)}
+          </div>
+        </div>
+      `).join('')}
+      ${!docs.length ? `
+        <div style="text-align:center;color:var(--text-muted);padding:40px">
+          No documents for this brand yet
+        </div>
+      ` : ''}
+    </div>
+  `;
+  
+  // Auto-expand first doc
+  if (docs.length > 0 && expandedDocs.size === 0) {
+    expandedDocs.add(docs[0].id);
+    const firstDoc = document.getElementById('doc-' + docs[0].id);
+    if (firstDoc) firstDoc.classList.add('expanded');
+  }
+}
+
+function toggleDocCard(docId) {
+  if (expandedDocs.has(docId)) {
+    expandedDocs.delete(docId);
+  } else {
+    expandedDocs.add(docId);
+  }
+  
+  const card = document.getElementById('doc-' + docId);
+  if (card) {
+    card.classList.toggle('expanded', expandedDocs.has(docId));
+  }
+  
+  playSound('pop');
+}
+
+function renderDocContent(content) {
+  if (!content) return '';
+  
+  // Simple markdown-like rendering
+  let html = escHtml(content);
+  
+  // Bold **text**
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  
+  // Lines starting with - become list items
+  const lines = html.split('\n');
+  let result = '';
+  let inList = false;
+  
+  for (const line of lines) {
+    if (line.trim().startsWith('- ')) {
+      if (!inList) {
+        result += '<ul>';
+        inList = true;
+      }
+      result += '<li>' + line.trim().slice(2) + '</li>';
+    } else {
+      if (inList) {
+        result += '</ul>';
+        inList = false;
+      }
+      if (line.trim()) {
+        result += '<p>' + line + '</p>';
+      }
+    }
+  }
+  
+  if (inList) result += '</ul>';
+  
+  return result;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
