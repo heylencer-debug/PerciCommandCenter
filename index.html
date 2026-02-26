@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ Perci Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- TOP NAV -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo">⚔️ Perci Command Center</span>
+    </div>
+    <div class="topbar-right">
+      <div class="perci-status" id="perci-status">
+        <div class="status-dot" id="status-dot"></div>
+        <div class="status-info">
+          <span class="status-mood" id="status-mood">⚔️</span>
+          <span class="status-text" id="status-text">Loading...</span>
+        </div>
+      </div>
+      <div class="last-updated" id="last-updated">—</div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR: Projects -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Projects</div>
+        <div id="projects-list"></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Stats</div>
+        <div id="stats-panel"></div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- MISSION CONTROL -->
+      <section class="mission-control" id="mission-control"></section>
+
+      <!-- CARLO ACTION ITEMS -->
+      <section class="carlo-actions" id="carlo-actions"></section>
+
+      <!-- ACTIVE SUBAGENTS -->
+      <section class="subagents-panel" id="subagents-panel"></section>
+
+      <!-- KANBAN BOARD -->
+      <section class="kanban-section">
+        <div class="section-title">Task Board</div>
+        <div class="kanban-board" id="kanban-board"></div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR: Activity Log -->
+    <aside class="activity-sidebar">
+      <div class="sidebar-title">Activity Log</div>
+      <div id="activity-log"></div>
+    </aside>
+  </div>
+
+  <!-- TASK MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="task-modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="data/tasks.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
