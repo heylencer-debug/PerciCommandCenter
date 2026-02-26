@@ -113,6 +113,11 @@
       </div>
     </div>
 
+    <!-- MILESTONE TRACKER (V5) -->
+    <div class="milestone-tracker" id="milestone-tracker">
+      <!-- Rendered by JS -->
+    </div>
+
     <div class="app-layout">
       <!-- LEFT SIDEBAR: Projects -->
       <aside class="sidebar">
@@ -188,6 +193,28 @@
         <h2 class="view-title">⚔️ Perci Reviews</h2>
         <p class="reviews-subtitle">What should we work on? Here's Perci's guidance on pending tasks.</p>
       </div>
+      
+      <!-- QUICK ACTIONS PANEL (V5) -->
+      <div class="quick-actions-panel" id="quick-actions-panel">
+        <div class="quick-actions-header">
+          <span class="quick-actions-title">⚡ Quick Actions</span>
+        </div>
+        <div class="quick-actions-grid">
+          <button class="quick-action-btn qa-instagram" onclick="openPostDay1Modal()">
+            <span class="qa-icon">📸</span>
+            <span class="qa-label">Post Day 1 to Instagram</span>
+          </button>
+          <button class="quick-action-btn qa-generate" onclick="openDay2BriefModal()">
+            <span class="qa-icon">📝</span>
+            <span class="qa-label">Generate Day 2 Brief</span>
+          </button>
+          <button class="quick-action-btn qa-refresh" onclick="refreshData()">
+            <span class="qa-icon" id="refresh-icon">🔄</span>
+            <span class="qa-label">Refresh Data</span>
+          </button>
+        </div>
+      </div>
+      
       <div class="reviews-grid" id="reviews-grid">
         <!-- Review cards rendered by JS -->
       </div>
@@ -410,6 +437,22 @@
     <div class="modal gallery-modal" id="gallery-modal">
       <button class="modal-close" onclick="closeGalleryModal()">✕</button>
       <div id="gallery-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Post Day 1 Modal (V5) -->
+  <div class="modal-overlay" id="post-day1-modal-overlay">
+    <div class="modal post-day1-modal" id="post-day1-modal">
+      <button class="modal-close" onclick="closePostDay1Modal()">✕</button>
+      <div id="post-day1-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Day 2 Brief Modal (V5) -->
+  <div class="modal-overlay" id="day2-brief-modal-overlay">
+    <div class="modal day2-brief-modal" id="day2-brief-modal">
+      <button class="modal-close" onclick="closeDay2BriefModal()">✕</button>
+      <div id="day2-brief-modal-content"></div>
     </div>
   </div>
 

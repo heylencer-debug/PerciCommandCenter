@@ -1,22 +1,22 @@
-window.DATA_VERSION = '2026-02-27T03:06:00.000Z';
+window.DATA_VERSION = '2026-02-27T04:09:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "Command Center v4 building — Perci HQ, vault, gallery, pings",
+  "statusText": "Command Center v5 — Quick Actions, Milestone Tracker, Data Refresh",
   "mood": "onfire",
-  "lastUpdated": "2026-02-27T03:06:00.000Z",
-  "currentTask": "Command Center v4 — Perci as Visual HQ",
-  "currentStep": "Brigid forging all features",
-  "totalSteps": 3,
-  "currentStepNum": 2
+  "lastUpdated": "2026-02-27T04:09:00.000Z",
+  "currentTask": "Command Center v5 — UX Improvements",
+  "currentStep": "Brigid polishing v5 features",
+  "totalSteps": 4,
+  "currentStepNum": 3
 };
 
 window.SUBAGENTS = [
   {
-    "id": "brigid-v4",
+    "id": "brigid-v5",
     "agentId": "brigid",
     "name": "Brigid",
-    "task": "Command Center v4 — Perci HQ, Vault, Gallery, Pings, Task Review",
+    "task": "Command Center v5 — Quick Actions, Milestone Tracker, Fresh Data",
     "project": "perci-system",
     "taskId": "task-010",
     "startedAt": new Date().toISOString()
@@ -97,40 +97,40 @@ window.TASKS = [
     "priority": "high",
     "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "Completed by Brigid earlier today.",
-    "percisAdvice": "Done — now part of v4 upgrade",
+    "notes": "Completed by Brigid — v4 complete, all features live.",
+    "percisAdvice": "v4 complete — all features live",
     "createdAt": "2026-02-27T02:47:00+08:00",
-    "updatedAt": "2026-02-27T03:00:00+08:00"
+    "updatedAt": "2026-02-27T04:00:00+08:00"
   },
   {
     "id": "task-007",
-    "title": "Day 1 carousel v8 generation",
-    "description": "Generate v8: white hook text, powder blue accent bar, real Filipino candid emotions, no AI faces, iPhone depth-of-field",
+    "title": "Day 1 carousel v11 generation",
+    "description": "Generate v11: white hook text, powder blue accent bar, real Filipino candid emotions, no AI faces, iPhone depth-of-field",
     "project": "projectperciph",
-    "status": "in-progress",
+    "status": "done",
     "priority": "high",
-    "needsCarlo": true,
+    "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "7/7 slides generated. 2 test slides sent to Carlo for approval.",
-    "carloAction": "Review the 2 test slides sent to Telegram and approve or request changes",
-    "percisAdvice": "2 test slides sent to Carlo for approval. Awaiting green light.",
+    "notes": "7/7 slides generated and approved! v11 is the final version.",
+    "carloAction": "",
+    "percisAdvice": "v11 APPROVED by Carlo ✅ — ready to post",
     "createdAt": "2026-02-27T02:30:00+08:00",
-    "updatedAt": "2026-02-27T03:00:00+08:00"
+    "updatedAt": "2026-02-27T04:09:00+08:00"
   },
   {
     "id": "task-001",
     "title": "Post Day 1 carousel to Instagram",
-    "description": "Upload approved v8 carousel to @projectperciph — first ever post",
+    "description": "Upload approved v11 carousel to @projectperciph — first ever post",
     "project": "instagram",
-    "status": "blocked",
+    "status": "approved",
     "priority": "high",
     "needsCarlo": true,
     "subagentRunning": false,
-    "notes": "Waiting for v8 Carlo approval. Instagram @projectperciph live, 0 posts. Must post manually via phone (Instagram blocks API on new accounts).",
-    "carloAction": "Review v8 slides → transfer to phone → post via Instagram app",
-    "percisAdvice": "Carlo needs to approve v8 slides, then post manually from phone. Automation is blocked on new accounts.",
+    "notes": "v11 APPROVED! Instagram @projectperciph live, 0 posts. Must post manually via phone.",
+    "carloAction": "Post from phone. Slides in dashboard/assets/day-01-*.png",
+    "percisAdvice": "Day 1 v11 approved by Carlo ✅ — ready to post manually from phone!",
     "createdAt": "2026-02-26T16:00:00+08:00",
-    "updatedAt": "2026-02-27T02:47:00+08:00"
+    "updatedAt": "2026-02-27T04:09:00+08:00"
   },
   {
     "id": "task-002",
@@ -198,10 +198,10 @@ window.TASKS = [
     "priority": "medium",
     "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "Waiting for Day 1 to go live first.",
-    "percisAdvice": "Waiting on Day 1 approval. Perci will generate when Carlo says go.",
+    "notes": "Day 1 approved! Ready for Day 2 generation on Carlo's go.",
+    "percisAdvice": "Day 1 approved. Perci ready to generate Day 2 on Carlo's go.",
     "createdAt": "2026-02-26T22:00:00+08:00",
-    "updatedAt": "2026-02-26T22:00:00+08:00"
+    "updatedAt": "2026-02-27T04:09:00+08:00"
   },
   {
     "id": "task-005",
@@ -222,15 +222,33 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T04:09:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid spawned — building Command Center v5: Quick Actions, Milestone Tracker, UX Polish",
+    "type": "info"
+  },
+  {
+    "time": "2026-02-27T04:05:00+08:00",
+    "emoji": "✅",
+    "text": "v11 carousel APPROVED by Carlo — ready to post!",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T04:00:00+08:00",
+    "emoji": "🔥",
+    "text": "Command Center v4 complete — all features live",
+    "type": "success"
+  },
+  {
     "time": "2026-02-27T03:06:00+08:00",
     "emoji": "🔥",
-    "text": "Brigid spawned — building Command Center v4: Perci HQ, Vault, Gallery, Pings, Task Review",
-    "type": "info"
+    "text": "Brigid completed Command Center v4: Perci HQ, Vault, Gallery, Pings, Task Review",
+    "type": "success"
   },
   {
     "time": "2026-02-27T03:00:00+08:00",
     "emoji": "📸",
-    "text": "V8 test slides sent to Carlo for review — awaiting approval",
+    "text": "V11 carousel test slides sent to Carlo for review",
     "type": "info"
   },
   {
@@ -399,13 +417,52 @@ window.VAULT_DOCS = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 window.GALLERY_IMAGES = [
-  { id: "cover", file: "../dashboard/assets/day-01-cover.png", label: "Day 1 Cover", status: "pending", description: "Hook slide: 'The first gift I ever made? It was terrible.'" },
-  { id: "slide-02", file: "../dashboard/assets/day-01-slide-02.png", label: "Slide 2", status: "pending", description: "Story continuation with Filipino tita" },
-  { id: "slide-03", file: "../dashboard/assets/day-01-slide-03.png", label: "Slide 3", status: "pending", description: "Emotional moment — lola's reaction" },
-  { id: "slide-04", file: "../dashboard/assets/day-01-slide-04.png", label: "Slide 4", status: "pending", description: "Product showcase — embroidered tote" },
-  { id: "slide-05", file: "../dashboard/assets/day-01-slide-05.png", label: "Slide 5", status: "pending", description: "Behind the scenes — embroidery process" },
-  { id: "slide-06", file: "../dashboard/assets/day-01-slide-06.png", label: "Slide 6", status: "pending", description: "Customer testimonial moment" },
-  { id: "slide-07", file: "../dashboard/assets/day-01-slide-07.png", label: "Slide 7 (CTA)", status: "pending", description: "Call to action — follow for more" }
+  { id: "cover", file: "../dashboard/assets/day-01-cover.png", label: "Day 1 Cover", status: "approved", description: "Hook slide: 'The first gift I ever made? It was terrible.'" },
+  { id: "slide-02", file: "../dashboard/assets/day-01-slide-02.png", label: "Slide 2", status: "approved", description: "Story continuation with Filipino tita" },
+  { id: "slide-03", file: "../dashboard/assets/day-01-slide-03.png", label: "Slide 3", status: "approved", description: "Emotional moment — lola's reaction" },
+  { id: "slide-04", file: "../dashboard/assets/day-01-slide-04.png", label: "Slide 4", status: "approved", description: "Product showcase — embroidered tote" },
+  { id: "slide-05", file: "../dashboard/assets/day-01-slide-05.png", label: "Slide 5", status: "approved", description: "Behind the scenes — embroidery process" },
+  { id: "slide-06", file: "../dashboard/assets/day-01-slide-06.png", label: "Slide 6", status: "approved", description: "Customer testimonial moment" },
+  { id: "slide-07", file: "../dashboard/assets/day-01-slide-07.png", label: "Slide 7 (CTA)", status: "approved", description: "Call to action — follow for more" }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: Day 1 Caption for Quick Actions
+// ═══════════════════════════════════════════════════════════════════════════
+
+window.DAY1_CAPTION = `The first gift I ever made? It was terrible. 😂
+
+But my lola kept it anyway. She put it on her dresser, right next to her wedding photo.
+
+That's when I learned: it's not about perfection.
+It's about the love stitched into every thread. 🧵💕
+
+Coming soon: personalized embroidery gifts that tell YOUR story.
+
+Follow @projectperciph for the journey ✨
+
+#projectperciph #personalizedgifts #cebugifts #embroidery #handmadeph`;
+
+window.DAY1_SLIDES = [
+  "day-01-cover.png",
+  "day-01-slide-02.png",
+  "day-01-slide-03.png",
+  "day-01-slide-04.png",
+  "day-01-slide-05.png",
+  "day-01-slide-06.png",
+  "day-01-slide-07.png"
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: Milestone Tracker Data
+// ═══════════════════════════════════════════════════════════════════════════
+
+window.MILESTONES = [
+  { id: "brand", label: "Brand", emoji: "🎨", status: "done", description: "Brand identity complete" },
+  { id: "social", label: "Social", emoji: "📱", status: "in-progress", description: "Instagram Day 1 ready to post" },
+  { id: "shopee", label: "Shopee", emoji: "🛒", status: "todo", description: "Store setup pending" },
+  { id: "facebook", label: "Facebook", emoji: "📘", status: "todo", description: "Page creation pending" },
+  { id: "website", label: "Website", emoji: "🌐", status: "todo", description: "Future phase" }
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

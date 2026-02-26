@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollEffect();
   renderStatus();
   renderPerciHeroHQ(); // V4: New hero section
+  renderMilestoneTracker(); // V5: Milestone tracker
   renderProjects();
   renderStats();
   renderMissionControl();
@@ -1659,6 +1660,7 @@ function renderActivityLog() {
 function renderAll() {
   renderStatus();
   renderPerciHeroHQ();
+  renderMilestoneTracker(); // V5
   renderProjects();
   renderStats();
   renderMissionControl();
@@ -2292,4 +2294,248 @@ function initFilterProjects() {
   const projects = window.PROJECTS || [];
   select.innerHTML = '<option value="all">All Projects</option>' +
     projects.map(p => `<option value="${p.id}">${p.emoji} ${escHtml(p.name)}</option>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: MILESTONE TRACKER
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderMilestoneTracker() {
+  const el = document.getElementById('milestone-tracker');
+  if (!el) return;
+  
+  const milestones = window.MILESTONES || [
+    { id: "brand", label: "Brand", emoji: "🎨", status: "done" },
+    { id: "social", label: "Social", emoji: "📱", status: "in-progress" },
+    { id: "shopee", label: "Shopee", emoji: "🛒", status: "todo" },
+    { id: "facebook", label: "Facebook", emoji: "📘", status: "todo" },
+    { id: "website", label: "Website", emoji: "🌐", status: "todo" }
+  ];
+
+  const statusIcons = {
+    'done': '✅',
+    'in-progress': '⏳',
+    'todo': '⬜'
+  };
+
+  el.innerHTML = `
+    <div class="milestone-header">
+      <span class="milestone-title">🗺️ Project Roadmap</span>
+    </div>
+    <div class="milestone-strip">
+      ${milestones.map((m, i) => `
+        <div class="milestone-item status-${m.status}" title="${m.description || m.label}">
+          <div class="milestone-dot">${statusIcons[m.status]}</div>
+          <div class="milestone-label">${m.emoji} ${m.label}</div>
+        </div>
+        ${i < milestones.length - 1 ? '<div class="milestone-connector status-' + (m.status === 'done' ? 'done' : 'pending') + '"></div>' : ''}
+      `).join('')}
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: QUICK ACTIONS — Post Day 1 Modal
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openPostDay1Modal() {
+  const caption = window.DAY1_CAPTION || 'Caption not found';
+  const slides = window.DAY1_SLIDES || [];
+  
+  const overlay = document.getElementById('post-day1-modal-overlay');
+  const content = document.getElementById('post-day1-modal-content');
+  
+  content.innerHTML = `
+    <div class="modal-title">📸 Post Day 1 to Instagram</div>
+    <div class="post-modal-section">
+      <div class="post-modal-label">📄 Caption (tap to copy)</div>
+      <div class="post-caption-box" onclick="copyCaption()" id="caption-box">
+        <pre>${escHtml(caption)}</pre>
+      </div>
+      <button class="post-copy-btn" onclick="copyCaption()">📋 Copy Caption</button>
+    </div>
+    <div class="post-modal-section">
+      <div class="post-modal-label">🖼️ Slide Files (${slides.length} images)</div>
+      <div class="post-slides-list">
+        ${slides.map((s, i) => `
+          <div class="post-slide-item">
+            <span class="slide-num">${i + 1}</span>
+            <span class="slide-file">${escHtml(s)}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="post-slides-path">
+        <strong>Location:</strong> dashboard/assets/
+      </div>
+    </div>
+    <div class="post-modal-steps">
+      <div class="post-step">1️⃣ Copy caption above</div>
+      <div class="post-step">2️⃣ Open Instagram app on phone</div>
+      <div class="post-step">3️⃣ Create new post → Add slides in order</div>
+      <div class="post-step">4️⃣ Paste caption → Post!</div>
+    </div>
+  `;
+  
+  overlay.classList.add('open');
+  playSound('pop');
+}
+
+function closePostDay1Modal() {
+  document.getElementById('post-day1-modal-overlay').classList.remove('open');
+}
+
+function copyCaption() {
+  const caption = window.DAY1_CAPTION || '';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(caption).then(() => {
+      const box = document.getElementById('caption-box');
+      if (box) {
+        box.classList.add('copied');
+        setTimeout(() => box.classList.remove('copied'), 1500);
+      }
+      playSound('complete');
+      addActivityEntry('📋', 'Day 1 caption copied to clipboard', 'success');
+    }).catch(() => fallbackCopy(caption));
+  } else {
+    fallbackCopy(caption);
+  }
+}
+
+// Close post day1 modal on overlay click
+document.addEventListener('click', e => {
+  if (e.target.id === 'post-day1-modal-overlay') closePostDay1Modal();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: QUICK ACTIONS — Day 2 Brief Modal
+// ═══════════════════════════════════════════════════════════════════════════
+
+function openDay2BriefModal() {
+  const overlay = document.getElementById('day2-brief-modal-overlay');
+  const content = document.getElementById('day2-brief-modal-content');
+  
+  content.innerHTML = `
+    <div class="modal-title">📝 Generate Day 2 Brief</div>
+    <div class="brief-modal-section">
+      <div class="brief-modal-intro">
+        Day 1 is approved and ready to post. When you're ready to generate Day 2, 
+        share these prompts with Perci:
+      </div>
+    </div>
+    <div class="brief-modal-section">
+      <div class="brief-prompt-card" onclick="copyPrompt(this, 'day2-start')">
+        <div class="prompt-label">🚀 Start Day 2 Generation</div>
+        <div class="prompt-text" id="day2-start">Generate Day 2 carousel for ProjectPerciPH. Theme: "Why Embroidery Lasts" — focus on durability, craftsmanship, and emotional longevity. Use same style as v11: white hook text, powder blue accents, real Filipino people, iPhone feel.</div>
+        <div class="prompt-copy-hint">Tap to copy</div>
+      </div>
+      <div class="brief-prompt-card" onclick="copyPrompt(this, 'day2-hook')">
+        <div class="prompt-label">🎣 Alternative Hook Ideas</div>
+        <div class="prompt-text" id="day2-hook">Give me 5 hook options for Day 2 "Why Embroidery Lasts" carousel. Style: emotional, relatable, Filipino family context. Similar to Day 1's "The first gift I ever made? It was terrible."</div>
+        <div class="prompt-copy-hint">Tap to copy</div>
+      </div>
+      <div class="brief-prompt-card" onclick="copyPrompt(this, 'day2-review')">
+        <div class="prompt-label">👀 Review Day 2 Slides</div>
+        <div class="prompt-text" id="day2-review">Show me the Day 2 slides for review. I'll approve or request changes before posting.</div>
+        <div class="prompt-copy-hint">Tap to copy</div>
+      </div>
+    </div>
+    <div class="brief-modal-note">
+      💡 Copy any prompt above and send it to Perci in Telegram to start Day 2 generation.
+    </div>
+  `;
+  
+  overlay.classList.add('open');
+  playSound('pop');
+}
+
+function closeDay2BriefModal() {
+  document.getElementById('day2-brief-modal-overlay').classList.remove('open');
+}
+
+function copyPrompt(card, promptId) {
+  const promptEl = document.getElementById(promptId);
+  const text = promptEl ? promptEl.textContent : '';
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      card.classList.add('copied');
+      setTimeout(() => card.classList.remove('copied'), 1500);
+      playSound('pop');
+    }).catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+// Close day2 brief modal on overlay click
+document.addEventListener('click', e => {
+  if (e.target.id === 'day2-brief-modal-overlay') closeDay2BriefModal();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V5: QUICK ACTIONS — Refresh Data
+// ═══════════════════════════════════════════════════════════════════════════
+
+let isRefreshing = false;
+
+function refreshData() {
+  if (isRefreshing) return;
+  isRefreshing = true;
+  
+  const icon = document.getElementById('refresh-icon');
+  if (icon) {
+    icon.classList.add('spinning');
+    icon.textContent = '🔄';
+  }
+  
+  playSound('pop');
+  
+  // Re-fetch data files
+  const cacheBust = '?t=' + Date.now();
+  
+  Promise.all([
+    fetch('data/tasks.js' + cacheBust).then(r => r.text()),
+    fetch('data/content.js' + cacheBust).then(r => r.text())
+  ]).then(([tasksText, contentText]) => {
+    // Re-evaluate both data scripts
+    const script1 = document.createElement('script');
+    script1.textContent = tasksText;
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.textContent = contentText;
+    document.head.appendChild(script2);
+
+    tasks = [...(window.TASKS || [])];
+    
+    // Re-render everything
+    renderAll();
+    renderMilestoneTracker();
+    
+    // Visual feedback
+    setTimeout(() => {
+      if (icon) {
+        icon.classList.remove('spinning');
+        icon.textContent = '✅';
+      }
+      playSound('complete');
+      addActivityEntry('🔄', 'Data refreshed successfully', 'success');
+      
+      setTimeout(() => {
+        if (icon) icon.textContent = '🔄';
+        isRefreshing = false;
+      }, 1500);
+    }, 800);
+    
+  }).catch(err => {
+    console.error('Refresh failed:', err);
+    if (icon) {
+      icon.classList.remove('spinning');
+      icon.textContent = '❌';
+    }
+    setTimeout(() => {
+      if (icon) icon.textContent = '🔄';
+      isRefreshing = false;
+    }, 2000);
+  });
 }
