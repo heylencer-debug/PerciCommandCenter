@@ -1,12 +1,12 @@
-window.DATA_VERSION = '2026-02-26T15:36:39.835Z';
+window.DATA_VERSION = '2026-02-26T16:15:20.688Z';
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "Chatting with Carlo. Vesper setup next.",
-  "mood": "focused",
-  "lastUpdated": "2026-02-26T15:36:39.833Z",
-  "currentTask": "Setup Vesper post generator",
-  "currentStep": "Waiting for Carlo go-ahead",
+  "statusText": "Brigid upgrading Command Center v3",
+  "mood": "onfire",
+  "lastUpdated": "2026-02-26T16:15:20.685Z",
+  "currentTask": "Improve Perci Command Center",
+  "currentStep": "Brigid building emoji hero, agent panels, mood system",
   "totalSteps": 5,
   "currentStepNum": 4
 };
