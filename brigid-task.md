@@ -1,80 +1,92 @@
 You are Brigid 🔥 — forge master for Perci Command Center.
 
-## Goal: Live Auto-Update System
+Improve the dashboard with these specific upgrades. Work in:
+C:\Users\Carl Rebadomia\.openclaw\workspace\PerciCommandCenter\
 
-Build these 3 things:
+---
 
-### 1. update-dashboard.js
-Create at: C:\Users\Carl Rebadomia\.openclaw\workspace\update-dashboard.js
+## UPGRADE 1: PERCI STATUS HERO (Big emoji indicator — top of page)
 
-Node.js script that accepts CLI args:
---task <id> --status <status> --notes <text>
---perci-status <active|idle|offline> --status-text <text> --mood <focused|idle|thinking|onfire>
---add-subagent <json> --remove-subagent <id>
---log <json>
---current-task <text> --current-step <text>
+Replace the current small topbar status dot with a LARGE, prominent hero status block just below the topbar.
 
-Steps:
-1. Read data/tasks.js as text
-2. Use eval() in a sandbox (new Function) to extract window globals into a plain object
-3. Apply CLI patches to the data
-4. Set DATA_VERSION = new Date().toISOString()
-5. Serialize back to data/tasks.js (window.DATA_VERSION = '...'; window.PERCI_STATUS = {...}; etc.)
-6. Push to GitHub via Contents API:
-   - GET https://api.github.com/repos/heylencer-debug/PerciCommandCenter/contents/data/tasks.js → get sha
-   - PUT same URL with base64 content, sha, commit message "dashboard: live update"
-   - Token: GITHUB_TOKEN_FROM_ENV
-7. Print: Dashboard updated and live on GitHub
+It should show:
+- A GIANT emoji (120px) that changes based on mood:
+  - ⚔️ = focused/active (default)
+  - 🔥 = onfire (many tasks done)
+  - 🧠 = thinking (processing)
+  - 😴 = idle
+  - 🔴 = offline
+- Below the emoji: bold status text (e.g. "Perci is working on: Build Perci Command Center")
+- Below that: smaller subtext (current step)
+- Animated breathing glow ring around the emoji when active (CSS pulse animation in orange/blue)
+- When idle: emoji greys out slightly, glow ring stops
 
-### 2. data/tasks.js updates
-- Add at top: window.DATA_VERSION = '2026-02-26T23:25:00+08:00';
-- Set SUBAGENTS = [] (all done)
-- Update PERCI_STATUS.statusText = 'Building live update system'
-- Update PERCI_STATUS.lastUpdated to now
+Style:
+- Centered card, dark bg (#161B22), orange border glow when active
+- Feels like a "character status" in a game HUD
 
-### 3. app.js — startLiveSync()
-Add function at bottom of app.js:
+---
 
-function startLiveSync() {
-  const isLocal = location.hostname === 'localhost' || location.hostname.startsWith('192.168');
-  const interval = isLocal ? 15000 : 60000;
-  let lastVersion = window.DATA_VERSION || '';
+## UPGRADE 2: ACTIVE SUBAGENTS — Prominent Panel
 
-  // Add live badge to topbar
-  const logo = document.querySelector('.topbar-left');
-  logo.insertAdjacentHTML('beforeend', '<div class="live-badge"><div class="live-dot"></div><span id="live-label">Live</span></div>');
+Make the subagents panel much more visible:
+- Show as large cards (not small), each with:
+  - Big agent emoji + name (e.g. "🔥 Brigid")
+  - Task description (bold)
+  - Project badge (colored)
+  - Animated spinning gear ⚙️ or spinner
+  - Time elapsed since started (live, updates every second)
+  - Progress pulse bar (indeterminate animated orange bar)
+- When NO subagents: show a card that says "⚔️ Perci is handling it solo" with a subtle idle animation
+- Panel title: "🤖 Active Agents" — always visible even when empty
 
-  setInterval(async () => {
-    try {
-      const res = await fetch('data/tasks.js?t=' + Date.now());
-      const text = await res.text();
-      const match = text.match(/DATA_VERSION\s*=\s*'([^']+)'/);
-      if (match && match[1] !== lastVersion) {
-        lastVersion = match[1];
-        const script = document.createElement('script');
-        script.textContent = text;
-        document.head.appendChild(script);
-        renderStatus();
-        renderMissionControl();
-        renderCarloActions();
-        renderSubagents();
-        renderKanban();
-        renderActivityLog();
-        renderStats();
-        document.getElementById('live-label').textContent = 'Updated!';
-        setTimeout(() => document.getElementById('live-label').textContent = 'Live', 2000);
-      }
-    } catch(e) {}
-  }, interval);
-}
+---
 
-Call startLiveSync() at end of DOMContentLoaded handler.
+## UPGRADE 3: PERCI + SUBAGENT STATUS in TOPBAR
 
-### 4. style.css additions
-.live-badge { display:flex; align-items:center; gap:5px; font-size:11px; color:#22C55E; margin-left:12px; }
-.live-dot { width:7px; height:7px; border-radius:50%; background:#22C55E; animation:pulse 2s infinite; }
+Keep the topbar but improve it:
+- Left: ⚔️ logo + "Perci Command Center"
+- Center: Live status pill — shows Perci emoji (small, 24px) + status text
+- Right: Agent count badge (e.g. "2 agents running" in orange) + 🟢 Live dot + last synced
 
-### 5. Git push
-git add -A && git commit -m "Brigid: Live auto-update + update-dashboard.js" && git push origin main
+---
 
-When done run: openclaw system event --text "Brigid done: Live auto-update COMPLETE. update-dashboard.js ready." --mode now
+## UPGRADE 4: TASK CARDS — Cleaner, more scannable
+
+- Add a thin left border colored by PROJECT color (already partially done — make sure it works)
+- "Needs Carlo" cards: pulsing red border + 🔴 badge floats to very top of column
+- "Subagent Running" cards: show which agent (e.g. "🔥 Brigid") not just generic badge
+- Add hover tooltip showing full notes on hover
+- Task card footer: show relative time (e.g. "updated 2h ago") — already exists, make sure it refreshes
+
+---
+
+## UPGRADE 5: PERCI MOOD CHANGES THE WHOLE UI
+
+Based on PERCI_STATUS.mood, apply a subtle theme shift:
+- focused (default): orange accents, normal
+- onfire 🔥: orange accents glow brighter, small flame particles in bg canvas
+- thinking 🧠: blue/purple accent shift, slower pulse
+- idle 😴: desaturated slightly, slower animations
+- offline 🔴: red accent, static (no animations)
+
+Implement by adding a data-mood attribute to <body> and CSS [data-mood="onfire"] overrides.
+
+---
+
+## UPGRADE 6: MISSION CONTROL — Bigger, bolder
+
+- Make the mission control banner taller and more dramatic
+- Show: current task in LARGE bold text (28px+)
+- Show: "🔥 Brigid" or "⚔️ Perci" avatar pill showing WHO is working on it
+- Progress bar: thicker (10px), animated shimmer effect on the fill
+- Add: estimated completion if available
+
+---
+
+## TECHNICAL NOTES
+- All existing features must still work (kanban, carlo actions, activity log, branding page, localStorage, live sync)
+- Keep dark navy theme, orange + powder blue accents
+- Mobile responsive
+- After all changes: git add -A && git commit -m "Brigid: Command Center v3 — Perci emoji hero, agent panels, mood system" && git push origin main
+- When done: openclaw system event --text "Brigid done: Command Center v3 LIVE — Perci emoji hero status, active agent cards, mood system deployed" --mode now

@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FF7A00" />
+  <meta name="description" content="Perci Command Center — Task management for Carlo and Perci" />
   <title>⚔️ Perci Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
 </head>
 <body>
   <canvas id="bg-canvas"></canvas>
@@ -14,7 +18,10 @@
   <!-- TOP NAV -->
   <header class="topbar">
     <div class="topbar-left">
-      <span class="logo">⚔️ Perci Command Center</span>
+      <span class="logo">
+        <span class="logo-icon">⚔️</span>
+        <span>Perci Command Center</span>
+      </span>
     </div>
     <div class="topbar-right">
       <div class="perci-status" id="perci-status">
@@ -38,71 +45,78 @@
     <button class="nav-tab" data-tab="branding" onclick="switchTab('branding')">🎨 Branding</button>
   </nav>
 
+  <!-- PERCI STATUS HERO -->
+  <div class="status-hero" id="status-hero">
+    <div class="status-hero-emoji" id="hero-emoji">⚔️</div>
+    <div class="status-hero-text" id="hero-text">Perci is standing by</div>
+    <div class="status-hero-sub" id="hero-sub">Ready for action</div>
+  </div>
+
   <!-- DASHBOARD VIEW -->
   <div id="view-dashboard">
-  <div class="app-layout">
-    <!-- LEFT SIDEBAR: Projects -->
-    <aside class="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-title">Projects</div>
-        <div id="projects-list"></div>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-title">Stats</div>
-        <div id="stats-panel"></div>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-
-      <!-- MISSION CONTROL -->
-      <section class="mission-control" id="mission-control"></section>
-
-      <!-- BRAIN DUMP BOX -->
-      <section class="brain-dump" id="brain-dump">
-        <div class="brain-dump-header">
-          <span class="brain-dump-title">🧠 Carlo's Brain Dump</span>
-          <span class="brain-dump-sub">Drop thoughts here... Perci reads this every heartbeat</span>
+    <div class="app-layout">
+      <!-- LEFT SIDEBAR: Projects -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Projects</div>
+          <div id="projects-list"></div>
         </div>
-        <textarea class="brain-dump-textarea" id="brain-dump-text" placeholder="What's on your mind, Carlo? Tasks, ideas, links, anything..."></textarea>
-        <div class="brain-dump-actions">
-          <button class="brain-dump-send" id="brain-dump-send" onclick="sendBrainDump()">Send to Perci 📨</button>
-          <div class="brain-dump-last" id="brain-dump-last"></div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">Stats</div>
+          <div id="stats-panel"></div>
         </div>
-      </section>
+      </aside>
 
-      <!-- CARLO ACTION ITEMS -->
-      <section class="carlo-actions" id="carlo-actions"></section>
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
 
-      <!-- ACTIVE SUBAGENTS -->
-      <section class="subagents-panel" id="subagents-panel"></section>
+        <!-- MISSION CONTROL -->
+        <section class="mission-control" id="mission-control"></section>
 
-      <!-- KANBAN BOARD -->
-      <section class="kanban-section">
-        <div class="section-title">Task Board</div>
-        <div class="kanban-board" id="kanban-board"></div>
-      </section>
+        <!-- BRAIN DUMP BOX -->
+        <section class="brain-dump" id="brain-dump">
+          <div class="brain-dump-header">
+            <span class="brain-dump-title">🧠 Brain Dump</span>
+            <span class="brain-dump-sub">Drop thoughts here — Perci reads this every heartbeat</span>
+          </div>
+          <textarea class="brain-dump-textarea" id="brain-dump-text" placeholder="What's on your mind? Tasks, ideas, links, anything..."></textarea>
+          <div class="brain-dump-actions">
+            <button class="brain-dump-send" id="brain-dump-send" onclick="sendBrainDump()">Send to Perci 📨</button>
+            <div class="brain-dump-last" id="brain-dump-last"></div>
+          </div>
+        </section>
 
-    </main>
+        <!-- CARLO ACTION ITEMS -->
+        <section class="carlo-actions" id="carlo-actions"></section>
 
-    <!-- RIGHT SIDEBAR: Activity Log -->
-    <aside class="activity-sidebar">
-      <div class="sidebar-title">Activity Log</div>
-      <div id="activity-log"></div>
-    </aside>
-  </div>
+        <!-- ACTIVE SUBAGENTS -->
+        <section class="subagents-panel" id="subagents-panel"></section>
+
+        <!-- KANBAN BOARD -->
+        <section class="kanban-section">
+          <div class="section-title">Task Board</div>
+          <div class="kanban-board" id="kanban-board"></div>
+        </section>
+
+      </main>
+
+      <!-- RIGHT SIDEBAR: Activity Log -->
+      <aside class="activity-sidebar">
+        <div class="sidebar-title">Activity</div>
+        <div id="activity-log"></div>
+      </aside>
+    </div>
   </div><!-- /view-dashboard -->
 
   <!-- BRANDING VIEW -->
   <div id="view-branding" class="branding-view" style="display:none">
     <div class="branding-header">
       <div class="branding-title-row">
-        <h2 class="branding-title">🎨 Branding Guidelines</h2>
+        <h2 class="branding-title">🎨 Brand Guidelines</h2>
         <div class="branding-actions">
-          <button class="branding-btn branding-btn-save" onclick="saveBranding()">💾 Save Changes</button>
-          <button class="branding-btn branding-btn-copy" onclick="copyBranding()">📋 Copy to Clipboard</button>
-          <button class="branding-btn branding-btn-reset" onclick="resetBranding()">🔄 Reset to Default</button>
+          <button class="branding-btn branding-btn-save" onclick="saveBranding()">💾 Save</button>
+          <button class="branding-btn branding-btn-copy" onclick="copyBranding()">📋 Copy</button>
+          <button class="branding-btn branding-btn-reset" onclick="resetBranding()">🔄 Reset</button>
         </div>
       </div>
     </div>
@@ -137,9 +151,9 @@
   <!-- QUICK ADD FORM -->
   <div class="quick-add-overlay" id="quick-add-overlay" onclick="closeQuickAdd(event)">
     <div class="quick-add-form" id="quick-add-form">
-      <div class="quick-add-title">+ Add New Task</div>
+      <div class="quick-add-title">+ Add Task</div>
       <label class="quick-add-label">Title</label>
-      <input type="text" class="quick-add-input" id="qa-title" placeholder="Task title..." />
+      <input type="text" class="quick-add-input" id="qa-title" placeholder="What needs to be done?" />
       <label class="quick-add-label">Project</label>
       <select class="quick-add-select" id="qa-project"></select>
       <label class="quick-add-label">Priority</label>
@@ -149,7 +163,7 @@
         <option value="low">🟢 Low</option>
       </select>
       <label class="quick-add-label">Notes</label>
-      <textarea class="quick-add-textarea" id="qa-notes" placeholder="Optional notes..."></textarea>
+      <textarea class="quick-add-textarea" id="qa-notes" placeholder="Optional details..."></textarea>
       <div class="quick-add-actions">
         <button class="quick-add-cancel" onclick="closeQuickAdd()">Cancel</button>
         <button class="quick-add-submit" onclick="submitQuickAdd()">Add Task ⚔️</button>
@@ -176,14 +190,20 @@
           </label>
         </div>
         <div class="settings-section">
-          <div class="settings-section-title">Config</div>
-          <div class="settings-info-row"><span>Model Tiers</span><span class="settings-info-value">Sonnet / Haiku / Opus</span></div>
-          <div class="settings-info-row"><span>Days Together</span><span class="settings-info-value" id="settings-days">1</span></div>
+          <div class="settings-section-title">Info</div>
+          <div class="settings-info-row">
+            <span>Model Tiers</span>
+            <span class="settings-info-value">Sonnet / Haiku / Opus</span>
+          </div>
+          <div class="settings-info-row">
+            <span>Days Together</span>
+            <span class="settings-info-value" id="settings-days">1</span>
+          </div>
         </div>
         <div class="settings-section">
           <div class="settings-section-title">Data</div>
-          <button class="settings-danger-btn" onclick="resetAllData()">🗑️ Reset All Data to Defaults</button>
-          <p class="settings-warning">This clears all localStorage data and restores original tasks.</p>
+          <button class="settings-danger-btn" onclick="resetAllData()">🗑️ Reset All Data</button>
+          <p class="settings-warning">This clears tasks, briefs, and streak data.</p>
         </div>
       </div>
     </div>
