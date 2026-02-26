@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#FF7A00" />
-  <meta name="description" content="Perci Command Center — Task management for Carlo and Perci" />
+  <meta name="description" content="Perci Command Center — Sir Percival's Visual Headquarters" />
   <title>⚔️ Perci Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,22 +47,70 @@
   <!-- NAV TABS -->
   <nav class="nav-tabs">
     <button class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">⚔️ Command</button>
-    <button class="nav-tab" data-tab="tasks" onclick="switchTab('tasks')">📋 Tasks</button>
+    <button class="nav-tab" data-tab="reviews" onclick="switchTab('reviews')">📋 Perci Reviews</button>
+    <button class="nav-tab" data-tab="vault" onclick="switchTab('vault')">📁 Vault</button>
+    <button class="nav-tab" data-tab="gallery" onclick="switchTab('gallery')">🖼️ Gallery</button>
+    <button class="nav-tab" data-tab="tasks" onclick="switchTab('tasks')">📌 Tasks</button>
     <button class="nav-tab" data-tab="content" onclick="switchTab('content')">📸 Content</button>
     <button class="nav-tab" data-tab="agents" onclick="switchTab('agents')">🤖 Agents</button>
     <button class="nav-tab" data-tab="branding" onclick="switchTab('branding')">🎨 Branding</button>
   </nav>
 
   <!-- ═══════════════════════════════════════════════════════════════════════
-       DASHBOARD VIEW
+       DASHBOARD VIEW (COMMAND)
        ═══════════════════════════════════════════════════════════════════════ -->
   <div id="view-dashboard" class="view-container">
-    <!-- PERCI STATUS HERO -->
-    <div class="status-hero" id="status-hero">
+    
+    <!-- PERCI HERO HQ -->
+    <div class="perci-hero-hq" id="perci-hero-hq">
       <div class="hero-glow-ring" id="hero-glow-ring"></div>
-      <div class="status-hero-emoji" id="hero-emoji">⚔️</div>
-      <div class="status-hero-text" id="hero-text">Perci is standing by</div>
-      <div class="status-hero-sub" id="hero-sub">Ready for action</div>
+      <div class="hero-flame-container" id="hero-flames"></div>
+      
+      <div class="hero-avatar-section">
+        <div class="hero-avatar" id="hero-avatar">
+          <!-- Knight SVG Icon -->
+          <svg viewBox="0 0 100 100" class="knight-svg">
+            <defs>
+              <linearGradient id="swordGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#C0C0C0"/>
+                <stop offset="50%" style="stop-color:#FFFFFF"/>
+                <stop offset="100%" style="stop-color:#A0A0A0"/>
+              </linearGradient>
+              <linearGradient id="hiltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FF7A00"/>
+                <stop offset="100%" style="stop-color:#FF5500"/>
+              </linearGradient>
+            </defs>
+            <!-- Sword blade -->
+            <path d="M50 5 L55 50 L50 55 L45 50 Z" fill="url(#swordGrad)" stroke="#888" stroke-width="1"/>
+            <!-- Crossguard -->
+            <rect x="35" y="50" width="30" height="6" rx="2" fill="url(#hiltGrad)"/>
+            <!-- Handle -->
+            <rect x="47" y="56" width="6" height="20" rx="1" fill="#4A3728"/>
+            <!-- Pommel -->
+            <circle cx="50" cy="80" r="5" fill="url(#hiltGrad)"/>
+            <!-- Gem in pommel -->
+            <circle cx="50" cy="80" r="2" fill="#3B82F6"/>
+          </svg>
+        </div>
+        <div class="hero-mood-badge" id="hero-mood-badge">⚔️</div>
+      </div>
+      
+      <div class="hero-info">
+        <h1 class="hero-title">SIR PERCIVAL</h1>
+        <div class="hero-status-line">
+          <span class="hero-mood-emoji" id="hero-mood-emoji">⚔️</span>
+          <span class="hero-status-text" id="hero-status-text">Standing by</span>
+        </div>
+        <div class="hero-current-task" id="hero-current-task">Ready for your command</div>
+        <div class="hero-progress-container" id="hero-progress-container" style="display:none">
+          <div class="hero-progress-bar">
+            <div class="hero-progress-fill" id="hero-progress-fill"></div>
+          </div>
+          <span class="hero-progress-text" id="hero-progress-text">0%</span>
+        </div>
+        <div class="hero-sync-time" id="hero-sync-time">Last synced: —</div>
+      </div>
     </div>
 
     <div class="app-layout">
@@ -120,11 +168,74 @@
         </section>
       </main>
 
-      <!-- RIGHT SIDEBAR: Activity Log -->
-      <aside class="activity-sidebar">
-        <div class="sidebar-title">Activity</div>
-        <div id="activity-log"></div>
+      <!-- RIGHT SIDEBAR: Pings (Activity Log) -->
+      <aside class="activity-sidebar pings-sidebar">
+        <div class="pings-header">
+          <div class="sidebar-title">🔔 Pings</div>
+          <div class="pings-indicator" id="pings-indicator"></div>
+        </div>
+        <div id="activity-log" class="pings-feed"></div>
       </aside>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PERCI REVIEWS VIEW — Task Review Panel
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-reviews" class="view-container" style="display:none">
+    <div class="reviews-view">
+      <div class="reviews-header">
+        <h2 class="view-title">⚔️ Perci Reviews</h2>
+        <p class="reviews-subtitle">What should we work on? Here's Perci's guidance on pending tasks.</p>
+      </div>
+      <div class="reviews-grid" id="reviews-grid">
+        <!-- Review cards rendered by JS -->
+      </div>
+      <div class="reviews-empty" id="reviews-empty" style="display:none">
+        <div class="empty-icon">✨</div>
+        <div class="empty-text">All clear! No tasks need attention right now.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       VAULT VIEW — Documents
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-vault" class="view-container" style="display:none">
+    <div class="vault-view">
+      <div class="vault-header">
+        <h2 class="view-title">📁 Documents Vault</h2>
+        <p class="vault-subtitle">Key documents Perci manages and references</p>
+      </div>
+      <div class="vault-filters">
+        <button class="vault-filter active" data-cat="all" onclick="filterVault('all')">All</button>
+        <button class="vault-filter" data-cat="Brand" onclick="filterVault('Brand')">🎨 Brand</button>
+        <button class="vault-filter" data-cat="Memory" onclick="filterVault('Memory')">🧠 Memory</button>
+        <button class="vault-filter" data-cat="Config" onclick="filterVault('Config')">⚙️ Config</button>
+        <button class="vault-filter" data-cat="Content" onclick="filterVault('Content')">📄 Content</button>
+      </div>
+      <div class="vault-grid" id="vault-grid">
+        <!-- Vault cards rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       GALLERY VIEW — Generated Images
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-gallery" class="view-container" style="display:none">
+    <div class="gallery-view">
+      <div class="gallery-header">
+        <h2 class="view-title">🖼️ Generated Images Gallery</h2>
+        <p class="gallery-subtitle">Carousel slides and generated assets</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Gallery items rendered by JS -->
+      </div>
+      <div class="gallery-empty" id="gallery-empty" style="display:none">
+        <div class="empty-icon">🎨</div>
+        <div class="empty-text">No images generated yet</div>
+      </div>
     </div>
   </div>
 
@@ -286,6 +397,22 @@
     </div>
   </div>
 
+  <!-- Vault Doc Modal -->
+  <div class="modal-overlay" id="vault-modal-overlay">
+    <div class="modal vault-modal" id="vault-modal">
+      <button class="modal-close" onclick="closeVaultModal()">✕</button>
+      <div id="vault-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Gallery Image Modal -->
+  <div class="modal-overlay" id="gallery-modal-overlay">
+    <div class="modal gallery-modal" id="gallery-modal">
+      <button class="modal-close" onclick="closeGalleryModal()">✕</button>
+      <div id="gallery-modal-content"></div>
+    </div>
+  </div>
+
   <!-- Keyboard Shortcuts Modal -->
   <div class="modal-overlay" id="shortcuts-overlay">
     <div class="modal shortcuts-modal">
@@ -310,19 +437,15 @@
         </div>
         <div class="shortcut-item">
           <span class="shortcut-keys"><kbd>2</kbd></span>
-          <span class="shortcut-desc">Tasks tab</span>
+          <span class="shortcut-desc">Reviews tab</span>
         </div>
         <div class="shortcut-item">
           <span class="shortcut-keys"><kbd>3</kbd></span>
-          <span class="shortcut-desc">Content tab</span>
+          <span class="shortcut-desc">Vault tab</span>
         </div>
         <div class="shortcut-item">
           <span class="shortcut-keys"><kbd>4</kbd></span>
-          <span class="shortcut-desc">Agents tab</span>
-        </div>
-        <div class="shortcut-item">
-          <span class="shortcut-keys"><kbd>5</kbd></span>
-          <span class="shortcut-desc">Branding tab</span>
+          <span class="shortcut-desc">Gallery tab</span>
         </div>
         <div class="shortcut-item">
           <span class="shortcut-keys"><kbd>D</kbd></span>
@@ -390,7 +513,7 @@
           </div>
           <div class="settings-info-row">
             <span>Version</span>
-            <span class="settings-info-value">v3.0</span>
+            <span class="settings-info-value">v4.0</span>
           </div>
         </div>
         <div class="settings-section">

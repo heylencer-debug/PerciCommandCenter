@@ -1,24 +1,24 @@
-window.DATA_VERSION = '2026-02-27T02:47:00.000Z';
+window.DATA_VERSION = '2026-02-27T03:06:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "V8 carousel generating — 6/7 slides done, slide 2 retrying",
+  "statusText": "Command Center v4 building — Perci HQ, vault, gallery, pings",
   "mood": "onfire",
-  "lastUpdated": "2026-02-27T02:47:00.000Z",
-  "currentTask": "Day 1 carousel v8 generation + Command Center branding section build",
-  "currentStep": "Brigid building Branding section; v8 slide 2 retrying",
+  "lastUpdated": "2026-02-27T03:06:00.000Z",
+  "currentTask": "Command Center v4 — Perci as Visual HQ",
+  "currentStep": "Brigid forging all features",
   "totalSteps": 3,
   "currentStepNum": 2
 };
 
 window.SUBAGENTS = [
   {
-    "id": "brigid-cc",
+    "id": "brigid-v4",
     "agentId": "brigid",
     "name": "Brigid",
-    "task": "Command Center: Tasks/Notes visibility + Branding section for ProjectPerciPH",
+    "task": "Command Center v4 — Perci HQ, Vault, Gallery, Pings, Task Review",
     "project": "perci-system",
-    "taskId": "task-009",
+    "taskId": "task-010",
     "startedAt": new Date().toISOString()
   }
 ];
@@ -50,19 +50,57 @@ window.PROJECTS = [
   }
 ];
 
+window.AGENTS_CONFIG = [
+  {
+    "id": "brigid",
+    "name": "Brigid",
+    "emoji": "🔥",
+    "role": "Forge Master",
+    "description": "Builds and deploys code — Command Center, dashboards, scripts",
+    "color": "#FF7A00",
+    "model": "Claude Opus",
+    "status": "active"
+  },
+  {
+    "id": "vesper",
+    "name": "Vesper",
+    "emoji": "🌌",
+    "role": "Creative Director",
+    "description": "Generates images — carousels, product shots, brand assets",
+    "color": "#9333EA",
+    "model": "Gemini + DALL-E",
+    "status": "idle"
+  }
+];
+
 window.TASKS = [
   {
-    "id": "task-009",
-    "title": "Command Center: Tasks + Branding section",
-    "description": "1. Perci notes/tasks visibility — show what Perci has seen and confirmed. 2. Branding section — show all brand docs per brand, filled with current ProjectPerciPH identity",
+    "id": "task-010",
+    "title": "Command Center v4 — Perci as Visual HQ",
+    "description": "Full redesign: Perci avatar hero, Documents Vault tab, Generated Images Gallery tab, Ping notification feed, Task Review Panel with Carlo action cards",
     "project": "perci-system",
     "status": "in-progress",
     "priority": "high",
     "needsCarlo": false,
     "subagentRunning": true,
-    "notes": "Carlo wants to confirm what Perci has read/updated. Also needs a Branding tab showing brand documents per brand.",
+    "notes": "Brigid building now. Perci's headquarters visualization.",
+    "percisAdvice": "Brigid is building this now — no action needed",
+    "createdAt": "2026-02-27T03:04:00+08:00",
+    "updatedAt": "2026-02-27T03:06:00+08:00"
+  },
+  {
+    "id": "task-009",
+    "title": "Command Center: Tasks + Branding section",
+    "description": "1. Perci notes/tasks visibility — show what Perci has seen and confirmed. 2. Branding section — show all brand docs per brand, filled with current ProjectPerciPH identity",
+    "project": "perci-system",
+    "status": "done",
+    "priority": "high",
+    "needsCarlo": false,
+    "subagentRunning": false,
+    "notes": "Completed by Brigid earlier today.",
+    "percisAdvice": "Done — now part of v4 upgrade",
     "createdAt": "2026-02-27T02:47:00+08:00",
-    "updatedAt": "2026-02-27T02:47:00+08:00"
+    "updatedAt": "2026-02-27T03:00:00+08:00"
   },
   {
     "id": "task-007",
@@ -71,11 +109,13 @@ window.TASKS = [
     "project": "projectperciph",
     "status": "in-progress",
     "priority": "high",
-    "needsCarlo": false,
+    "needsCarlo": true,
     "subagentRunning": false,
-    "notes": "6/7 slides generated (cover + slides 3–7). Slide 2 failed (Gemini returned no image) — retrying now. Will send all 7 to Carlo when complete.",
+    "notes": "7/7 slides generated. 2 test slides sent to Carlo for approval.",
+    "carloAction": "Review the 2 test slides sent to Telegram and approve or request changes",
+    "percisAdvice": "2 test slides sent to Carlo for approval. Awaiting green light.",
     "createdAt": "2026-02-27T02:30:00+08:00",
-    "updatedAt": "2026-02-27T02:47:00+08:00"
+    "updatedAt": "2026-02-27T03:00:00+08:00"
   },
   {
     "id": "task-001",
@@ -88,6 +128,7 @@ window.TASKS = [
     "subagentRunning": false,
     "notes": "Waiting for v8 Carlo approval. Instagram @projectperciph live, 0 posts. Must post manually via phone (Instagram blocks API on new accounts).",
     "carloAction": "Review v8 slides → transfer to phone → post via Instagram app",
+    "percisAdvice": "Carlo needs to approve v8 slides, then post manually from phone. Automation is blocked on new accounts.",
     "createdAt": "2026-02-26T16:00:00+08:00",
     "updatedAt": "2026-02-27T02:47:00+08:00"
   },
@@ -101,6 +142,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Done: emoji hero, agent panels, mood system, task cards, flame particles, mission control. Commit afe9208.",
+    "percisAdvice": "Complete. Superseded by v4.",
     "createdAt": "2026-02-26T22:08:00+08:00",
     "updatedAt": "2026-02-27T02:00:00+08:00"
   },
@@ -114,6 +156,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Done: renderKanban now respects activeQuickFilter. startLiveSync fetches tasks.js + content.js in parallel. Timestamp = real sync time. Commit 0e6793a.",
+    "percisAdvice": "Complete. Superseded by v4.",
     "createdAt": "2026-02-27T01:00:00+08:00",
     "updatedAt": "2026-02-27T02:00:00+08:00"
   },
@@ -128,6 +171,7 @@ window.TASKS = [
     "subagentRunning": false,
     "notes": "Bot detection blocked automated creation. Must be done manually.",
     "carloAction": "Go to facebook.com/pages/create → \"Project Perci PH\" → Gift Shop category",
+    "percisAdvice": "15 min task. Carlo creates manually at facebook.com/pages/create. No automation possible.",
     "createdAt": "2026-02-26T12:00:00+08:00",
     "updatedAt": "2026-02-26T22:00:00+08:00"
   },
@@ -141,6 +185,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Pre-launch phase. Need store setup, product photos, and listing copy before going live.",
+    "percisAdvice": "Hold until Instagram Day 1 is live. Then Perci can draft listings.",
     "createdAt": "2026-02-27T09:00:00+08:00",
     "updatedAt": "2026-02-27T09:00:00+08:00"
   },
@@ -154,6 +199,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Waiting for Day 1 to go live first.",
+    "percisAdvice": "Waiting on Day 1 approval. Perci will generate when Carlo says go.",
     "createdAt": "2026-02-26T22:00:00+08:00",
     "updatedAt": "2026-02-26T22:00:00+08:00"
   },
@@ -168,6 +214,7 @@ window.TASKS = [
     "subagentRunning": false,
     "notes": "Paste-ready PowerShell provided. Waiting for Carlo to run as admin.",
     "carloAction": "Run admin PowerShell commands for BitLocker + SMB + firewall (shared earlier)",
+    "percisAdvice": "Low risk but should be done. Carlo pastes the PowerShell commands shared earlier.",
     "createdAt": "2026-02-26T12:00:00+08:00",
     "updatedAt": "2026-02-26T22:00:00+08:00"
   }
@@ -175,16 +222,28 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T03:06:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid spawned — building Command Center v4: Perci HQ, Vault, Gallery, Pings, Task Review",
+    "type": "info"
+  },
+  {
+    "time": "2026-02-27T03:00:00+08:00",
+    "emoji": "📸",
+    "text": "V8 test slides sent to Carlo for review — awaiting approval",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T02:47:00+08:00",
     "emoji": "🔥",
-    "text": "Brigid spawned — building Tasks visibility + Branding section for Command Center",
-    "type": "info"
+    "text": "Brigid completed — Tasks visibility + Branding section deployed",
+    "type": "success"
   },
   {
     "time": "2026-02-27T02:45:00+08:00",
     "emoji": "⚔️",
-    "text": "Perci confirmed: v8 = 6/7 slides done. Slide 2 failed (Gemini no image) — retrying",
-    "type": "info"
+    "text": "Perci confirmed: v8 = 7/7 slides complete",
+    "type": "success"
   },
   {
     "time": "2026-02-27T02:28:00+08:00",
@@ -243,7 +302,7 @@ window.ACTIVITY_LOG = [
 ];
 
 window.STATS = {
-  "tasksCompletedThisWeek": 11,
+  "tasksCompletedThisWeek": 12,
   "activeSubagents": 1,
   "blockedTasks": 3,
   "daysWorkingTogether": 2
@@ -254,16 +313,100 @@ window.STATS = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 window.PERCI_NOTES = {
-  "lastUpdated": "2026-02-27T02:47:00+08:00",
+  "lastUpdated": "2026-02-27T03:00:00+08:00",
   "confirmedReads": [
     { "file": "PROJECT_PERCI_BRAND_IDENTITY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Brand identity updated: silver chrome, white hook text, powder blue accents. Orange retired." },
     { "file": "MEMORY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Long-term memory loaded. Carlo's preferences, business context, Instagram status all current." },
-    { "file": "memory/2026-02-27.md", "at": "2026-02-27T02:40:00+08:00", "note": "Today's notes loaded. V8 carousel in progress, Brigid v2 complete." },
-    { "file": "data/tasks.js", "at": "2026-02-27T02:47:00+08:00", "note": "Tasks updated: 9 tasks, accurate statuses, v8 in-progress." },
-    { "file": "generate-carousel-v7.js", "at": "2026-02-27T02:45:00+08:00", "note": "V7 script reviewed. V8 created with white hook text + powder blue accent bar + real Filipino people prompt." }
+    { "file": "memory/2026-02-27.md", "at": "2026-02-27T02:40:00+08:00", "note": "Today's notes loaded. V8 carousel complete, Brigid building v4." },
+    { "file": "data/tasks.js", "at": "2026-02-27T03:00:00+08:00", "note": "Tasks updated: 10 tasks, accurate statuses, v4 in-progress." },
+    { "file": "brigid-task.md", "at": "2026-02-27T03:04:00+08:00", "note": "V4 task brief read. Building Perci HQ, Vault, Gallery, Pings, Task Review." }
   ],
-  "percisNotes": "V8 carousel generating: 6/7 slides done (cover + slides 3-7). Slide 2 failed (Gemini returned no image) — retrying separately. Will send all 7 when complete. Brigid now building branding section."
+  "percisNotes": "V8 carousel complete. 2 test slides sent to Carlo for approval. Brigid now building Command Center v4 — Perci's visual HQ with Vault, Gallery, Pings, and Task Review Panel."
 };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// VAULT DOCUMENTS — Key documents Perci manages
+// ═══════════════════════════════════════════════════════════════════════════
+
+window.VAULT_DOCS = [
+  { 
+    id: "brand-identity", 
+    title: "PROJECT_PERCI_BRAND_IDENTITY.md", 
+    category: "Brand", 
+    lastUpdated: "2026-02-27", 
+    icon: "🎨",
+    summary: "Full brand identity: Silver Chrome Dopamine Chic, visual identity, color palette, photography style. The definitive guide for all ProjectPerciPH visuals.",
+    content: "**Style Formula:**\nSilver Chrome + Colored Chrome Wall Panels + Colored Frosted/Clear Glass or Acrylic Dividers + Dopamine Vibrant Decor + Iridescent/Silver Surfaces + White + Blue Accents\n\n**Color Palette:**\n- Hook text: White #FFFFFF\n- Accent bar: Powder Blue #A8D8F0\n- NO orange in overlays\n\n**Photography:**\nReal Filipino people, 20-40yo. Genuine candid emotions. iPhone/mirrorless feel with natural depth of field."
+  },
+  { 
+    id: "branding", 
+    title: "PROJECT_PERCI_BRANDING.md", 
+    category: "Brand", 
+    lastUpdated: "2026-02-27", 
+    icon: "🏷️",
+    summary: "Brand guidelines: environment system, product palette, photography rules, social content strategy.",
+    content: "**Environment:** Silver chrome + colored chrome wall panels. Colored frosted/clear acrylic dividers.\n\n**Products:** Neon Poppy, Electric Grape, Hot Coral, Acid Lime, Soft Lilac, Peach Fizz, Baby Blue\n\n**Packaging:** Iridescent outer, powder blue tissue, holographic sticker"
+  },
+  { 
+    id: "memory", 
+    title: "MEMORY.md", 
+    category: "Memory", 
+    lastUpdated: "2026-02-27", 
+    icon: "🧠",
+    summary: "Long-term memory: Carlo's profile, business context, Instagram status, all projects built. Perci's curated wisdom.",
+    content: "Carlo (he/him) — GMT+8 Manila. Building ProjectPerciPH: personalized embroidery gifts. Instagram @projectperciph live, 0 posts. Day 1 carousel v8 ready for approval."
+  },
+  { 
+    id: "daily-notes", 
+    title: "memory/2026-02-27.md", 
+    category: "Memory", 
+    lastUpdated: "2026-02-27", 
+    icon: "📝",
+    summary: "Today's session notes: carousel v8 complete, Brigid building v4, waiting on Carlo approval.",
+    content: "02:28 — V8 carousel generation started\n02:45 — 7/7 slides complete\n03:00 — Test slides sent to Carlo\n03:04 — Brigid spawned for CC v4"
+  },
+  { 
+    id: "soul", 
+    title: "SOUL.md", 
+    category: "Config", 
+    lastUpdated: "2026-02-26", 
+    icon: "⚔️",
+    summary: "Perci's character: values, personality, operating principles. Be genuinely helpful, have opinions, earn trust.",
+    content: "Be genuinely helpful, not performatively helpful. Have opinions. Be resourceful before asking. Earn trust through competence. Remember you're a guest."
+  },
+  { 
+    id: "user", 
+    title: "USER.md", 
+    category: "Config", 
+    lastUpdated: "2026-02-26", 
+    icon: "👤",
+    summary: "About Carlo: name, timezone GMT+8, business context, preferences.",
+    content: "Name: Carlo\nTimezone: GMT+8 (Asia/Manila)\nNotes: Named me Sir Percival (Perci). First met 2026-02-26."
+  },
+  { 
+    id: "day1-caption", 
+    title: "day-01-caption.txt", 
+    category: "Content", 
+    lastUpdated: "2026-02-27", 
+    icon: "📄",
+    summary: "Day 1 Instagram caption ready for posting.",
+    content: "The first gift I ever made? It was terrible. 😂\n\nBut my lola kept it anyway. She put it on her dresser, right next to her wedding photo.\n\n[Full caption in file...]"
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GALLERY IMAGES — Generated carousel images
+// ═══════════════════════════════════════════════════════════════════════════
+
+window.GALLERY_IMAGES = [
+  { id: "cover", file: "../dashboard/assets/day-01-cover.png", label: "Day 1 Cover", status: "pending", description: "Hook slide: 'The first gift I ever made? It was terrible.'" },
+  { id: "slide-02", file: "../dashboard/assets/day-01-slide-02.png", label: "Slide 2", status: "pending", description: "Story continuation with Filipino tita" },
+  { id: "slide-03", file: "../dashboard/assets/day-01-slide-03.png", label: "Slide 3", status: "pending", description: "Emotional moment — lola's reaction" },
+  { id: "slide-04", file: "../dashboard/assets/day-01-slide-04.png", label: "Slide 4", status: "pending", description: "Product showcase — embroidered tote" },
+  { id: "slide-05", file: "../dashboard/assets/day-01-slide-05.png", label: "Slide 5", status: "pending", description: "Behind the scenes — embroidery process" },
+  { id: "slide-06", file: "../dashboard/assets/day-01-slide-06.png", label: "Slide 6", status: "pending", description: "Customer testimonial moment" },
+  { id: "slide-07", file: "../dashboard/assets/day-01-slide-07.png", label: "Slide 7 (CTA)", status: "pending", description: "Call to action — follow for more" }
+];
 
 // ═══════════════════════════════════════════════════════════════════════════
 // BRANDING DATA — Brand documents per brand

@@ -1,4 +1,4 @@
-// ⚔️ Perci Command Center — app.js (v3: Dopamine Chic)
+// ⚔️ Perci Command Center — app.js (v4: Perci HQ)
 
 const COLUMNS = [
   { id: 'backlog',     label: '🧊 Backlog',     emoji: '🧊' },
@@ -21,7 +21,12 @@ const LS_KEYS = {
   streak: 'perci_streak',
   theme: 'perci_theme',
   sounds: 'perci_sounds',
+  dismissedReviews: 'perci_dismissed_reviews',
 };
+
+// V4: Track dismissed review cards
+let dismissedReviews = new Set();
+let activeVaultFilter = 'all';
 
 let activeProject = null;
 let tasks = [];
@@ -201,12 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
   briefs = loadBriefs();
   streak = loadStreak();
   soundsEnabled = loadSoundsPreference();
+  loadDismissedReviews();
 
   initTheme();
   initBgCanvas();
   initScrollEffect();
   renderStatus();
-  renderStatusHero();
+  renderPerciHeroHQ(); // V4: New hero section
   renderProjects();
   renderStats();
   renderMissionControl();
@@ -214,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSubagents();
   renderPerciNotes();
   renderKanban();
-  renderActivityLog();
+  renderPings(); // V4: Enhanced activity log
   renderStreakBadge();
   checkOnARoll();
   startLiveSync();
@@ -228,9 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Refresh timestamps every 60 seconds
   setInterval(() => {
     renderKanban();
-    renderActivityLog();
+    renderPings();
     renderStatus();
-    renderStatusHero();
+    renderPerciHeroHQ();
   }, 60000);
   
   // Add streak style
@@ -1294,12 +1300,365 @@ function togglePerciNotesCollapse() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// V4: PERCI HERO HQ — Knight's Headquarters
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderPerciHeroHQ() {
+  const s = window.PERCI_STATUS || {};
+  const hero = document.getElementById('perci-hero-hq');
+  if (!hero) return;
+
+  const mood = s.mood || 'focused';
+  hero.className = 'perci-hero-hq mood-' + mood;
+
+  // Update mood badge
+  const moodBadge = document.getElementById('hero-mood-badge');
+  if (moodBadge) moodBadge.textContent = MOOD_ICONS[mood] || '⚔️';
+
+  // Update status text
+  const moodEmoji = document.getElementById('hero-mood-emoji');
+  const statusText = document.getElementById('hero-status-text');
+  if (moodEmoji) moodEmoji.textContent = MOOD_ICONS[mood] || '⚔️';
+  if (statusText) statusText.textContent = s.statusText || 'Standing by';
+
+  // Update current task
+  const currentTask = document.getElementById('hero-current-task');
+  if (currentTask) {
+    currentTask.textContent = s.currentTask ? `Working on: ${s.currentTask}` : 'Ready for your command';
+  }
+
+  // Update progress
+  const progressContainer = document.getElementById('hero-progress-container');
+  const progressFill = document.getElementById('hero-progress-fill');
+  const progressText = document.getElementById('hero-progress-text');
+  
+  if (s.totalSteps && s.currentStepNum) {
+    const pct = Math.round((s.currentStepNum / s.totalSteps) * 100);
+    if (progressContainer) progressContainer.style.display = 'flex';
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressText) progressText.textContent = pct + '%';
+  } else {
+    if (progressContainer) progressContainer.style.display = 'none';
+  }
+
+  // Update sync time
+  const syncTime = document.getElementById('hero-sync-time');
+  if (syncTime) {
+    syncTime.textContent = s.lastUpdated ? `Last synced: ${timeAgo(s.lastUpdated)}` : 'Last synced: —';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V4: PERCI REVIEWS — Task Review Panel
+// ═══════════════════════════════════════════════════════════════════════════
+
+function loadDismissedReviews() {
+  try {
+    const raw = localStorage.getItem(LS_KEYS.dismissedReviews);
+    if (raw) dismissedReviews = new Set(JSON.parse(raw));
+  } catch (e) {}
+}
+
+function saveDismissedReviews() {
+  try {
+    localStorage.setItem(LS_KEYS.dismissedReviews, JSON.stringify([...dismissedReviews]));
+  } catch (e) {}
+}
+
+function dismissReviewCard(taskId) {
+  dismissedReviews.add(taskId);
+  saveDismissedReviews();
+  playSound('pop');
+  renderReviews();
+}
+
+function renderReviews() {
+  const grid = document.getElementById('reviews-grid');
+  const empty = document.getElementById('reviews-empty');
+  if (!grid) return;
+
+  // Get tasks that need review: blocked, todo, in-progress (not done, not dismissed)
+  const reviewTasks = tasks.filter(t => 
+    ['blocked', 'todo', 'in-progress'].includes(t.status) &&
+    !dismissedReviews.has(t.id)
+  ).sort((a, b) => {
+    // Sort: needsCarlo first, then by priority, then by status
+    if (a.needsCarlo && !b.needsCarlo) return -1;
+    if (!a.needsCarlo && b.needsCarlo) return 1;
+    const statusOrder = { blocked: 0, 'in-progress': 1, todo: 2 };
+    if (statusOrder[a.status] !== statusOrder[b.status]) {
+      return statusOrder[a.status] - statusOrder[b.status];
+    }
+    const priorityOrder = { high: 0, medium: 1, low: 2 };
+    return (priorityOrder[a.priority] || 1) - (priorityOrder[b.priority] || 1);
+  });
+
+  if (!reviewTasks.length) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = '';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+
+  grid.innerHTML = reviewTasks.map(t => {
+    const project = (window.PROJECTS || []).find(p => p.id === t.project);
+    
+    // Determine urgency class
+    let urgencyClass = 'urgency-' + t.status;
+    if (t.needsCarlo) urgencyClass = 'urgency-needs-carlo';
+    
+    // Status badge
+    let statusBadge = '';
+    if (t.status === 'blocked') statusBadge = '<span class="review-badge review-badge-blocked">Blocked</span>';
+    else if (t.status === 'in-progress') statusBadge = '<span class="review-badge review-badge-in-progress">In Progress</span>';
+    else if (t.status === 'todo') statusBadge = '<span class="review-badge review-badge-todo">Todo</span>';
+
+    return `
+      <div class="review-card ${urgencyClass}" data-task-id="${t.id}">
+        <div class="review-card-header">
+          <div class="review-card-title">${PRIORITY_ICONS[t.priority] || '⚪'} ${escHtml(t.title)}</div>
+          <div class="review-card-badges">
+            <span class="review-badge review-badge-priority-${t.priority}">${t.priority}</span>
+            ${statusBadge}
+            ${project ? `<span class="review-badge" style="background:${project.color}15;color:${project.color}">${project.emoji} ${escHtml(project.name)}</span>` : ''}
+          </div>
+        </div>
+        
+        ${t.percisAdvice ? `
+          <div class="review-card-advice">
+            <div class="review-advice-label">⚔️ Perci's Recommendation</div>
+            <div class="review-advice-text">${escHtml(t.percisAdvice)}</div>
+          </div>
+        ` : ''}
+        
+        ${t.needsCarlo && t.carloAction ? `
+          <div class="review-carlo-action">
+            <div class="review-carlo-label">🙋 Carlo's Action Needed</div>
+            <div class="review-carlo-text">${escHtml(t.carloAction)}</div>
+          </div>
+        ` : ''}
+        
+        ${t.subagentRunning ? `
+          <div class="review-subagent-badge">🤖 Brigid/Vesper on it</div>
+        ` : ''}
+        
+        <div class="review-card-actions">
+          <button class="review-dismiss-btn" onclick="dismissReviewCard('${t.id}')">✓ Dismiss</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V4: DOCUMENTS VAULT
+// ═══════════════════════════════════════════════════════════════════════════
+
+function filterVault(category) {
+  activeVaultFilter = category;
+  document.querySelectorAll('.vault-filter').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === category);
+  });
+  renderVault();
+}
+
+function renderVault() {
+  const grid = document.getElementById('vault-grid');
+  if (!grid) return;
+
+  const docs = window.VAULT_DOCS || [];
+  const filtered = activeVaultFilter === 'all' 
+    ? docs 
+    : docs.filter(d => d.category === activeVaultFilter);
+
+  const categoryColors = {
+    Brand: '#FF7A00',
+    Memory: '#9333EA',
+    Config: '#3B82F6',
+    Content: '#22C55E'
+  };
+
+  grid.innerHTML = filtered.map(doc => `
+    <div class="vault-card" onclick="openVaultModal('${doc.id}')" style="--card-color: ${categoryColors[doc.category] || '#FF7A00'}">
+      <div class="vault-card-header">
+        <span class="vault-card-icon">${doc.icon || '📄'}</span>
+        <div class="vault-card-info">
+          <div class="vault-card-title">${escHtml(doc.title)}</div>
+          <div class="vault-card-category">${escHtml(doc.category)}</div>
+        </div>
+      </div>
+      <div class="vault-card-summary">${escHtml(doc.summary)}</div>
+      <div class="vault-card-footer">
+        <span class="vault-card-date">Updated: ${doc.lastUpdated}</span>
+        <span class="vault-card-view">View →</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openVaultModal(docId) {
+  const docs = window.VAULT_DOCS || [];
+  const doc = docs.find(d => d.id === docId);
+  if (!doc) return;
+
+  const overlay = document.getElementById('vault-modal-overlay');
+  const content = document.getElementById('vault-modal-content');
+  
+  // Render markdown-like content
+  let contentHtml = escHtml(doc.content || doc.summary);
+  contentHtml = contentHtml.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  contentHtml = contentHtml.replace(/\n/g, '<br>');
+
+  content.innerHTML = `
+    <div class="vault-modal-header">
+      <span class="vault-modal-icon">${doc.icon || '📄'}</span>
+      <div>
+        <div class="vault-modal-title">${escHtml(doc.title)}</div>
+        <div class="vault-modal-category">${escHtml(doc.category)} • Updated: ${doc.lastUpdated}</div>
+      </div>
+    </div>
+    <div class="vault-modal-content">${contentHtml}</div>
+  `;
+  
+  overlay.classList.add('open');
+}
+
+function closeVaultModal() {
+  document.getElementById('vault-modal-overlay').classList.remove('open');
+}
+
+// Close vault modal on overlay click
+document.addEventListener('click', e => {
+  if (e.target.id === 'vault-modal-overlay') closeVaultModal();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V4: GENERATED IMAGES GALLERY
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderGallery() {
+  const grid = document.getElementById('gallery-grid');
+  const empty = document.getElementById('gallery-empty');
+  if (!grid) return;
+
+  const images = window.GALLERY_IMAGES || [];
+
+  if (!images.length) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = '';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+
+  const statusClasses = {
+    approved: 'gallery-status-approved',
+    pending: 'gallery-status-pending',
+    test: 'gallery-status-test'
+  };
+
+  const statusLabels = {
+    approved: '✅ Approved',
+    pending: '🔄 Pending Review',
+    test: '🧪 Test'
+  };
+
+  grid.innerHTML = images.map(img => `
+    <div class="gallery-item" onclick="openGalleryModal('${img.id}')">
+      <div class="gallery-item-image">
+        <img src="${img.file}" alt="${escHtml(img.label)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="gallery-item-placeholder" style="display:none">🖼️</div>
+        <span class="gallery-item-status ${statusClasses[img.status] || 'gallery-status-pending'}">${statusLabels[img.status] || 'Pending'}</span>
+      </div>
+      <div class="gallery-item-info">
+        <div class="gallery-item-label">${escHtml(img.label)}</div>
+        <div class="gallery-item-desc">${escHtml(img.description || '')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openGalleryModal(imgId) {
+  const images = window.GALLERY_IMAGES || [];
+  const img = images.find(i => i.id === imgId);
+  if (!img) return;
+
+  const overlay = document.getElementById('gallery-modal-overlay');
+  const content = document.getElementById('gallery-modal-content');
+
+  const statusLabels = {
+    approved: '✅ Approved',
+    pending: '🔄 Pending Review',
+    test: '🧪 Test'
+  };
+
+  content.innerHTML = `
+    <img class="gallery-modal-image" src="${img.file}" alt="${escHtml(img.label)}" onerror="this.src='';this.alt='Image not found'">
+    <div class="gallery-modal-info">
+      <div class="gallery-modal-title">${escHtml(img.label)} — ${statusLabels[img.status] || 'Pending'}</div>
+      <div class="gallery-modal-desc">${escHtml(img.description || '')}</div>
+    </div>
+  `;
+
+  overlay.classList.add('open');
+}
+
+function closeGalleryModal() {
+  document.getElementById('gallery-modal-overlay').classList.remove('open');
+}
+
+// Close gallery modal on overlay click
+document.addEventListener('click', e => {
+  if (e.target.id === 'gallery-modal-overlay') closeGalleryModal();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V4: PINGS — Enhanced Activity Feed
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderPings() {
+  const log = [...(window.ACTIVITY_LOG || []), ...activityLog]
+    .sort((a, b) => new Date(b.time) - new Date(a.time));
+  const el = document.getElementById('activity-log');
+  const indicator = document.getElementById('pings-indicator');
+  
+  if (!el) return;
+
+  // Check for new entries (within last 10 minutes)
+  const tenMinAgo = Date.now() - 10 * 60 * 1000;
+  const hasNew = log.some(l => new Date(l.time) > tenMinAgo);
+  
+  if (indicator) {
+    indicator.classList.toggle('has-new', hasNew);
+  }
+  
+  el.innerHTML = log.slice(0, 25).map(l => {
+    const isNew = new Date(l.time) > tenMinAgo;
+    return `
+      <div class="ping-item type-${l.type || 'info'} ${isNew ? 'is-new' : ''}">
+        <span class="ping-emoji">${l.emoji}</span>
+        <div class="ping-content">
+          <div class="ping-text">${escHtml(l.text)}</div>
+          <div class="ping-time">${timeAgo(l.time)}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Alias for backward compatibility
+function renderActivityLog() {
+  renderPings();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // RENDER ALL
 // ═══════════════════════════════════════════════════════════════════════════
 
 function renderAll() {
   renderStatus();
-  renderStatusHero();
+  renderPerciHeroHQ();
   renderProjects();
   renderStats();
   renderMissionControl();
@@ -1307,9 +1666,13 @@ function renderAll() {
   renderSubagents();
   renderPerciNotes();
   renderKanban();
-  renderActivityLog();
+  renderPings();
   updateTabBadge();
   checkOnARoll();
+  // Re-render current tab if it's a data-driven view
+  if (currentTab === 'reviews') renderReviews();
+  if (currentTab === 'vault') renderVault();
+  if (currentTab === 'gallery') renderGallery();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1357,19 +1720,24 @@ function switchTab(tab) {
     btn.classList.toggle('active', btn.dataset.tab === tab);
   });
 
-  const views = ['dashboard', 'tasks', 'content', 'agents', 'branding'];
+  // V4: All views including new ones
+  const views = ['dashboard', 'reviews', 'vault', 'gallery', 'tasks', 'content', 'agents', 'branding'];
   views.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.style.display = (v === tab) ? '' : 'none';
   });
 
   const fab = document.getElementById('fab-add');
-  fab.style.display = (tab === 'branding') ? 'none' : '';
+  fab.style.display = (tab === 'branding' || tab === 'vault' || tab === 'gallery') ? 'none' : '';
 
+  // V4: Initialize views on switch
   if (tab === 'branding') initBrandingPage();
   if (tab === 'tasks') renderTasksList();
   if (tab === 'content') renderContentCalendar();
   if (tab === 'agents') renderAgentsView();
+  if (tab === 'reviews') renderReviews();
+  if (tab === 'vault') renderVault();
+  if (tab === 'gallery') renderGallery();
 }
 
 function renderTasksList() {
@@ -1686,6 +2054,8 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
     closeBriefModal();
+    closeVaultModal();
+    closeGalleryModal();
     document.getElementById('quick-add-overlay').classList.remove('open');
     document.getElementById('settings-overlay').classList.remove('open');
   }

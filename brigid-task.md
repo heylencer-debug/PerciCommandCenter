@@ -1,185 +1,127 @@
-# Brigid Task — Command Center: Tasks Visibility + Branding Section
-_Assigned: 2026-02-27 02:47 AM_
+# Brigid Task — Command Center v4: Perci as Visual HQ
+_Assigned: 2026-02-27 03:04 AM_
 
 ## Repo
 `C:\Users\Carl Rebadomia\.openclaw\workspace\PerciCommandCenter\`
 GitHub: `https://github.com/heylencer-debug/PerciCommandCenter`
+Live: `https://heylencer-debug.github.io/PerciCommandCenter`
 
-## Current files
-- `index.html` — main shell
-- `style.css` — styles
-- `app.js` — all JS logic
-- `data/tasks.js` — tasks, Perci status, subagents, activity log
-- `data/content.js` — content calendar data
-
-## TWO THINGS TO BUILD
+## THREE THINGS TO BUILD
 
 ---
 
-### 1. Tasks / Notes — Perci Confirmation Panel
+### 1. Perci Task Review Panel — "What should we do?"
 
-Carlo wants to see: **what has Perci seen, read, and confirmed?**
+Carlo wants Perci to review pending/blocked tasks and surface them with clear "What to do" guidance.
 
-Add a "Perci's Notes" panel or section to the dashboard. This should show:
-- A list of **confirmed reads** — what Perci has recently read/confirmed (e.g. "Read PROJECT_PERCI_BRAND_IDENTITY.md", "Read MEMORY.md", "Reviewed tasks.js")
-- A **"Last sync" timestamp** — when Perci last updated the data
-- Any **notes Perci left** about specific tasks (pull from task `notes` field)
+In the dashboard, add a **"⚔️ Perci Reviews"** section (prominent, near the top or as a floating card).
 
-In `data/tasks.js`, add a new `window.PERCI_NOTES` object like:
+This section should:
+- Pull all tasks with `status: "blocked"` or `status: "todo"` or `status: "in-progress"` from `window.TASKS`
+- For each task, show a **Perci recommendation card** with:
+  - Task title + priority badge
+  - Status badge
+  - Perci's recommendation (from `task.percisAdvice` field — add this to each task in tasks.js)
+  - If `task.needsCarlo === true`: show a bright **"🙋 Carlo's Action Needed"** badge + the `task.carloAction` field
+  - If `task.subagentRunning === true`: show **"🤖 Brigid/Vesper on it"** badge
+  - A "Dismiss" button to hide that card for the session
 
-```js
-window.PERCI_NOTES = {
-  "lastUpdated": "2026-02-27T02:47:00+08:00",
-  "confirmedReads": [
-    { "file": "PROJECT_PERCI_BRAND_IDENTITY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Brand identity updated: silver chrome, white hook text, powder blue accents. Orange retired." },
-    { "file": "MEMORY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Long-term memory loaded. Carlo's preferences, business context, Instagram status all current." },
-    { "file": "memory/2026-02-27.md", "at": "2026-02-27T02:40:00+08:00", "note": "Today's notes loaded. V8 carousel in progress, Brigid v2 complete." },
-    { "file": "data/tasks.js", "at": "2026-02-27T02:47:00+08:00", "note": "Tasks updated: 9 tasks, accurate statuses, v8 in-progress." },
-    { "file": "generate-carousel-v7.js", "at": "2026-02-27T02:45:00+08:00", "note": "V7 script reviewed. V8 created with white hook text + powder blue accent bar + real Filipino people prompt." }
-  ],
-  "percisNotes": "V8 carousel generating: 6/7 slides done (cover + slides 3-7). Slide 2 failed (Gemini returned no image) — retrying separately. Will send all 7 when complete. Brigid now building branding section."
-};
-```
+Add `percisAdvice` to each relevant task in `data/tasks.js`:
+- task-009 (CC branding): "Brigid is building this now — no action needed"
+- task-007 (carousel v8): "2 test slides sent to Carlo for approval. Awaiting green light."
+- task-001 (Instagram post): "Carlo needs to approve v8 slides, then post manually from phone. Automation is blocked on new accounts."
+- task-006 (FB page): "15 min task. Carlo creates manually at facebook.com/pages/create. No automation possible."
+- task-008 (Shopee): "Hold until Instagram Day 1 is live. Then Perci can draft listings."
+- task-005 (Security): "Low risk but should be done. Carlo pastes the PowerShell commands shared earlier."
+- task-004 (Day 2 post): "Waiting on Day 1 approval. Perci will generate when Carlo says go."
 
-In `app.js` and `index.html`: render this as a **"⚔️ Perci's Notes"** card/panel. Show:
-- `percisNotes` text at the top (brief summary of what Perci is doing)
-- A list of confirmed reads with file name, time, and note (collapsible or scrollable)
-- Last updated timestamp
-
-Style: dark panel, monospace font for file names, clean and readable.
+Style: Clean cards, color-coded by urgency. Blocked = red border. Needs Carlo = amber. In-progress = blue. Green checkmark when dismissed.
 
 ---
 
-### 2. Branding Section — Brand Documents per Brand
+### 2. Perci as Visual HQ — The Full Command Center Redesign
 
-Carlo handles multiple brands. He needs a **Branding tab** in the Command Center that shows:
-- A list of **brands** (for now just ProjectPerciPH)
-- When a brand is selected: show its **brand documents** with real content
+Carlo wants the Command Center to feel like **Sir Percival's headquarters** — a visual, living, breathing representation of what Perci is doing, tracking, and managing.
 
-#### Data: Add `window.BRANDING_DATA` to `data/tasks.js`:
+#### Hero Section — Perci Avatar + Status
+At the top: a large **Perci hero block** (full width). Include:
+- A pixel-art or icon avatar of a knight/sword (⚔️ styled, or an SVG inline knight icon — creative, not generic)
+- Big display: **"SIR PERCIVAL"** title
+- Current mood emoji + status text (from `window.PERCI_STATUS.statusText`)
+- Current task + step progress bar
+- Animated flame/sparkle when mood = "onfire" (CSS animation)
+- "Last synced" timestamp
 
+#### Documents Vault
+A **"📁 Vault"** tab/section that shows all key documents Perci manages. Display as cards with:
+- File name
+- Category (Brand, Memory, Config, Content)
+- Last updated timestamp (if available)
+- A "View" button that opens a modal showing the file content
+
+Populate with these documents (hardcode content or reference from `window.PERCI_NOTES.confirmedReads`):
 ```js
-window.BRANDING_DATA = [
-  {
-    "id": "projectperciph",
-    "name": "Project Perci PH",
-    "emoji": "🛍️",
-    "color": "#FF7A00",
-    "tagline": "Personalized gifts, engineered with love.",
-    "category": "Personalized embroidery gifts — tote bags, towels, caps, polo shirts",
-    "market": "Philippines, starting Cebu City",
-    "docs": [
-      {
-        "id": "visual-identity",
-        "title": "🎨 Visual Identity",
-        "content": `**Style Formula:**
-Silver Chrome + Colored Chrome Wall Panels + Colored Frosted/Clear Glass or Acrylic Dividers (smooth, pleated, matte, glossy) + Dopamine Vibrant Decor + Iridescent/Silver Surfaces + White + Blue Accents
-
-**NOT:** Pure white minimalism. NOT dark warehouse. NOT orange-dominant text. NOT warm/golden.
-
-**Vibe:** Walking into a luxury dopamine-charged gift boutique from the future.`
-      },
-      {
-        "id": "color-palette",
-        "title": "🌈 Color Palette",
-        "content": `**Text Overlays (Social):**
-- Hook text: White #FFFFFF (90px+, bold)
-- Subtext: White #FFFFFF (42px)
-- Accent bar: Powder Blue #A8D8F0
-- Border: Iridescent rainbow gradient
-- NO orange in overlays
-
-**UI / Dashboard:**
-- Coral Red: #E94560 (dashboard only)
-- Navy: #1A1A2E
-
-**Products:**
-- Neon Poppy (bright red-orange)
-- Electric Grape (vivid purple)
-- Hot Coral
-- Acid Lime
-- Soft Lilac
-- Peach Fizz
-- Baby Blue
-
-**Packaging:**
-- Outer: Iridescent or silver metallic mailer
-- Inner: Powder blue tissue paper + baby pink ribbon
-- Seal: Holographic Project Perci sticker`
-      },
-      {
-        "id": "photography",
-        "title": "📸 Photography Style",
-        "content": `**Environment:** Silver chrome + colored chrome wall panels. Colored frosted/clear acrylic dividers. Dopamine vibrant decor. Iridescent surfaces.
-
-**People:** Real Filipino people, 20-40yo. Genuine candid emotions — mid-laugh, actual tears, real surprise. NOT AI faces, NOT stock poses, NOT perfect symmetry. iPhone/mirrorless feel with natural depth of field.
-
-**Products:** Neon/bold embroidered items as dopamine hero. Always show: tote bags, towels, caps, polo shirts — never generic gift boxes.
-
-**Lighting:** Cool balanced (5500-6500K). NOT warm, NOT golden. Chrome reflections add sparkle.
-
-**Logo:** "PROJECT PERCI PH" — white, bold, bottom-right corner, every image.`
-      },
-      {
-        "id": "embroidery-style",
-        "title": "🧵 Embroidery Style",
-        "content": `**NOT:** Plain name/text only (e.g. just "SOFIA" in orange)
-
-**YES — Creative Embroidery Art:**
-- Pet portraits (golden retriever, tabby cat, etc.)
-- Vectorized face portraits
-- Couple silhouettes
-- Family portraits
-- Baby portraits
-
-**Brand differentiator:** "We turn your people and pets into wearable art"
-
-**Thread quality:** Individual stitch textures visible. Museum-quality detail. Layered fur, realistic eyes, delicate features.`
-      },
-      {
-        "id": "social-strategy",
-        "title": "📱 Social Strategy",
-        "content": `**Platform:** Instagram @projectperciph (0 posts, launching soon)
-**Facebook:** Page creation pending (Carlo must create manually)
-
-**Content Plan:**
-- Days 1-29: Educational only (no promotions)
-- Day 30: First promotional post
-- 5 pillars: Art of Gifting, Craft & Process, Filipino Gift Culture, Gift Inspo, Behind the Brand
-
-**Audience:** Gift-givers — NOT embroidery/craft enthusiasts
-
-**Carousel spec:** 1080×1080px, 7 slides, cool-toned
-**Approval:** Carlo approves EVERY post before it goes live`
-      },
-      {
-        "id": "reference-brand",
-        "title": "🔗 Reference Brand",
-        "content": `**Beyond The Vines (BTV)** — beyondthevines.com
-Study: product photography, contrast pairings, label design, editorial clean aesthetic`
-      }
-    ]
-  }
+window.VAULT_DOCS = [
+  { id: "brand-identity", title: "PROJECT_PERCI_BRAND_IDENTITY.md", category: "Brand", lastUpdated: "2026-02-27", summary: "Full brand identity: Silver Chrome Dopamine Chic, visual identity, color palette, photography style." },
+  { id: "branding", title: "PROJECT_PERCI_BRANDING.md", category: "Brand", lastUpdated: "2026-02-27", summary: "Brand guidelines: environment system, product palette, photography rules, social content strategy." },
+  { id: "memory", title: "MEMORY.md", category: "Memory", lastUpdated: "2026-02-27", summary: "Long-term memory: Carlo's profile, business context, Instagram status, all projects built." },
+  { id: "daily-notes", title: "memory/2026-02-27.md", category: "Memory", lastUpdated: "2026-02-27", summary: "Today's session notes: carousel v8 in progress, Brigid v2 done, cron monitoring." },
+  { id: "soul", title: "SOUL.md", category: "Config", lastUpdated: "2026-02-26", summary: "Perci's character: values, personality, operating principles." },
+  { id: "user", title: "USER.md", category: "Config", lastUpdated: "2026-02-26", summary: "About Carlo: name, timezone GMT+8, business context, preferences." },
+  { id: "day1-caption", title: "day-01-caption.txt", category: "Content", lastUpdated: "2026-02-27", summary: "Day 1 Instagram caption ready for posting." }
 ];
 ```
 
-#### UI: Add a **"Branding" tab** to the top navigation (alongside existing tabs like Kanban, Activity, etc.)
+#### Generated Images Gallery
+A **"🖼️ Gallery"** tab showing all generated carousel images. Display as a responsive grid (3 columns):
+- Show thumbnails of `day-01-cover.png`, `day-01-slide-02.png` … `day-01-slide-07.png`
+- Source: images live at `../dashboard/assets/day-01-*.png` (relative path from Command Center)
+- Each thumbnail: click to open full-size in a modal
+- Caption: slide name + file size (if available)
+- Status badge: "✅ Approved" / "🔄 Pending Review" / "🧪 Test"
+- Add `window.GALLERY_IMAGES` to tasks.js:
+```js
+window.GALLERY_IMAGES = [
+  { id: "cover", file: "../dashboard/assets/day-01-cover.png", label: "Day 1 Cover", status: "pending" },
+  { id: "slide-02", file: "../dashboard/assets/day-01-slide-02.png", label: "Slide 2", status: "pending" },
+  { id: "slide-03", file: "../dashboard/assets/day-01-slide-03.png", label: "Slide 3", status: "pending" },
+  { id: "slide-04", file: "../dashboard/assets/day-01-slide-04.png", label: "Slide 4", status: "pending" },
+  { id: "slide-05", file: "../dashboard/assets/day-01-slide-05.png", label: "Slide 5", status: "pending" },
+  { id: "slide-06", file: "../dashboard/assets/day-01-slide-06.png", label: "Slide 6", status: "pending" },
+  { id: "slide-07", file: "../dashboard/assets/day-01-slide-07.png", label: "Slide 7", status: "pending" }
+];
+```
 
-When the Branding tab is active:
-- Show brand cards on the left (just ProjectPerciPH for now)
-- When a brand card is clicked: show its docs on the right as expandable sections/cards
-- Each doc card shows title + content (markdown-rendered or just pre-formatted)
-- Style: clean, dark background, colored left border matching brand color
-- Use the existing design system (dark cards, white text, same fonts/colors as the rest of the dashboard)
+#### Ping Notification Feed — "What Perci Did"
+A **"🔔 Pings"** section (sidebar or bottom panel) — a live feed of actions Perci has taken, pulled from `window.ACTIVITY_LOG`. Show as a vertical timeline:
+- Timestamp (relative: "2 min ago", "1 hour ago")
+- Action emoji + text
+- Color-coded by type: success=green, blocked=red, info=blue
+- Auto-scrolls to the latest entry
+- Pulsing dot indicator when there are new entries (within last 10 min)
+
+This replaces or enhances the existing Activity Log section.
 
 ---
 
-## After building:
-1. Push to GitHub: `git add -A && git commit -m "feat: Perci notes panel + Branding section" && git push`
-2. Run: `node -e "require('child_process').execSync('openclaw system event --mode now --text \"✅ Brigid done: Perci Notes + Branding section built and pushed\"', {stdio:'inherit'})"`
+### 3. Navigation Update
+Add these new tabs to the top nav (alongside existing Kanban, Branding, etc.):
+- **⚔️ Perci Reviews** — task review panel
+- **📁 Vault** — documents vault
+- **🖼️ Gallery** — generated images
+- **🔔 Pings** — notification feed (or integrate into existing Activity)
 
-## Notes
+Keep all existing tabs working. Don't break Kanban, Branding, Perci Notes, etc.
+
+---
+
+## Design Rules
 - Pure HTML/CSS/Vanilla JS only. No frameworks.
-- All new data goes in `data/tasks.js` (window globals).
-- Keep existing functionality intact — don't break Kanban, Activity, etc.
-- The dashboard is file:// compatible (no fetch calls).
+- All new data in `data/tasks.js` as window globals.
+- Dark theme consistent with existing (bg #0D0D1A, cards #1A1A2E, accent #E94560).
+- file:// compatible — no fetch() calls.
+- Mobile-responsive is a bonus but desktop-first.
+
+## After building:
+1. `git add -A && git commit -m "feat: Command Center v4 — Perci HQ, vault, gallery, pings, task review" && git push`
+2. `node -e "require('child_process').execSync('openclaw system event --mode now --text \"✅ Brigid done: Command Center v4 live\"', {stdio:'inherit'})"`
