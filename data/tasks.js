@@ -1,4 +1,6 @@
-window.DATA_VERSION = '2026-02-27T04:54:00.000Z';
+window.DATA_VERSION = '2026-02-27T06:50:00.000Z';
+
+window.PERCI_AVATAR = "assets/perci-icons/perci-icon-01-classic.png";
 
 window.PERCI_STATUS = {
   "status": "active",

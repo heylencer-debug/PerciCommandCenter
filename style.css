@@ -2784,6 +2784,32 @@ body.compact .task-action-btn { padding: 3px 8px; font-size: 9px; }
   transition: transform 0.3s var(--ease-bounce);
 }
 
+.perci-avatar-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: drop-shadow(0 8px 24px rgba(255,122,0,0.4));
+  transition: transform 0.3s var(--ease-bounce);
+  border: 4px solid var(--orange);
+  background: white;
+}
+
+.hero-avatar:hover .perci-avatar-img {
+  transform: scale(1.1);
+}
+
+.perci-hero-hq.mood-onfire .perci-avatar-img {
+  filter: drop-shadow(0 8px 40px rgba(255,122,0,0.6));
+  animation: avatar-pulse 0.5s ease-in-out infinite alternate;
+  border-color: #FF5500;
+}
+
+@keyframes avatar-pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
 .hero-avatar:hover .knight-svg {
   transform: scale(1.1) rotate(-5deg);
 }
