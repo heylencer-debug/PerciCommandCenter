@@ -2453,7 +2453,7 @@ function openDay2BriefModal() {
     <div class="brief-modal-section">
       <div class="brief-prompt-card" onclick="copyPrompt(this, 'day2-start')">
         <div class="prompt-label">🚀 Start Day 2 Generation</div>
-        <div class="prompt-text" id="day2-start">Generate Day 2 carousel for ProjectPerciPH. Theme: "Why Embroidery Lasts" — focus on durability, craftsmanship, and emotional longevity. Use same style as v11: white hook text, powder blue accents, real Filipino people, iPhone feel.</div>
+        <div class="prompt-text" id="day2-start">Generate Day 2 carousel for Project Percy PH. Theme: "Why Embroidery Lasts" — focus on durability, craftsmanship, and emotional longevity. Use same style as v11: white hook text, powder blue accents, real Filipino people, iPhone feel.</div>
         <div class="prompt-copy-hint">Tap to copy</div>
       </div>
       <div class="brief-prompt-card" onclick="copyPrompt(this, 'day2-hook')">

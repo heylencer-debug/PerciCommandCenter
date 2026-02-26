@@ -18,7 +18,7 @@ window.SUBAGENTS = [
     "id": "brigid-qa",
     "agentId": "brigid",
     "name": "Brigid",
-    "task": "QA Review — Verifying ProjectPerciPH Dashboard + Command Center",
+    "task": "QA Review — Verifying Project Percy PH Dashboard + Command Center",
     "project": "perci-system",
     "taskId": "task-012",
     "startedAt": new Date().toISOString()
@@ -28,7 +28,7 @@ window.SUBAGENTS = [
 window.PROJECTS = [
   {
     "id": "projectperciph",
-    "name": "ProjectPerciPH",
+    "name": "Project Percy PH",
     "emoji": "🛍️",
     "color": "#FF7A00"
   },
@@ -78,14 +78,14 @@ window.AGENTS_CONFIG = [
 window.TASKS = [
   {
     "id": "task-011",
-    "title": "ProjectPerciPH Dashboard v2 — Competitive Intelligence Upgrade",
+    "title": "Project Percy PH Dashboard v2 — Competitive Intelligence Upgrade",
     "description": "Improve all features of the embroidery intelligence dashboard: Competitor Deep-Dive page, Pricing Calculator, Calendar upgrade, Seasonal Alerts, Catalog upgrade, Quick Stats bar",
     "project": "projectperciph",
     "status": "done",
     "priority": "high",
     "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "All 6 major improvements deployed: Competitor Deep-Dive, Pricing Calculator, Seasonal Alerts, Calendar upgrade, Catalog upgrade, Quick Stats bar. Live at heylencer-debug.github.io/ProjectPerciPH",
+    "notes": "All 6 major improvements deployed: Competitor Deep-Dive, Pricing Calculator, Seasonal Alerts, Calendar upgrade, Catalog upgrade, Quick Stats bar. Live at heylencer-debug.github.io/ProjectPerciPH (URL unchanged)",
     "percisAdvice": "Dashboard v2 complete ✅ — all features live and working",
     "createdAt": "2026-02-27T04:20:00+08:00",
     "updatedAt": "2026-02-27T04:54:00+08:00"
@@ -107,7 +107,7 @@ window.TASKS = [
   {
     "id": "task-009",
     "title": "Command Center: Tasks + Branding section",
-    "description": "1. Perci notes/tasks visibility — show what Perci has seen and confirmed. 2. Branding section — show all brand docs per brand, filled with current ProjectPerciPH identity",
+    "description": "1. Perci notes/tasks visibility — show what Perci has seen and confirmed. 2. Branding section — show all brand docs per brand, filled with current Project Percy PH identity",
     "project": "perci-system",
     "status": "done",
     "priority": "high",
@@ -179,14 +179,14 @@ window.TASKS = [
   {
     "id": "task-006",
     "title": "Create Facebook Business Page",
-    "description": "\"Project Perci PH\" Facebook page",
+    "description": "\"Project Percy PH\" Facebook page",
     "project": "instagram",
     "status": "blocked",
     "priority": "low",
     "needsCarlo": true,
     "subagentRunning": false,
     "notes": "Bot detection blocked automated creation. Must be done manually.",
-    "carloAction": "Go to facebook.com/pages/create → \"Project Perci PH\" → Gift Shop category",
+    "carloAction": "Go to facebook.com/pages/create → \"Project Percy PH\" → Gift Shop category",
     "percisAdvice": "15 min task. Carlo creates manually at facebook.com/pages/create. No automation possible.",
     "createdAt": "2026-02-26T12:00:00+08:00",
     "updatedAt": "2026-02-26T22:00:00+08:00"
@@ -194,7 +194,7 @@ window.TASKS = [
   {
     "id": "task-008",
     "title": "Set up Shopee store",
-    "description": "Create ProjectPerciPH Shopee store for embroidery products",
+    "description": "Create Project Percy PH Shopee store for embroidery products",
     "project": "projectperciph",
     "status": "todo",
     "priority": "medium",
@@ -336,7 +336,7 @@ window.ACTIVITY_LOG = [
   {
     "time": "2026-02-26T12:00:00+08:00",
     "emoji": "🌐",
-    "text": "ProjectPerciPH dashboard + Command Center live on GitHub Pages",
+    "text": "Project Percy PH dashboard + Command Center live on GitHub Pages",
     "type": "success"
   }
 ];
@@ -375,7 +375,7 @@ window.VAULT_DOCS = [
     category: "Brand", 
     lastUpdated: "2026-02-27", 
     icon: "🎨",
-    summary: "Full brand identity: Silver Chrome Dopamine Chic, visual identity, color palette, photography style. The definitive guide for all ProjectPerciPH visuals.",
+    summary: "Full brand identity: Silver Chrome Dopamine Chic, visual identity, color palette, photography style. The definitive guide for all Project Percy PH visuals.",
     content: "**Style Formula:**\nSilver Chrome + Colored Chrome Wall Panels + Colored Frosted/Clear Glass or Acrylic Dividers + Dopamine Vibrant Decor + Iridescent/Silver Surfaces + White + Blue Accents\n\n**Color Palette:**\n- Hook text: White #FFFFFF\n- Accent bar: Powder Blue #A8D8F0\n- NO orange in overlays\n\n**Photography:**\nReal Filipino people, 20-40yo. Genuine candid emotions. iPhone/mirrorless feel with natural depth of field."
   },
   { 
@@ -394,7 +394,7 @@ window.VAULT_DOCS = [
     lastUpdated: "2026-02-27", 
     icon: "🧠",
     summary: "Long-term memory: Carlo's profile, business context, Instagram status, all projects built. Perci's curated wisdom.",
-    content: "Carlo (he/him) — GMT+8 Manila. Building ProjectPerciPH: personalized embroidery gifts. Instagram @projectperciph live, 0 posts. Day 1 carousel v11 ready for approval."
+    content: "Carlo (he/him) — GMT+8 Manila. Building Project Percy PH: personalized embroidery gifts. Instagram @projectperciph live, 0 posts. Day 1 carousel v11 ready for approval."
   },
   { 
     id: "daily-notes", 
@@ -494,7 +494,7 @@ window.MILESTONES = [
 window.BRANDING_DATA = [
   {
     "id": "projectperciph",
-    "name": "Project Perci PH",
+    "name": "Project Percy PH",
     "emoji": "🛍️",
     "color": "#FF7A00",
     "tagline": "Personalized gifts, engineered with love.",
@@ -509,12 +509,12 @@ window.BRANDING_DATA = [
       {
         "id": "color-palette",
         "title": "🌈 Color Palette",
-        "content": "**Text Overlays (Social):**\n- Hook text: White #FFFFFF (90px+, bold)\n- Subtext: White #FFFFFF (42px)\n- Accent bar: Powder Blue #A8D8F0\n- Border: Iridescent rainbow gradient\n- NO orange in overlays\n\n**UI / Dashboard:**\n- Coral Red: #E94560 (dashboard only)\n- Navy: #1A1A2E\n\n**Products:**\n- Neon Poppy (bright red-orange)\n- Electric Grape (vivid purple)\n- Hot Coral\n- Acid Lime\n- Soft Lilac\n- Peach Fizz\n- Baby Blue\n\n**Packaging:**\n- Outer: Iridescent or silver metallic mailer\n- Inner: Powder blue tissue paper + baby pink ribbon\n- Seal: Holographic Project Perci sticker"
+        "content": "**Text Overlays (Social):**\n- Hook text: White #FFFFFF (90px+, bold)\n- Subtext: White #FFFFFF (42px)\n- Accent bar: Powder Blue #A8D8F0\n- Border: Iridescent rainbow gradient\n- NO orange in overlays\n\n**UI / Dashboard:**\n- Coral Red: #E94560 (dashboard only)\n- Navy: #1A1A2E\n\n**Products:**\n- Neon Poppy (bright red-orange)\n- Electric Grape (vivid purple)\n- Hot Coral\n- Acid Lime\n- Soft Lilac\n- Peach Fizz\n- Baby Blue\n\n**Packaging:**\n- Outer: Iridescent or silver metallic mailer\n- Inner: Powder blue tissue paper + baby pink ribbon\n- Seal: Holographic Project Percy sticker"
       },
       {
         "id": "photography",
         "title": "📸 Photography Style",
-        "content": "**Environment:** Silver chrome + colored chrome wall panels. Colored frosted/clear acrylic dividers. Dopamine vibrant decor. Iridescent surfaces.\n\n**People:** Real Filipino people, 20-40yo. Genuine candid emotions — mid-laugh, actual tears, real surprise. NOT AI faces, NOT stock poses, NOT perfect symmetry. iPhone/mirrorless feel with natural depth of field.\n\n**Products:** Neon/bold embroidered items as dopamine hero. Always show: tote bags, towels, caps, polo shirts — never generic gift boxes.\n\n**Lighting:** Cool balanced (5500-6500K). NOT warm, NOT golden. Chrome reflections add sparkle.\n\n**Logo:** \"PROJECT PERCI PH\" — white, bold, bottom-right corner, every image."
+        "content": "**Environment:** Silver chrome + colored chrome wall panels. Colored frosted/clear acrylic dividers. Dopamine vibrant decor. Iridescent surfaces.\n\n**People:** Real Filipino people, 20-40yo. Genuine candid emotions — mid-laugh, actual tears, real surprise. NOT AI faces, NOT stock poses, NOT perfect symmetry. iPhone/mirrorless feel with natural depth of field.\n\n**Products:** Neon/bold embroidered items as dopamine hero. Always show: tote bags, towels, caps, polo shirts — never generic gift boxes.\n\n**Lighting:** Cool balanced (5500-6500K). NOT warm, NOT golden. Chrome reflections add sparkle.\n\n**Logo:** \"PROJECT PERCY PH\" — white, bold, bottom-right corner, every image."
       },
       {
         "id": "embroidery-style",
