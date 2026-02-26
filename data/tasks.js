@@ -437,13 +437,13 @@ window.VAULT_DOCS = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 window.GALLERY_IMAGES = [
-  { id: "cover", file: "../dashboard/assets/day-01-cover.png", label: "Day 1 Cover", status: "approved", description: "Hook slide: 'The first gift I ever made? It was terrible.'" },
-  { id: "slide-02", file: "../dashboard/assets/day-01-slide-02.png", label: "Slide 2", status: "approved", description: "Story continuation with Filipino tita" },
-  { id: "slide-03", file: "../dashboard/assets/day-01-slide-03.png", label: "Slide 3", status: "approved", description: "Emotional moment — lola's reaction" },
-  { id: "slide-04", file: "../dashboard/assets/day-01-slide-04.png", label: "Slide 4", status: "approved", description: "Product showcase — embroidered tote" },
-  { id: "slide-05", file: "../dashboard/assets/day-01-slide-05.png", label: "Slide 5", status: "approved", description: "Behind the scenes — embroidery process" },
-  { id: "slide-06", file: "../dashboard/assets/day-01-slide-06.png", label: "Slide 6", status: "approved", description: "Customer testimonial moment" },
-  { id: "slide-07", file: "../dashboard/assets/day-01-slide-07.png", label: "Slide 7 (CTA)", status: "approved", description: "Call to action — follow for more" }
+  { id: "cover", file: "assets/slides/day-01-cover.png", label: "Day 1 Cover", status: "approved", description: "Hook: Why personalized gifts stay with you forever" },
+  { id: "slide-02", file: "assets/slides/day-01-slide-02.png", label: "Slide 2", status: "approved", description: "Café terrace, couple with purple tote" },
+  { id: "slide-03", file: "assets/slides/day-01-slide-03.png", label: "Slide 3", status: "approved", description: "Teen bedroom, lime backpack with pet" },
+  { id: "slide-04", file: "assets/slides/day-01-slide-04.png", label: "Slide 4", status: "approved", description: "Office birthday, coral polo with face portrait" },
+  { id: "slide-05", file: "assets/slides/day-01-slide-05.png", label: "Slide 5", status: "approved", description: "Restaurant dinner, blue cap with family crest" },
+  { id: "slide-06", file: "assets/slides/day-01-slide-06.png", label: "Slide 6", status: "approved", description: "Living room friends, red-orange tote with golden retriever" },
+  { id: "slide-07", file: "assets/slides/day-01-slide-07.png", label: "Slide 7 (CTA)", status: "approved", description: "Chrome flatlay — all 4 products" }
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

@@ -3993,6 +3993,67 @@ body.compact .task-action-btn { padding: 3px 8px; font-size: 9px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   GALLERY CAPTION SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.gallery-caption-section {
+  margin-top: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.caption-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.caption-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.caption-copy-btn {
+  padding: 8px 16px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.caption-copy-btn:hover {
+  background: var(--orange-hover);
+  transform: translateY(-1px);
+}
+
+.caption-preview {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.caption-preview pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    V5: RESPONSIVE FIXES
    ═══════════════════════════════════════════════════════════════════════════ */
 

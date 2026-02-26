@@ -1541,17 +1541,22 @@ document.addEventListener('click', e => {
 function renderGallery() {
   const grid = document.getElementById('gallery-grid');
   const empty = document.getElementById('gallery-empty');
+  const captionSection = document.getElementById('gallery-caption-section');
+  const captionPreview = document.getElementById('gallery-caption-preview');
   if (!grid) return;
 
   const images = window.GALLERY_IMAGES || [];
+  const caption = window.DAY1_CAPTION || '';
 
   if (!images.length) {
     grid.innerHTML = '';
     if (empty) empty.style.display = '';
+    if (captionSection) captionSection.style.display = 'none';
     return;
   }
 
   if (empty) empty.style.display = 'none';
+  if (captionSection) captionSection.style.display = '';
 
   const statusClasses = {
     approved: 'gallery-status-approved',
@@ -1578,6 +1583,29 @@ function renderGallery() {
       </div>
     </div>
   `).join('');
+
+  // Render caption preview
+  if (captionPreview && caption) {
+    captionPreview.innerHTML = `<pre>${escHtml(caption)}</pre>`;
+  }
+}
+
+function copyGalleryCaption() {
+  const caption = window.DAY1_CAPTION || '';
+  if (!caption) return;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(caption).then(() => {
+      const btn = document.querySelector('.caption-copy-btn');
+      if (btn) {
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy'; }, 1500);
+      }
+      playSound('pop');
+    }).catch(() => fallbackCopy(caption));
+  } else {
+    fallbackCopy(caption);
+  }
 }
 
 function openGalleryModal(imgId) {
