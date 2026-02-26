@@ -1,24 +1,24 @@
-window.DATA_VERSION = '2026-02-27T04:09:00.000Z';
+window.DATA_VERSION = '2026-02-27T04:54:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "Command Center v5 — Quick Actions, Milestone Tracker, Data Refresh",
-  "mood": "onfire",
-  "lastUpdated": "2026-02-27T04:09:00.000Z",
-  "currentTask": "Command Center v5 — UX Improvements",
-  "currentStep": "Brigid polishing v5 features",
+  "statusText": "QA Review — Brigid verifying both dashboards",
+  "mood": "focused",
+  "lastUpdated": "2026-02-27T04:54:00.000Z",
+  "currentTask": "QA Review of live dashboards",
+  "currentStep": "Brigid reviewing all features",
   "totalSteps": 4,
-  "currentStepNum": 3
+  "currentStepNum": 4
 };
 
 window.SUBAGENTS = [
   {
-    "id": "brigid-v5",
+    "id": "brigid-qa",
     "agentId": "brigid",
     "name": "Brigid",
-    "task": "Command Center v5 — Quick Actions, Milestone Tracker, Fresh Data",
+    "task": "QA Review — Verifying ProjectPerciPH Dashboard + Command Center",
     "project": "perci-system",
-    "taskId": "task-010",
+    "taskId": "task-012",
     "startedAt": new Date().toISOString()
   }
 ];
@@ -75,18 +75,32 @@ window.AGENTS_CONFIG = [
 
 window.TASKS = [
   {
-    "id": "task-010",
-    "title": "Command Center v4 — Perci as Visual HQ",
-    "description": "Full redesign: Perci avatar hero, Documents Vault tab, Generated Images Gallery tab, Ping notification feed, Task Review Panel with Carlo action cards",
-    "project": "perci-system",
-    "status": "in-progress",
+    "id": "task-011",
+    "title": "ProjectPerciPH Dashboard v2 — Competitive Intelligence Upgrade",
+    "description": "Improve all features of the embroidery intelligence dashboard: Competitor Deep-Dive page, Pricing Calculator, Calendar upgrade, Seasonal Alerts, Catalog upgrade, Quick Stats bar",
+    "project": "projectperciph",
+    "status": "done",
     "priority": "high",
     "needsCarlo": false,
-    "subagentRunning": true,
-    "notes": "Brigid building now. Perci's headquarters visualization.",
-    "percisAdvice": "Brigid is building this now — no action needed",
+    "subagentRunning": false,
+    "notes": "All 6 major improvements deployed: Competitor Deep-Dive, Pricing Calculator, Seasonal Alerts, Calendar upgrade, Catalog upgrade, Quick Stats bar. Live at heylencer-debug.github.io/ProjectPerciPH",
+    "percisAdvice": "Dashboard v2 complete ✅ — all features live and working",
+    "createdAt": "2026-02-27T04:20:00+08:00",
+    "updatedAt": "2026-02-27T04:54:00+08:00"
+  },
+  {
+    "id": "task-010",
+    "title": "Command Center v5 — Quick Actions & Milestones",
+    "description": "v5 upgrades: Quick Actions panel (Post Day 1, Generate Day 2, Refresh), Milestone tracker strip, UX polish",
+    "project": "perci-system",
+    "status": "done",
+    "priority": "high",
+    "needsCarlo": false,
+    "subagentRunning": false,
+    "notes": "v5 complete — Quick Actions, Milestone Tracker, and all UX improvements deployed.",
+    "percisAdvice": "Command Center v5 complete ✅ — all features live",
     "createdAt": "2026-02-27T03:04:00+08:00",
-    "updatedAt": "2026-02-27T03:06:00+08:00"
+    "updatedAt": "2026-02-27T04:54:00+08:00"
   },
   {
     "id": "task-009",
@@ -142,7 +156,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Done: emoji hero, agent panels, mood system, task cards, flame particles, mission control. Commit afe9208.",
-    "percisAdvice": "Complete. Superseded by v4.",
+    "percisAdvice": "Complete. Superseded by v5.",
     "createdAt": "2026-02-26T22:08:00+08:00",
     "updatedAt": "2026-02-27T02:00:00+08:00"
   },
@@ -156,7 +170,7 @@ window.TASKS = [
     "needsCarlo": false,
     "subagentRunning": false,
     "notes": "Done: renderKanban now respects activeQuickFilter. startLiveSync fetches tasks.js + content.js in parallel. Timestamp = real sync time. Commit 0e6793a.",
-    "percisAdvice": "Complete. Superseded by v4.",
+    "percisAdvice": "Complete. Superseded by v5.",
     "createdAt": "2026-02-27T01:00:00+08:00",
     "updatedAt": "2026-02-27T02:00:00+08:00"
   },
@@ -221,6 +235,12 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {
+    "time": "2026-02-27T04:54:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid QA review — verifying both dashboards live",
+    "type": "info"
+  },
   {
     "time": "2026-02-27T04:09:00+08:00",
     "emoji": "🔥",
@@ -320,9 +340,9 @@ window.ACTIVITY_LOG = [
 ];
 
 window.STATS = {
-  "tasksCompletedThisWeek": 12,
+  "tasksCompletedThisWeek": 14,
   "activeSubagents": 1,
-  "blockedTasks": 3,
+  "blockedTasks": 2,
   "daysWorkingTogether": 2
 };
 
@@ -331,15 +351,15 @@ window.STATS = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 window.PERCI_NOTES = {
-  "lastUpdated": "2026-02-27T03:00:00+08:00",
+  "lastUpdated": "2026-02-27T04:54:00+08:00",
   "confirmedReads": [
     { "file": "PROJECT_PERCI_BRAND_IDENTITY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Brand identity updated: silver chrome, white hook text, powder blue accents. Orange retired." },
     { "file": "MEMORY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Long-term memory loaded. Carlo's preferences, business context, Instagram status all current." },
     { "file": "memory/2026-02-27.md", "at": "2026-02-27T02:40:00+08:00", "note": "Today's notes loaded. V8 carousel complete, Brigid building v4." },
-    { "file": "data/tasks.js", "at": "2026-02-27T03:00:00+08:00", "note": "Tasks updated: 10 tasks, accurate statuses, v4 in-progress." },
+    { "file": "data/tasks.js", "at": "2026-02-27T04:54:00+08:00", "note": "Tasks updated: task-011 (Dashboard v2) done, task-010 (CC v5) done." },
     { "file": "brigid-task.md", "at": "2026-02-27T03:04:00+08:00", "note": "V4 task brief read. Building Perci HQ, Vault, Gallery, Pings, Task Review." }
   ],
-  "percisNotes": "V8 carousel complete. 2 test slides sent to Carlo for approval. Brigid now building Command Center v4 — Perci's visual HQ with Vault, Gallery, Pings, and Task Review Panel."
+  "percisNotes": "Dashboard v2 + Command Center v5 complete. All features verified. Day 1 carousel v11 approved — waiting for Carlo to post manually."
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -372,7 +392,7 @@ window.VAULT_DOCS = [
     lastUpdated: "2026-02-27", 
     icon: "🧠",
     summary: "Long-term memory: Carlo's profile, business context, Instagram status, all projects built. Perci's curated wisdom.",
-    content: "Carlo (he/him) — GMT+8 Manila. Building ProjectPerciPH: personalized embroidery gifts. Instagram @projectperciph live, 0 posts. Day 1 carousel v8 ready for approval."
+    content: "Carlo (he/him) — GMT+8 Manila. Building ProjectPerciPH: personalized embroidery gifts. Instagram @projectperciph live, 0 posts. Day 1 carousel v11 ready for approval."
   },
   { 
     id: "daily-notes", 
@@ -380,8 +400,8 @@ window.VAULT_DOCS = [
     category: "Memory", 
     lastUpdated: "2026-02-27", 
     icon: "📝",
-    summary: "Today's session notes: carousel v8 complete, Brigid building v4, waiting on Carlo approval.",
-    content: "02:28 — V8 carousel generation started\n02:45 — 7/7 slides complete\n03:00 — Test slides sent to Carlo\n03:04 — Brigid spawned for CC v4"
+    summary: "Today's session notes: carousel v11 approved, Dashboard v2 + CC v5 complete.",
+    content: "02:28 — V8 carousel generation started\n02:45 — 7/7 slides complete\n03:00 — Test slides sent to Carlo\n04:05 — v11 APPROVED\n04:54 — Brigid QA review"
   },
   { 
     id: "soul", 
