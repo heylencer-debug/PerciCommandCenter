@@ -17,6 +17,7 @@ const LS_KEYS = {
   brainDumpLast: 'perci_brain_dump_last',
   briefs: 'perci_briefs',
   compact: 'perci_compact',
+  branding: 'perci_branding',
 };
 
 let activeProject = null;
@@ -827,6 +828,209 @@ function escHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// ── NAV TABS ──────────────────────────────────────────────────────────────────
+
+let currentTab = 'dashboard';
+
+function switchTab(tab) {
+  currentTab = tab;
+  // Update tab buttons
+  document.querySelectorAll('.nav-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+
+  // Show/hide views
+  const dashboardView = document.getElementById('view-dashboard');
+  const brandingView = document.getElementById('view-branding');
+  const fab = document.getElementById('fab-add');
+
+  if (tab === 'branding') {
+    dashboardView.style.display = 'none';
+    brandingView.style.display = 'block';
+    fab.style.display = 'none';
+    initBrandingPage();
+  } else {
+    dashboardView.style.display = '';
+    brandingView.style.display = 'none';
+    fab.style.display = '';
+  }
+}
+
+// ── BRANDING PAGE ─────────────────────────────────────────────────────────────
+
+let brandingInitialized = false;
+
+function initBrandingPage() {
+  const textarea = document.getElementById('branding-textarea');
+  if (!brandingInitialized) {
+    // Load from localStorage or default
+    let content = null;
+    try { content = localStorage.getItem(LS_KEYS.branding); } catch (e) {}
+    textarea.value = content || window.BRANDING_MD || '';
+
+    // Live preview on input
+    textarea.addEventListener('input', () => {
+      renderBrandingPreview();
+    });
+    brandingInitialized = true;
+  }
+  renderBrandingPreview();
+}
+
+function renderBrandingPreview() {
+  const textarea = document.getElementById('branding-textarea');
+  const preview = document.getElementById('branding-preview');
+  preview.innerHTML = renderMarkdown(textarea.value);
+}
+
+function saveBranding() {
+  const textarea = document.getElementById('branding-textarea');
+  try {
+    localStorage.setItem(LS_KEYS.branding, textarea.value);
+  } catch (e) {}
+  const btn = document.querySelector('.branding-btn-save');
+  const orig = btn.textContent;
+  btn.textContent = 'Saved! ✅';
+  setTimeout(() => { btn.textContent = orig; }, 2000);
+  addActivityEntry('🎨', 'Branding guidelines saved', 'success');
+}
+
+function copyBranding() {
+  const textarea = document.getElementById('branding-textarea');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textarea.value).catch(() => fallbackCopy(textarea.value));
+  } else {
+    fallbackCopy(textarea.value);
+  }
+  const btn = document.querySelector('.branding-btn-copy');
+  const orig = btn.textContent;
+  btn.textContent = 'Copied! ✅';
+  setTimeout(() => { btn.textContent = orig; }, 2000);
+}
+
+function resetBranding() {
+  if (!confirm('Reset branding to default? Your edits will be lost.')) return;
+  const textarea = document.getElementById('branding-textarea');
+  textarea.value = window.BRANDING_MD || '';
+  try { localStorage.removeItem(LS_KEYS.branding); } catch (e) {}
+  renderBrandingPreview();
+  addActivityEntry('🎨', 'Branding reset to defaults', 'info');
+}
+
+// ── MARKDOWN RENDERER ─────────────────────────────────────────────────────────
+
+function renderMarkdown(md) {
+  if (!md) return '';
+  const lines = md.split('\n');
+  let html = '';
+  let inTable = false;
+  let inUl = false;
+  let inOl = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Horizontal rule
+    if (/^---+\s*$/.test(line.trim())) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (inOl) { html += '</ol>'; inOl = false; }
+      if (inTable) { html += '</tbody></table>'; inTable = false; }
+      html += '<hr>';
+      continue;
+    }
+
+    // Table row
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (inOl) { html += '</ol>'; inOl = false; }
+      // Skip separator rows
+      if (/^\|[-| :]+\|$/.test(line.trim())) continue;
+      if (!inTable) {
+        html += '<table>';
+        inTable = true;
+        const cells = line.split('|').filter(Boolean).map(c => '<th>' + mdInline(c.trim()) + '</th>').join('');
+        html += '<thead><tr>' + cells + '</tr></thead><tbody>';
+        // Skip next line if it's a separator
+        if (lines[i + 1] && /^\|[-| :]+\|$/.test(lines[i + 1].trim())) i++;
+        continue;
+      } else {
+        const cells = line.split('|').filter(Boolean).map(c => '<td>' + mdInline(c.trim()) + '</td>').join('');
+        html += '<tr>' + cells + '</tr>';
+        continue;
+      }
+    } else if (inTable) {
+      html += '</tbody></table>';
+      inTable = false;
+    }
+
+    // Headers
+    const hMatch = line.match(/^(#{1,6})\s+(.+)/);
+    if (hMatch) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (inOl) { html += '</ol>'; inOl = false; }
+      const lvl = hMatch[1].length;
+      html += '<h' + lvl + '>' + mdInline(hMatch[2]) + '</h' + lvl + '>';
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith('> ')) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (inOl) { html += '</ol>'; inOl = false; }
+      html += '<blockquote>' + mdInline(line.slice(2)) + '</blockquote>';
+      continue;
+    }
+
+    // Unordered list
+    if (/^- (.+)/.test(line)) {
+      if (inOl) { html += '</ol>'; inOl = false; }
+      if (!inUl) { html += '<ul>'; inUl = true; }
+      html += '<li>' + mdInline(line.replace(/^- /, '')) + '</li>';
+      continue;
+    } else if (inUl && line.trim() !== '') {
+      html += '</ul>'; inUl = false;
+    }
+
+    // Ordered list
+    if (/^\d+\.\s+(.+)/.test(line)) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (!inOl) { html += '<ol>'; inOl = true; }
+      html += '<li>' + mdInline(line.replace(/^\d+\.\s+/, '')) + '</li>';
+      continue;
+    } else if (inOl && line.trim() !== '') {
+      html += '</ol>'; inOl = false;
+    }
+
+    // Empty line — close lists
+    if (!line.trim()) {
+      if (inUl) { html += '</ul>'; inUl = false; }
+      if (inOl) { html += '</ol>'; inOl = false; }
+      continue;
+    }
+
+    // Paragraph
+    html += '<p>' + mdInline(line) + '</p>';
+  }
+
+  if (inUl) html += '</ul>';
+  if (inOl) html += '</ol>';
+  if (inTable) html += '</tbody></table>';
+
+  return html;
+}
+
+function mdInline(text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank">$1</a>');
 }
 
 // ── KEYBOARD SHORTCUTS ────────────────────────────────────────────────────────

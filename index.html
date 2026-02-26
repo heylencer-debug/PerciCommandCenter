@@ -29,6 +29,17 @@
     </div>
   </header>
 
+  <!-- NAV TABS -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">⚔️ Command</button>
+    <button class="nav-tab" data-tab="tasks" onclick="switchTab('tasks')">📋 Tasks</button>
+    <button class="nav-tab" data-tab="content" onclick="switchTab('content')">📸 Content</button>
+    <button class="nav-tab" data-tab="system" onclick="switchTab('system')">🤖 Agents</button>
+    <button class="nav-tab" data-tab="branding" onclick="switchTab('branding')">🎨 Branding</button>
+  </nav>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="view-dashboard">
   <div class="app-layout">
     <!-- LEFT SIDEBAR: Projects -->
     <aside class="sidebar">
@@ -80,6 +91,31 @@
       <div class="sidebar-title">Activity Log</div>
       <div id="activity-log"></div>
     </aside>
+  </div>
+  </div><!-- /view-dashboard -->
+
+  <!-- BRANDING VIEW -->
+  <div id="view-branding" class="branding-view" style="display:none">
+    <div class="branding-header">
+      <div class="branding-title-row">
+        <h2 class="branding-title">🎨 Branding Guidelines</h2>
+        <div class="branding-actions">
+          <button class="branding-btn branding-btn-save" onclick="saveBranding()">💾 Save Changes</button>
+          <button class="branding-btn branding-btn-copy" onclick="copyBranding()">📋 Copy to Clipboard</button>
+          <button class="branding-btn branding-btn-reset" onclick="resetBranding()">🔄 Reset to Default</button>
+        </div>
+      </div>
+    </div>
+    <div class="branding-container">
+      <div class="branding-editor-panel">
+        <div class="branding-panel-label">Editor</div>
+        <textarea class="branding-textarea" id="branding-textarea" spellcheck="false"></textarea>
+      </div>
+      <div class="branding-preview-panel">
+        <div class="branding-panel-label">Preview</div>
+        <div class="branding-preview" id="branding-preview"></div>
+      </div>
+    </div>
   </div>
 
   <!-- TASK MODAL -->
