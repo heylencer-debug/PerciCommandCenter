@@ -1,83 +1,105 @@
-# ⚔️ Project Perci — Branding Guidelines
-_Inspired by Beyond The Vines (BTV) aesthetic with a "Chrome & Vibrant" twist_
+# ⚔️ Project Perci — Brand Guidelines
+_Clean. Industrial. Chic. A fun studio where neon meets chrome._
 _Last updated: 2026-02-26_
 
 ---
 
 ## 🎯 Brand Identity
 
-- **Name:** PROJECT PERCI (always caps, bold, wide font)
+- **Name:** PROJECT PERCI
 - **Tagline:** "Personalization, Engineered."
-- **Vibe:** Techno-Utilitarian — treat every personalized gift like a piece of industrial engineering
-- **Logo:** Stripped back — just PROJECT PERCI in a wide, bold sans-serif font
+- **Vibe:** Clean studio + industrial chic + Gen-Z neon energy
+- **The Formula:** Clinical white backdrop + mirror chrome hardware + neon/pastel products that POP
+- **Feel:** A gallery where the product is the art. Light, airy, high-tech — but fun.
+- **Logo:** Bold, wide Sans-Serif. Chrome foil or black text. Small "technical" placements (bottom corner of tote, back neck of hoodie).
 
 ---
 
-## 🎨 Color Palette (BTV-Inspired)
+## 🏗️ Store Environment — "The Backdrop"
 
-| Base (Industrial) | The "Pop" (Vibrant) | BTV Feel |
+The store is the shell. Keep it clean so the products explode.
+
+| Element | Material / Color | Visual Impact |
 |---|---|---|
-| Cool Slate / Silver | Electric Blue | Modern, clean, professional |
-| Deep Moss / Charcoal | Neon Orange | Rugged, utility-wear aesthetic |
-| Off-White / Cream | Cobalt | Classic BTV "Studio" look |
-
-> **Pro Tip:** Use **Silver Chrome** as your neutral. Instead of black or white, use reflective metallic silver — it bridges tech and style.
-
----
-
-## 📸 Photo/Content Style
-
-- **NOT warm, NOT golden-filtered** — cool, balanced natural daylight
-- **iPhone shot quality** — must NOT look AI-generated
-- **Editorial lifestyle feel** — real Filipino person + emotion + product
-- **Text overlays** — always a combination of: Person + Text + Branding
-- **Every image must have:** "Project Perci PH" logo, white bold, bottom-right corner
+| Primary Base | Bright White | Gallery-like canvas, maximizes light |
+| Primary Metal | Mirror Chrome | Racks, shelving, signage — industrial-chic |
+| Accent | Powder Blue / Baby Pink | Soft pastels on walls/signage headers — keeps it friendly |
+| Texture | Iridescent Film | On glass/acrylic surfaces — shifting "oil slick" glow |
 
 ---
 
-## 🏗️ Store Vibe: "The Clean Laboratory"
+## 👕 Product Palette — "The Bold Core"
 
-- **Materials:** Galvanized steel or brushed aluminum display racks — no wood
-- **Pop Block:** One solid high-gloss vibrant wall (Cobalt Blue or Safety Orange)
-- **Show the machine:** Embroidery machine behind clear acrylic — make the process the art
-- **Feel:** Futuristic playground, assembled not built
+Products are the stars. They must be impossible to miss.
 
----
+- **Neon Vibrants** — Neon Poppy, Electric Grape, Hot Coral, Acid Lime
+- **Neon Pastels** — Soft Lilac, Peach Fizz, Baby Blue, Mint Cloud
+- **White Gen-Z** — Clean white base with bold neon embroidery/accents
 
-## 🧵 Product Strategy: "Precision Customization"
-
-1. **Signature Tag:** Bold blue woven label — "PERCI CUSTOMIZED [01]" + customer name engraved on metal clip
-2. **Industrial Embroidery:** Heavy blocky sans-serif font — looks like a serial number, not a pretty monogram
-3. **The Hardware Look:** Chrome carabiner or metallic grommet on bags/towels for functional BTV edge
-
----
-
-## 📦 Packaging: "The Tech Gift"
-
-- **Bag/Box:** Translucent matte plastic or silver foil mailer
-- **Sticker:** Large wrap-around sticker in vibrant color, logo in bold black text sealing the package
+### The Contrast Rule (BTV-inspired)
+Always pair a **bold product color** with a **neutral metallic**:
+- Neon Poppy tote → displayed on polished Chrome hook
+- Electric Grape embroidery → on Powder Blue hoodie
+- Hot Coral cap → against bright white wall with chrome fixtures
 
 ---
 
-## 📱 Social Media Content Rules
+## ✨ Visual Execution Rules
 
-- **Audience:** Gift-givers — NOT embroidery craft people
-- **This month (pre-launch):** Educational only — Days 1–29
+### Photography Style
+- **Backdrop:** Bright white or light grey — clinical, gallery-like
+- **NOT warm, NOT golden hour** — cool, balanced natural daylight
+- **iPhone editorial quality** — must NOT look AI-generated
+- **Products are the hero** — let neon colors explode against clean backgrounds
+- **Real Filipino person** — authentic emotion, natural pose
+- **Every image has:** "Project Perci PH" logo — small, chrome/white, bottom-right corner
+
+### Typography
+- **Style:** Bold, wide Sans-Serif — Gen-Z "clunky-chic"
+- **Color:** Chrome foil or Black (cuts through neon product colors)
+- **Placement:** Technical — small text bottom corner of tote, back neck of hoodie, sleeve edge
+
+### Text Overlay (Social Posts)
+- Clean white hook text on dark gradient scrim
+- Orange #FF7A00 accent bar (left edge) — the one brand pop color
+- No clutter — maximum 2 lines of text + logo
+
+---
+
+## 📦 Packaging
+
+| Layer | Material |
+|---|---|
+| Outer | Silver metallic or iridescent bubble mailer |
+| Inner | Powder Blue tissue paper |
+| Seal | Holographic "Project Perci" sticker |
+
+---
+
+## 📱 Social Content Rules
+
+- **Audience:** Gift-givers — NOT embroidery/craft people
+- **This month (pre-launch):** Educational — Days 1–29
 - **Day 30:** First promotional post
-- **Carousel spec:** 1080×1080px square, cool-toned, editorial
+- **Carousel spec:** 1080×1080px square, cool-toned, clean white/chrome backdrop
 - **Every slide:** Real person + emotion + text overlay + branding
-- **Embroidery shown as creative art:** pet portraits, couple silhouettes, vectorized faces — not just names
+- **Embroidery = creative art:** pet portraits, vectorized faces, couple silhouettes — not just names
 
 ---
 
-## ✒️ Tone of Voice
+## 🌈 Color Quick Reference
 
-- Confident, clean, precise
-- "Engineered" not "cute"
-- Speaks to the gift-giver's desire to impress and be remembered
-- Filipino context, Cebu-first
+| Use | Color |
+|---|---|
+| Brand accent | #FF7A00 (Orange) |
+| Chrome / Metal | #C0C0C0 / Mirror Silver |
+| Powder Blue accent | #B0D4E8 |
+| Baby Pink accent | #F4C2C2 |
+| Base | #FFFFFF (Bright White) |
+| Text on dark | #FFFFFF |
+| Text on light | #000000 or Chrome |
 
 ---
 
 ## 🔗 Reference Brand
-[Beyond The Vines (BTV)](https://beyondthevines.com) — study their product photography, store layout, and label design
+[Beyond The Vines (BTV)](https://beyondthevines.com) — study their product photography, contrast pairings, and label design
