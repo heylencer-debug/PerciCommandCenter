@@ -364,7 +364,9 @@ function initBgCanvas() {
 function renderStatus() {
   const s = window.PERCI_STATUS || {};
   const updated = document.getElementById('last-updated');
-  if (s.lastUpdated) updated.textContent = timeAgo(s.lastUpdated);
+  if (updated && !updated.textContent.startsWith('Synced')) {
+    if (s.lastUpdated) updated.textContent = 'Data: ' + timeAgo(s.lastUpdated);
+  }
 
   // UPGRADE 3: Topbar status pill
   const pillEmoji = document.getElementById('topbar-mood-emoji');
@@ -835,7 +837,16 @@ function renderStats() {
 
 function renderKanban() {
   const board = document.getElementById('kanban-board');
-  const filtered = activeProject ? tasks.filter(t => t.project === activeProject) : tasks;
+  let filtered = activeProject ? tasks.filter(t => t.project === activeProject) : [...tasks];
+
+  // Apply quick filter
+  if (activeQuickFilter === 'needs-carlo') {
+    filtered = filtered.filter(t => t.needsCarlo);
+  } else if (activeQuickFilter === 'high') {
+    filtered = filtered.filter(t => t.priority === 'high');
+  } else if (activeQuickFilter === 'in-progress') {
+    filtered = filtered.filter(t => t.status === 'in-progress');
+  }
 
   // UPGRADE 4: needs-carlo floats to top, then by priority
   const sorted = [...filtered].sort((a, b) => {
@@ -1510,18 +1521,41 @@ function startLiveSync() {
   const interval = isLocal ? 15000 : 60000;
   let lastVersion = window.DATA_VERSION || '';
 
+  // Update "last synced" display on each cycle
+  function updateSyncTimestamp() {
+    const el = document.getElementById('last-updated');
+    if (el) el.textContent = 'Synced: just now';
+  }
+
   setInterval(async () => {
     try {
-      const res = await fetch('data/tasks.js?t=' + Date.now());
-      const text = await res.text();
-      const match = text.match(/DATA_VERSION\s*=\s*'([^']+)'/);
+      const cacheBust = '?t=' + Date.now();
+
+      // Fetch both data files in parallel
+      const [tasksRes, contentRes] = await Promise.all([
+        fetch('data/tasks.js' + cacheBust),
+        fetch('data/content.js' + cacheBust)
+      ]);
+
+      const tasksText = await tasksRes.text();
+      const contentText = await contentRes.text();
+
+      const match = tasksText.match(/DATA_VERSION\s*=\s*'([^']+)'/);
       if (match && match[1] !== lastVersion) {
         lastVersion = match[1];
-        const script = document.createElement('script');
-        script.textContent = text;
-        document.head.appendChild(script);
+
+        // Re-evaluate both data scripts
+        const script1 = document.createElement('script');
+        script1.textContent = tasksText;
+        document.head.appendChild(script1);
+
+        const script2 = document.createElement('script');
+        script2.textContent = contentText;
+        document.head.appendChild(script2);
+
         tasks = [...(window.TASKS || [])];
         renderAll();
+
         const lbl = document.getElementById('topbar-live-label');
         if (lbl) {
           lbl.textContent = 'Updated!';
@@ -1532,6 +1566,8 @@ function startLiveSync() {
           if (l) { l.textContent = 'Live'; l.style.color = ''; }
         }, 2000);
       }
+
+      updateSyncTimestamp();
     } catch (e) {}
   }, interval);
 }
