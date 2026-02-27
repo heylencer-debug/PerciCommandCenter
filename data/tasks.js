@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T08:52:00.000Z';
+window.DATA_VERSION = '2026-02-27T08:57:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T16:52:00+08:00",
+  "lastUpdated": "2026-02-27T16:57:00+08:00",
   "currentTask": "Idle — A/B generation complete, Carlo reviewing slides",
   "currentStep": "Waiting for Carlo to pick winning slides per slot",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T16:57:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's next move",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T16:52:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's direction",
@@ -373,20 +379,10 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid v1 complete — Command Center v3 all 6 upgrades pushed to GitHub (commit afe9208)",
     "type": "success"
-  },
-  {
-    "time": "2026-02-26T22:00:00+08:00",
-    "emoji": "🔴",
-    "text": "Instagram API 412 — new account blocked from API uploads",
-    "type": "blocked"
-  },
-  {
-    "time": "2026-02-26T16:00:00+08:00",
-    "emoji": "📸",
-    "text": "Instagram @projectperciph created and live",
-    "type": "success"
   }
 ];
+
+
 
 window.STATS = {
   "tasksCompletedThisWeek": 15,
