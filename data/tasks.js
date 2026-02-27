@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T12:27:00.000Z';
+window.DATA_VERSION = '2026-02-27T12:32:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T20:27:00+08:00",
+  "lastUpdated": "2026-02-27T20:32:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T20:32:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T20:27:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
@@ -240,240 +246,6 @@ window.ACTIVITY_LOG = [
     "time": "2026-02-27T20:22:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T20:17:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T20:12:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T20:07:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T20:02:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:57:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:52:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:47:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:42:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:37:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:32:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:27:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:22:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:17:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:12:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:07:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T19:02:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:57:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:52:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:47:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:42:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:37:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:32:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:27:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:22:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:17:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:12:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:07:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T18:02:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:57:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:47:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:42:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:27:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:22:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:17:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:12:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:07:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T17:02:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's next move",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T16:57:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's next move",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-27T16:52:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's direction",
     "type": "info"
   },
   {
@@ -524,7 +296,7 @@ window.ACTIVITY_LOG = [
     "text": "Cover v2 sent to Carlo — brand environment fix applied",
     "type": "info"
   }
-].slice(0, 25);
+];
 
 
 
