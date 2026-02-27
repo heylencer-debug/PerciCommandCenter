@@ -1,12 +1,12 @@
-window.DATA_VERSION = '2026-02-27T09:02:00.000Z';
+window.DATA_VERSION = '2026-02-27T09:07:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T17:02:00+08:00",
-  "currentTask": "Idle — A/B generation complete, Carlo reviewing slides",
-  "currentStep": "Waiting for Carlo to pick winning slides per slot",
+  "lastUpdated": "2026-02-27T17:07:00+08:00",
+  "currentTask": "Idle — awaiting Carlo's next direction",
+  "currentStep": "Standing by",
   "totalSteps": 7,
   "currentStepNum": 7
 };
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T17:07:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T17:02:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's next move",
@@ -372,12 +378,6 @@ window.ACTIVITY_LOG = [
     "time": "2026-02-27T01:30:00+08:00",
     "emoji": "🌌",
     "text": "Vesper v7 complete — Silver Chrome Dopamine Chic slides sent to Carlo",
-    "type": "success"
-  },
-  {
-    "time": "2026-02-27T00:30:00+08:00",
-    "emoji": "🌌",
-    "text": "Vesper v6 complete — Industrial Pop Dopamine Chic slides sent to Carlo",
     "type": "success"
   },
 ];
