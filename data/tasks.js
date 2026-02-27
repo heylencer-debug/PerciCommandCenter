@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T16:50:00.000Z';
+window.DATA_VERSION = '2026-02-27T08:52:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T16:47:00+08:00",
+  "lastUpdated": "2026-02-27T16:52:00+08:00",
   "currentTask": "Idle — A/B generation complete, Carlo reviewing slides",
   "currentStep": "Waiting for Carlo to pick winning slides per slot",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T16:52:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, awaiting Carlo's direction",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T16:47:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — all A/B agents complete, Perci idle, awaiting Carlo's slide picks",
@@ -379,7 +385,7 @@ window.ACTIVITY_LOG = [
     "emoji": "📸",
     "text": "Instagram @projectperciph created and live",
     "type": "success"
-  },
+  }
 ];
 
 window.STATS = {
