@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-28T04:24:00.000Z';
+window.DATA_VERSION = '2026-02-28T04:29:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-28T04:24:00+08:00",
+  "lastUpdated": "2026-02-28T04:29:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,165 +231,15 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
-    "time": "2026-02-28T04:24:00+08:00",
+    "time": "2026-02-28T04:29:00+08:00",
     "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T04:19:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T04:14:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T04:09:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T04:04:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:59:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:54:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:49:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:44:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:39:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:34:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:29:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:24:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:19:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:14:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:09:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T03:04:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:59:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:54:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:49:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:44:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:39:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:34:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:29:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:24:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
-    "type": "info"
-  },
-  {
-    "time": "2026-02-28T02:19:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "text": "Brigid live sync — Perci idle, no active subagents, standing by for Carlo",
     "type": "info"
   },
   {
     "time": "2026-02-28T02:14:00+08:00",
     "emoji": "🔥",
-    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "text": "Brigid watch shift begins — hourly sentinel mode active (4:29 AM)",
     "type": "info"
   },
   {
@@ -411,9 +261,33 @@ window.ACTIVITY_LOG = [
     "type": "success"
   },
   {
-    "time": "2026-02-27T13:50:00+08:00",
+    "time": "2026-02-27T16:50:00+08:00",
     "emoji": "⚔️",
+    "text": "BRAND.js expanded — 16 BTV×Blanc Nue combos + 8 personalization rules added",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T13:50:00+08:00",
+    "emoji": "🌌",
     "text": "BRAND.js created — Vesper now has full brand memory. generateCarouselSlide() live.",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T04:54:00+08:00",
+    "emoji": "⚔️",
+    "text": "Project Percy PH Dashboard v2 deployed — all 6 features live",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T04:54:00+08:00",
+    "emoji": "⚔️",
+    "text": "Command Center v5 complete — Quick Actions, Milestone Tracker deployed",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-26T22:08:00+08:00",
+    "emoji": "🔥",
+    "text": "Command Center v3 deployed — emoji hero, agent panels, mood system, flame particles",
     "type": "success"
   }
 ].slice(0, 25);  // capped at 25 entries
@@ -427,6 +301,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 2,
   "daysWorkingTogether": 3,
-  "lastSynced": "2026-02-28T04:24:00+08:00"
-
+  "lastSynced": "2026-02-28T04:29:00+08:00"
 };
