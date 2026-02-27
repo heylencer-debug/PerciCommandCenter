@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T09:47:00.000Z';
+window.DATA_VERSION = '2026-02-27T09:52:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T17:47:00+08:00",
+  "lastUpdated": "2026-02-27T17:52:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T17:52:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T17:47:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
@@ -379,13 +385,7 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Command Center v4 complete — all features live",
     "type": "success"
-  },
-  {
-    "time": "2026-02-27T03:06:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid completed Command Center v4: Perci HQ, Vault, Gallery, Pings, Task Review",
-    "type": "success"
-  },
+  }
 ];
 
 
