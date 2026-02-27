@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-28T01:54:00.000Z';
+window.DATA_VERSION = '2026-02-28T01:59:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-28T01:54:00+08:00",
+  "lastUpdated": "2026-02-28T01:59:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -230,6 +230,12 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {
+    "time": "2026-02-28T01:59:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
   {
     "time": "2026-02-28T01:54:00+08:00",
     "emoji": "🔥",
@@ -626,7 +632,7 @@ window.ACTIVITY_LOG = [
     "text": "Cover v2 sent to Carlo — brand environment fix applied",
     "type": "info"
   }
-].slice(0, 25);
+].slice(0, 25); // trimmed to 25
 
 
 
