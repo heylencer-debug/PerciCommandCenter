@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T10:12:00.000Z';
+window.DATA_VERSION = '2026-02-27T10:17:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T18:12:00+08:00",
+  "lastUpdated": "2026-02-27T18:17:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T18:17:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T18:12:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
@@ -386,7 +392,7 @@ window.ACTIVITY_LOG = [
     "text": "Day 1 v13 carousel generated — brand environment in every frame",
     "type": "success"
   }
-];
+].slice(0, 25);
 
 
 
