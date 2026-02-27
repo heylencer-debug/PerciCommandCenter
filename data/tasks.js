@@ -1,29 +1,19 @@
-window.DATA_VERSION = '2026-02-27T06:50:00.000Z';
+window.DATA_VERSION = '2026-02-27T14:00:00.000Z';
 
 window.PERCI_AVATAR = "assets/perci-icons/perci-icon-01-classic.png";
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "QA Review — Brigid verifying both dashboards",
+  "statusText": "Day 1 carousel refinement — Vesper generating v5 cover",
   "mood": "focused",
-  "lastUpdated": "2026-02-27T04:54:00.000Z",
-  "currentTask": "QA Review of live dashboards",
-  "currentStep": "Brigid reviewing all features",
-  "totalSteps": 4,
-  "currentStepNum": 4
+  "lastUpdated": "2026-02-27T14:00:00+08:00",
+  "currentTask": "Day 1 carousel brand refinement",
+  "currentStep": "Vesper generating v5 with new brand specs",
+  "totalSteps": null,
+  "currentStepNum": null
 };
 
-window.SUBAGENTS = [
-  {
-    "id": "brigid-qa",
-    "agentId": "brigid",
-    "name": "Brigid",
-    "task": "QA Review — Verifying Project Percy PH Dashboard + Command Center",
-    "project": "perci-system",
-    "taskId": "task-012",
-    "startedAt": new Date().toISOString()
-  }
-];
+window.SUBAGENTS = [];
 
 window.PROJECTS = [
   {
@@ -77,6 +67,20 @@ window.AGENTS_CONFIG = [
 
 window.TASKS = [
   {
+    "id": "task-013",
+    "title": "Vesper BRAND.js — Brand Memory System",
+    "description": "Created brand memory file for Vesper so she auto-injects brand specs into every image prompt. No more re-briefing.",
+    "project": "perci-system",
+    "status": "done",
+    "priority": "high",
+    "needsCarlo": false,
+    "subagentRunning": false,
+    "notes": "BRAND.js created at vesper/BRAND.js. generateCarouselSlide() added to generate.js. Brand: Bright Vibrant Industrial Dopamine Chic. Chrome+textured white+colored acrylic walls, dopamine sofa/furniture/carpets/decor, raspberry red elements, iridescent packaging with powder blue + baby pink.",
+    "percisAdvice": "Vesper now auto-injects brand specs. Just pass scene + text content.",
+    "createdAt": "2026-02-27T14:00:00+08:00",
+    "updatedAt": "2026-02-27T14:00:00+08:00"
+  },
+  {
     "id": "task-011",
     "title": "Project Percy PH Dashboard v2 — Competitive Intelligence Upgrade",
     "description": "Improve all features of the embroidery intelligence dashboard: Competitor Deep-Dive page, Pricing Calculator, Calendar upgrade, Seasonal Alerts, Catalog upgrade, Quick Stats bar",
@@ -123,15 +127,15 @@ window.TASKS = [
     "title": "Day 1 carousel v11 generation",
     "description": "Generate v11: white hook text, powder blue accent bar, real Filipino candid emotions, no AI faces, iPhone depth-of-field",
     "project": "projectperciph",
-    "status": "done",
+    "status": "in-progress",
     "priority": "high",
     "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "7/7 slides generated and approved! v11 is the final version.",
+    "notes": "Carousel in active refinement — v5 generating now. Brand updated to Bright Vibrant Industrial Dopamine Chic. BRAND.js created in Vesper. No tears, raspberry red added, textured acrylic walls, dopamine furniture/carpets/decor, iridescent packaging spec locked.",
     "carloAction": "",
-    "percisAdvice": "v11 APPROVED by Carlo ✅ — ready to post",
+    "percisAdvice": "v5 cover generating with updated brand specs — Bright Vibrant Industrial Dopamine Chic",
     "createdAt": "2026-02-27T02:30:00+08:00",
-    "updatedAt": "2026-02-27T04:09:00+08:00"
+    "updatedAt": "2026-02-27T14:00:00+08:00"
   },
   {
     "id": "task-001",
@@ -144,9 +148,9 @@ window.TASKS = [
     "subagentRunning": false,
     "notes": "v11 APPROVED! Instagram @projectperciph live, 0 posts. Must post manually via phone.",
     "carloAction": "Post from phone. Slides in dashboard/assets/day-01-*.png",
-    "percisAdvice": "Day 1 v11 approved by Carlo ✅ — ready to post manually from phone!",
+    "percisAdvice": "Day 1 carousel still being refined. Will update once final version approved by Carlo.",
     "createdAt": "2026-02-26T16:00:00+08:00",
-    "updatedAt": "2026-02-27T04:09:00+08:00"
+    "updatedAt": "2026-02-27T14:00:00+08:00"
   },
   {
     "id": "task-002",
@@ -237,6 +241,36 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {
+    "time": "2026-02-27T14:00:00+08:00",
+    "emoji": "🌌",
+    "text": "Vesper generating Day 1 cover v5 — Bright Vibrant Industrial Dopamine Chic",
+    "type": "info"
+  },
+  {
+    "time": "2026-02-27T13:50:00+08:00",
+    "emoji": "⚔️",
+    "text": "BRAND.js created — Vesper now has full brand memory. generateCarouselSlide() live.",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T13:40:00+08:00",
+    "emoji": "🎨",
+    "text": "Brand updated: raspberry red, textured acrylic walls, dopamine carpets/furniture, iridescent packaging spec",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T13:20:00+08:00",
+    "emoji": "🌌",
+    "text": "Cover v2 sent to Carlo — brand environment fix applied",
+    "type": "info"
+  },
+  {
+    "time": "2026-02-27T07:28:00+08:00",
+    "emoji": "🌌",
+    "text": "Day 1 v13 carousel generated — brand environment in every frame",
+    "type": "success"
+  },
   {
     "time": "2026-02-27T04:54:00+08:00",
     "emoji": "🔥",
@@ -342,8 +376,8 @@ window.ACTIVITY_LOG = [
 ];
 
 window.STATS = {
-  "tasksCompletedThisWeek": 14,
-  "activeSubagents": 1,
+  "tasksCompletedThisWeek": 15,
+  "activeSubagents": 0,
   "blockedTasks": 2,
   "daysWorkingTogether": 2
 };
@@ -353,15 +387,15 @@ window.STATS = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 window.PERCI_NOTES = {
-  "lastUpdated": "2026-02-27T04:54:00+08:00",
+  "lastUpdated": "2026-02-27T14:00:00+08:00",
   "confirmedReads": [
     { "file": "PROJECT_PERCI_BRAND_IDENTITY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Brand identity updated: silver chrome, white hook text, powder blue accents. Orange retired." },
     { "file": "MEMORY.md", "at": "2026-02-27T02:40:00+08:00", "note": "Long-term memory loaded. Carlo's preferences, business context, Instagram status all current." },
     { "file": "memory/2026-02-27.md", "at": "2026-02-27T02:40:00+08:00", "note": "Today's notes loaded. V8 carousel complete, Brigid building v4." },
-    { "file": "data/tasks.js", "at": "2026-02-27T04:54:00+08:00", "note": "Tasks updated: task-011 (Dashboard v2) done, task-010 (CC v5) done." },
+    { "file": "data/tasks.js", "at": "2026-02-27T14:00:00+08:00", "note": "Tasks updated by Brigid: BRAND.js task added, carousel status updated, live sync audited." },
     { "file": "brigid-task.md", "at": "2026-02-27T03:04:00+08:00", "note": "V4 task brief read. Building Perci HQ, Vault, Gallery, Pings, Task Review." }
   ],
-  "percisNotes": "Dashboard v2 + Command Center v5 complete. All features verified. Day 1 carousel v11 approved — waiting for Carlo to post manually."
+  "percisNotes": "Vesper BRAND.js created — brand memory locked. Day 1 carousel in active refinement (v5). Command Center live sync audited by Brigid."
 };
 
 // ═══════════════════════════════════════════════════════════════════════════
