@@ -1,17 +1,20 @@
-window.DATA_VERSION = '2026-02-27T06:28:42.264Z';
+window.DATA_VERSION = '2026-02-27T16:39:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "active",
-  "statusText": "Vesper generating Day 1 final — 7 slides in progress",
+  "statusText": "Vesper generating Day 1 slides 3–7 A/B variants",
   "mood": "focused",
-  "lastUpdated": "2026-02-27T06:28:42.263Z",
-  "currentTask": "Day 1 carousel final generation",
-  "currentStep": "Vesper generating v5 with new brand specs",
-  "totalSteps": null,
-  "currentStepNum": null
+  "lastUpdated": "2026-02-27T16:39:00+08:00",
+  "currentTask": "Day 1 carousel A/B generation (slides 3–7)",
+  "currentStep": "Vesper running parallel agents for slides 3+4 and 5+6+7",
+  "totalSteps": 7,
+  "currentStepNum": 5
 };
 
-window.SUBAGENTS = [];
+window.SUBAGENTS = [
+  { "id": "vesper-slides-34", "label": "Vesper Slides 3+4 A/B", "status": "running", "emoji": "🌌" },
+  { "id": "vesper-slides-567", "label": "Vesper Slides 5+6+7 A/B", "status": "running", "emoji": "🌌" }
+];
 
 window.PROJECTS = [
   {
@@ -102,15 +105,15 @@ window.TASKS = [
     "title": "Day 1 carousel v11 generation",
     "description": "Generate v11: white hook text, powder blue accent bar, real Filipino candid emotions, no AI faces, iPhone depth-of-field",
     "project": "projectperciph",
-    "status": "in-progress",
+    "status": "done",
     "priority": "high",
     "needsCarlo": false,
     "subagentRunning": false,
-    "notes": "Carousel in active refinement — v5 generating now. Brand updated to Bright Vibrant Industrial Dopamine Chic. BRAND.js created in Vesper. No tears, raspberry red added, textured acrylic walls, dopamine furniture/carpets/decor, iridescent packaging spec locked.",
+    "notes": "v12 carousel complete — 7 slides generated. A/B variants now being generated for slides 1–7. Carlo to pick best version per slide.",
     "carloAction": "",
-    "percisAdvice": "v5 cover generating with updated brand specs — Bright Vibrant Industrial Dopamine Chic",
+    "percisAdvice": "v12 done ✅ — A/B variants generating for all 7 slides. Awaiting Carlo's picks.",
     "createdAt": "2026-02-27T02:30:00+08:00",
-    "updatedAt": "2026-02-27T14:00:00+08:00"
+    "updatedAt": "2026-02-27T16:39:00+08:00"
   },
   {
     "id": "task-001",
@@ -216,6 +219,24 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {
+    "time": "2026-02-27T16:39:00+08:00",
+    "emoji": "🌌",
+    "text": "Vesper generating slides 3–7 A/B variants — 2 parallel agents running",
+    "type": "info"
+  },
+  {
+    "time": "2026-02-27T16:35:00+08:00",
+    "emoji": "🌌",
+    "text": "Slides 1+2 A/B generation complete — sent to Carlo for review",
+    "type": "success"
+  },
+  {
+    "time": "2026-02-27T16:20:00+08:00",
+    "emoji": "🌌",
+    "text": "A/B variant generation started — Carlo picks best version per slide",
+    "type": "info"
+  },
   {
     "time": "2026-02-27T14:00:00+08:00",
     "emoji": "🌌",
@@ -352,7 +373,7 @@ window.ACTIVITY_LOG = [
 
 window.STATS = {
   "tasksCompletedThisWeek": 15,
-  "activeSubagents": 0,
-  "blockedTasks": 2,
+  "activeSubagents": 2,
+  "blockedTasks": 3,
   "daysWorkingTogether": 2
 };
