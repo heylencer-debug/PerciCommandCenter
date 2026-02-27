@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T09:17:00.000Z';
+window.DATA_VERSION = '2026-02-27T09:22:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-02-27T17:17:00+08:00",
+  "lastUpdated": "2026-02-27T17:22:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T17:22:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T17:17:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — no active subagents, Perci idle, standing by for Carlo",
@@ -373,18 +379,6 @@ window.ACTIVITY_LOG = [
     "emoji": "🌌",
     "text": "Vesper v8 generation started — white text, powder blue accent, real Filipino candid emotions",
     "type": "info"
-  },
-  {
-    "time": "2026-02-27T02:10:00+08:00",
-    "emoji": "⚔️",
-    "text": "Carlo flagged: v7 slides looked same as before — v8 now generating with real changes",
-    "type": "blocked"
-  },
-  {
-    "time": "2026-02-27T02:00:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid v2 complete — Command Center data accuracy + bug fixes deployed (commit 0e6793a)",
-    "type": "success"
   }
 ];
 
