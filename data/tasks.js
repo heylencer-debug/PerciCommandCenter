@@ -1,20 +1,17 @@
-window.DATA_VERSION = '2026-02-27T16:39:00.000Z';
+window.DATA_VERSION = '2026-02-27T16:47:00.000Z';
 
 window.PERCI_STATUS = {
-  "status": "active",
-  "statusText": "Vesper generating Day 1 slides 3–7 A/B variants",
-  "mood": "focused",
-  "lastUpdated": "2026-02-27T16:39:00+08:00",
-  "currentTask": "Day 1 carousel A/B generation (slides 3–7)",
-  "currentStep": "Vesper running parallel agents for slides 3+4 and 5+6+7",
+  "status": "idle",
+  "statusText": "Standing by — awaiting Carlo's next move",
+  "mood": "ready",
+  "lastUpdated": "2026-02-27T16:47:00+08:00",
+  "currentTask": "Idle — A/B generation complete, Carlo reviewing slides",
+  "currentStep": "Waiting for Carlo to pick winning slides per slot",
   "totalSteps": 7,
-  "currentStepNum": 5
+  "currentStepNum": 7
 };
 
-window.SUBAGENTS = [
-  { "id": "vesper-slides-34", "label": "Vesper Slides 3+4 A/B", "status": "running", "emoji": "🌌" },
-  { "id": "vesper-slides-567", "label": "Vesper Slides 5+6+7 A/B", "status": "running", "emoji": "🌌" }
-];
+window.SUBAGENTS = [];
 
 window.PROJECTS = [
   {
@@ -220,6 +217,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-02-27T16:47:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — all A/B agents complete, Perci idle, awaiting Carlo's slide picks",
+    "type": "info"
+  },
+  {
     "time": "2026-02-27T16:39:00+08:00",
     "emoji": "🌌",
     "text": "Vesper generating slides 3–7 A/B variants — 2 parallel agents running",
@@ -363,17 +366,11 @@ window.ACTIVITY_LOG = [
     "text": "Instagram @projectperciph created and live",
     "type": "success"
   },
-  {
-    "time": "2026-02-26T12:00:00+08:00",
-    "emoji": "🌐",
-    "text": "Project Percy PH dashboard + Command Center live on GitHub Pages",
-    "type": "success"
-  }
 ];
 
 window.STATS = {
   "tasksCompletedThisWeek": 15,
-  "activeSubagents": 2,
-  "blockedTasks": 3,
+  "activeSubagents": 0,
+  "blockedTasks": 2,
   "daysWorkingTogether": 2
 };
