@@ -4083,19 +4083,161 @@ body.compact .task-action-btn { padding: 3px 8px; font-size: 9px; }
    V5: RESPONSIVE FIXES
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@media (max-width: 600px) {
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE-RESPONSIVE STYLES (Forged by Brigid 🔥)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) {
+  .topbar {
+    padding: 12px 20px;
+  }
+  
+  .topbar-left { font-size: 14px; }
+  
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar,
+  .activity-sidebar {
+    display: none; /* Hide sidebars on tablet, show in mobile drawer if needed */
+  }
+  
+  .main-content {
+    max-width: 100%;
+  }
+}
+
+/* Mobile & Tablet: Below 768px */
+@media (max-width: 768px) {
+  /* Top bar mobile */
+  .topbar {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .topbar-left {
+    flex: 1 1 100%;
+    order: 1;
+  }
+  
+  .logo { font-size: 14px; }
+  .logo-icon { font-size: 18px; }
+  
+  .topbar-center {
+    flex: 1 1 auto;
+    order: 3;
+  }
+  
+  .topbar-status-pill {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .topbar-mood-emoji { font-size: 14px; }
+  
+  .topbar-right {
+    flex: 1 1 auto;
+    order: 2;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .topbar-agent-badge,
+  .last-updated {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .theme-toggle,
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+  
+  /* Nav tabs → horizontal scroll */
+  .nav-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .nav-tab {
+    padding: 10px 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    min-width: fit-content;
+    flex-shrink: 0;
+  }
+  
+  /* View containers */
+  .view-container {
+    padding: 16px;
+  }
+  
+  /* Perci Hero HQ */
+  .perci-hero-hq {
+    padding: 20px 16px;
+    gap: 16px;
+  }
+  
+  .hero-avatar-section {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .hero-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .hero-mood-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    bottom: -4px;
+    right: -4px;
+  }
+  
+  .hero-title {
+    font-size: 20px;
+  }
+  
+  .hero-status-line {
+    font-size: 12px;
+  }
+  
+  .hero-current-task {
+    font-size: 12px;
+  }
+  
+  .hero-sync-time {
+    font-size: 10px;
+  }
+  
+  /* Milestone tracker */
   .milestone-tracker {
-    margin: 10px;
+    margin: 10px 0;
     padding: 16px;
   }
   
   .milestone-strip {
     justify-content: flex-start;
     gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
   }
   
   .milestone-item {
     min-width: 60px;
+    flex-shrink: 0;
   }
   
   .milestone-dot {
@@ -4114,17 +4256,473 @@ body.compact .task-action-btn { padding: 3px 8px; font-size: 9px; }
     margin-bottom: 20px;
   }
   
+  /* App layout → single column */
+  .app-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .sidebar,
+  .activity-sidebar {
+    display: none;
+  }
+  
+  .main-content {
+    max-width: 100%;
+    padding: 0;
+  }
+  
+  /* Mission control */
+  .mission-control {
+    padding: 16px;
+  }
+  
+  /* Brain dump */
+  .brain-dump {
+    padding: 16px;
+  }
+  
+  .brain-dump-textarea {
+    min-height: 120px;
+    font-size: 13px;
+  }
+  
+  .brain-dump-send {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  /* Carlo actions */
+  .carlo-actions {
+    padding: 16px;
+  }
+  
+  /* Subagents panel */
+  .subagents-panel {
+    padding: 16px;
+  }
+  
+  /* Kanban board → single column stack */
+  .kanban-section {
+    padding: 16px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .section-title {
+    font-size: 16px;
+  }
+  
+  .quick-filters {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .filter-chip {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .kanban-board {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .kanban-column {
+    min-width: 100%;
+  }
+  
+  .column-header {
+    padding: 12px;
+  }
+  
+  .column-title {
+    font-size: 13px;
+  }
+  
+  .column-count {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  
+  .task-card {
+    padding: 12px;
+  }
+  
+  .task-title {
+    font-size: 13px;
+  }
+  
+  .task-notes {
+    font-size: 11px;
+  }
+  
+  .task-meta {
+    gap: 6px;
+    font-size: 10px;
+  }
+  
+  /* Reviews view */
+  .reviews-view {
+    padding: 16px;
+  }
+  
+  .reviews-header {
+    padding: 16px;
+  }
+  
+  .view-title {
+    font-size: 20px;
+  }
+  
+  .reviews-subtitle {
+    font-size: 12px;
+  }
+  
+  .quick-actions-panel {
+    margin: 16px 0;
+    padding: 16px;
+  }
+  
   .quick-actions-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
   
   .quick-action-btn {
     flex-direction: row;
     justify-content: flex-start;
     padding: 14px 16px;
+    gap: 12px;
   }
   
   .qa-icon {
     font-size: 24px;
+  }
+  
+  .qa-label {
+    font-size: 13px;
+  }
+  
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  
+  .review-card {
+    padding: 14px;
+  }
+  
+  /* Vault view */
+  .vault-view {
+    padding: 16px;
+  }
+  
+  .vault-filters {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 0;
+  }
+  
+  .vault-filter {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+  
+  .vault-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .vault-card {
+    padding: 14px;
+  }
+  
+  /* Gallery view */
+  .gallery-view {
+    padding: 16px;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .gallery-item {
+    padding: 12px;
+  }
+  
+  .gallery-caption-section {
+    margin-top: 20px;
+    padding: 16px;
+  }
+  
+  .caption-preview {
+    max-height: 200px;
+    padding: 12px;
+  }
+  
+  /* Tasks view */
+  .tasks-view {
+    padding: 16px;
+  }
+  
+  .tasks-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-group {
+    width: 100%;
+  }
+  
+  .filter-select {
+    width: 100%;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  
+  .tasks-list {
+    gap: 12px;
+  }
+  
+  /* Content view */
+  .content-view {
+    padding: 16px;
+  }
+  
+  .content-nav {
+    gap: 12px;
+  }
+  
+  .content-month {
+    font-size: 14px;
+  }
+  
+  .content-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px 0;
+  }
+  
+  .content-stat-value {
+    font-size: 20px;
+  }
+  
+  .content-stat-label {
+    font-size: 10px;
+  }
+  
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  
+  .calendar-day {
+    min-height: 60px;
+    padding: 4px;
+    font-size: 11px;
+  }
+  
+  .queue-list {
+    gap: 10px;
+  }
+  
+  /* Agents view */
+  .agents-view {
+    padding: 16px;
+  }
+  
+  .agents-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  
+  .agent-card {
+    padding: 14px;
+  }
+  
+  /* Branding view */
+  .branding-view {
+    padding: 16px;
+  }
+  
+  .branding-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .brand-sidebar {
+    max-width: 100%;
+    padding: 12px;
+  }
+  
+  .brand-docs-panel {
+    padding: 16px;
+  }
+  
+  /* Modals → full screen on mobile */
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* FAB */
+  .fab-add {
+    bottom: 80px; /* Account for mobile nav */
+    right: 16px;
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+  
+  /* Quick add form */
+  .quick-add-form {
+    width: 100%;
+    max-width: 100%;
+    bottom: 0;
+    border-radius: 20px 20px 0 0;
+  }
+  
+  .quick-add-input,
+  .quick-add-select,
+  .quick-add-textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+  
+  /* Settings panel */
+  .settings-panel {
+    width: 100%;
+    max-width: 100%;
+    right: 0;
+  }
+  
+  /* Toast container */
+  .toast-container {
+    bottom: 80px; /* Account for mobile nav */
+    left: 16px;
+    right: 16px;
+  }
+}
+
+/* Small Mobile: Below 480px */
+@media (max-width: 480px) {
+  html { font-size: 13px; }
+  
+  .topbar { padding: 8px 12px; }
+  
+  .view-container { padding: 12px; }
+  
+  .perci-hero-hq { padding: 16px 12px; }
+  
+  .hero-avatar-section {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .hero-avatar {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .hero-title { font-size: 18px; }
+  .hero-status-line { font-size: 11px; }
+  .hero-current-task { font-size: 11px; }
+  
+  .milestone-tracker { padding: 12px; }
+  .milestone-dot {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+  
+  .milestone-label { font-size: 8px; }
+  
+  .quick-actions-grid { grid-template-columns: 1fr; }
+  .quick-action-btn { padding: 12px 14px; }
+  
+  .kanban-board { gap: 12px; }
+  .task-card { padding: 10px; }
+  
+  .content-stats {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .calendar-day {
+    min-height: 50px;
+    padding: 3px;
+    font-size: 10px;
+  }
+  
+  .nav-tab {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+}
+
+/* Mobile Bottom Navigation */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+    z-index: 1000;
+  }
+  
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 500;
+    transition: all 0.2s;
+    min-width: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .mobile-nav-item:active {
+    background: var(--orange-dim);
+  }
+  
+  .mobile-nav-item.active {
+    color: var(--orange);
+  }
+  
+  .mobile-nav-icon {
+    font-size: 20px;
   }
 }

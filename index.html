@@ -591,8 +591,56 @@
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
+    <a class="mobile-nav-item active" onclick="switchTab('dashboard')">
+      <span class="mobile-nav-icon">⚔️</span>
+      <span>Command</span>
+    </a>
+    <a class="mobile-nav-item" onclick="switchTab('reviews')">
+      <span class="mobile-nav-icon">📋</span>
+      <span>Reviews</span>
+    </a>
+    <a class="mobile-nav-item" onclick="switchTab('tasks')">
+      <span class="mobile-nav-icon">📌</span>
+      <span>Tasks</span>
+    </a>
+    <a class="mobile-nav-item" onclick="switchTab('content')">
+      <span class="mobile-nav-icon">📸</span>
+      <span>Content</span>
+    </a>
+    <a class="mobile-nav-item" onclick="switchTab('agents')">
+      <span class="mobile-nav-icon">🤖</span>
+      <span>More</span>
+    </a>
+  </nav>
+
   <script src="data/tasks.js"></script>
   <script src="data/content.js"></script>
   <script src="app.js"></script>
+  <script>
+    // Sync mobile bottom nav with tab switching
+    const originalSwitchTab = window.switchTab;
+    window.switchTab = function(tab) {
+      // Call original function
+      if (originalSwitchTab) {
+        originalSwitchTab(tab);
+      }
+      
+      // Update mobile nav active state
+      const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+      const tabMap = {
+        'dashboard': 0,
+        'reviews': 1,
+        'tasks': 2,
+        'content': 3,
+        'agents': 4
+      };
+      
+      mobileNavItems.forEach((item, index) => {
+        item.classList.toggle('active', index === tabMap[tab]);
+      });
+    };
+  </script>
 </body>
 </html>
