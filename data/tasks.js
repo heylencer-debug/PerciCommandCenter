@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-02-27T06:27:53.379Z';
+window.DATA_VERSION = '2026-02-27T06:28:42.264Z';
 
 window.PERCI_STATUS = {
   "status": "active",
   "statusText": "Vesper generating Day 1 final — 7 slides in progress",
   "mood": "focused",
-  "lastUpdated": "2026-02-27T06:27:53.377Z",
+  "lastUpdated": "2026-02-27T06:28:42.263Z",
   "currentTask": "Day 1 carousel final generation",
   "currentStep": "Vesper generating v5 with new brand specs",
   "totalSteps": null,
