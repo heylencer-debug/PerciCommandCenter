@@ -62,6 +62,91 @@ window.CONTENT_POSTS = [
   }
 ];
 
+// Brand Guidelines Data
+window.BRANDING_DATA = [
+  {
+    id: 'project-percy-ph',
+    name: 'Project Percy PH',
+    emoji: '🛍️',
+    tagline: 'Personalized Embroidery Gifts PH | BTV × Blanc Nue inspired',
+    category: 'Embroidery & Personalized Gifts',
+    market: 'Philippines',
+    color: '#FF7A00',
+    docs: [
+      {
+        id: 'identity',
+        title: '🎨 Brand Identity',
+        content: `**Brand Name:** Project Percy PH
+**Display Name:** Project Percy PH (Percy, not Perci — display name only)
+**Mascot:** Perci the chubby white cat ⚔️
+
+**Tagline:** Personalized Embroidery Gifts PH | BTV × Blanc Nue inspired
+
+**Style:** Bright Vibrant Industrial Dopamine Chic + BTV × Blanc Nue aesthetic
+- Dopamine Minimalism
+- Clean, bright, joyful aesthetic
+- Industrial chic elements with warmth`
+      },
+      {
+        id: 'colors',
+        title: '🎨 Brand Colors',
+        content: `**Primary Brand Colors:**
+- **White** — Base, clean canvas
+- **Orange #FF7A00** — Primary brand color for content, accents, CTAs
+
+**UI Colors:**
+- **Coral Red #E94560** — UI elements, interactive components
+
+**Supporting Palette:**
+- Powder blue + baby pink (BTV × Blanc Nue packaging)
+- Iridescent accents
+- Chrome/silver metallic touches`
+      },
+      {
+        id: 'products',
+        title: '📦 Product Catalog',
+        content: `**Embroidered Products:**
+- Tote bags (Glazed Poofy Bag, Micro Dumpling Bag, Colourblock Dumpling, Pocket Poofy, Striped Reversible, Classic Tote)
+- Towels (bath towels, hand towels)
+- Caps
+- Polo shirts
+
+**Design Types:**
+- Pet portraits
+- Personal names/initials
+- Family portraits
+- Baby portraits
+
+**Personalization Rules:**
+- Embroidery must always show intentional designs
+- No random patterns — always pet portraits, names, initials, family portraits, or baby designs
+- Every product showcases meaningful personalization`
+      },
+      {
+        id: 'aesthetic',
+        title: '✨ Visual Aesthetic',
+        content: `**BTV × Blanc Nue — Dopamine Minimalism**
+
+**Environment:**
+- Chrome + textured white + colored acrylic walls
+- Dopamine sofa/furniture/carpets/decor
+- Raspberry red elements
+- Iridescent packaging with powder blue + baby pink
+
+**Photography Style:**
+- Real Filipino candid emotions
+- No AI faces
+- iPhone depth-of-field feel
+- Bright, vibrant, joyful
+
+**Typography:**
+- White hook text
+- Powder blue accent bars`
+      }
+    ]
+  }
+];
+
 window.AGENTS_CONFIG = [
   {
     id: 'perci',

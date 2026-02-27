@@ -1,4 +1,4 @@
-window.DATA_VERSION = '2026-02-27T16:47:00.000Z';
+window.DATA_VERSION = '2026-02-27T16:50:00.000Z';
 
 window.PERCI_STATUS = {
   "status": "idle",
@@ -41,6 +41,20 @@ window.PROJECTS = [
 ];
 
 window.TASKS = [
+  {
+    "id": "task-014",
+    "title": "BRAND.js — Expanded Product Catalog + Personalization Rules",
+    "description": "Added 16 BTV × Blanc Nue product+embroidery combos. Added personalizationRules (8 rules). Embroidery must always show pet portraits, names, initials, family portraits — no random patterns.",
+    "project": "perci-system",
+    "status": "done",
+    "priority": "high",
+    "needsCarlo": false,
+    "subagentRunning": false,
+    "notes": "BRAND.js updated with expanded catalog: Glazed Poofy Bag, Micro Dumpling Bag, Colourblock Dumpling, Pocket Poofy, Striped Reversible, Classic Tote, Polo, Cap, Towel — all with specific personalized embroidery designs. Personalization rules: pet portraits, names/initials, family portraits, baby designs.",
+    "percisAdvice": "Vesper will now always show intentional personalized embroidery — names, pets, families. No more generic designs.",
+    "createdAt": "2026-02-27T16:50:00+08:00",
+    "updatedAt": "2026-02-27T16:50:00+08:00"
+  },
   {
     "id": "task-013",
     "title": "Vesper BRAND.js — Brand Memory System",
