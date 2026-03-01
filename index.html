@@ -147,6 +147,9 @@
             <span class="brain-dump-sub">Drop thoughts here — Perci reads this every heartbeat</span>
           </div>
           <textarea class="brain-dump-textarea" id="brain-dump-text" placeholder="What's on your mind? Tasks, ideas, links, anything..."></textarea>
+          <div class="brain-dump-hint">
+            Lines starting with "decided/rule" → Decisions · "noticed/competitor" → Intel · Everything else → Tasks
+          </div>
           <div class="brain-dump-actions">
             <button class="brain-dump-send" id="brain-dump-send" onclick="sendBrainDump()">Send to Perci 📨</button>
             <div class="brain-dump-last" id="brain-dump-last"></div>
@@ -388,6 +391,16 @@
         <span class="flow-step">approved</span>
         <span class="flow-arrow">→</span>
         <span class="flow-step">posted</span>
+      </div>
+
+      <div class="carousel-toolbar">
+        <button class="sb-add-btn" onclick="showAddCarouselForm()">+ Add Day</button>
+      </div>
+      <div id="add-carousel-form" style="display:none" class="sb-inline-form">
+        <input id="new-carousel-day" type="number" placeholder="Day #" class="sb-input" style="width:80px" />
+        <input id="new-carousel-topic" type="text" placeholder="Topic / theme" class="sb-input" style="flex:1" />
+        <button onclick="submitNewCarousel()" class="sb-submit-btn">Add</button>
+        <button onclick="hideAddCarouselForm()" class="sb-cancel-btn">Cancel</button>
       </div>
 
       <div class="carousel-grid" id="carousel-grid">
