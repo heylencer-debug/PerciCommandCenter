@@ -505,41 +505,71 @@ function showLastBrainDump() {
   } catch (e) {}
 }
 
-function sendBrainDump() {
-  const textarea = document.getElementById('brain-dump-text');
-  const text = textarea.value.trim();
+function sendBrainDump() { return submitBrainDump(); }
+
+async function submitBrainDump() {
+  const text = document.getElementById('brain-dump-text').value.trim();
   if (!text) return;
 
-  const formatted = `📨 [Carlo → Perci] ${new Date().toLocaleString('en-PH')}\n\n${text}`;
-
-  // Copy to clipboard
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(formatted).catch(() => fallbackCopy(formatted));
-  } else {
-    fallbackCopy(formatted);
+  if (!window.db) {
+    addActivityEntry('⚠️', 'Supabase not connected', 'error');
+    return;
   }
 
-  // Save to localStorage
-  const record = { text: text, time: new Date().toISOString() };
-  try {
-    localStorage.setItem(LS_KEYS.brainDumpLast, JSON.stringify(record));
-    localStorage.setItem(LS_KEYS.brainDump, '');
-  } catch (e) {}
+  // Parse the dump — split by newlines, each line = potential task
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 2);
 
-  // Visual feedback
-  const btn = document.getElementById('brain-dump-send');
-  btn.textContent = '✅ Copied!';
-  btn.style.background = '#22C55E';
-  playSound('pop');
-  
-  setTimeout(() => {
-    btn.textContent = 'Send to Perci 📨';
-    btn.style.background = '';
-  }, 2000);
+  let saved = 0;
+  for (const line of lines) {
+    // Detect type by keywords
+    const isDecision = /^(decided|decision|rule|going with|choosing)/i.test(line);
+    const isIntel = /^(noticed|competitor|saw|found|ethel)/i.test(line);
 
-  textarea.value = '';
-  showLastBrainDump();
-  addActivityEntry('📨', `Brain dump sent: "${text.substring(0, 40)}${text.length > 40 ? '...' : ''}"`, 'info');
+    try {
+      if (isDecision) {
+        await db.insert('decisions', {
+          title: line.slice(0, 60),
+          decision: line,
+          project: 'project-percy-ph'
+        });
+      } else if (isIntel) {
+        await db.insert('intel_feed', {
+          source: 'carlo-brain-dump',
+          type: 'observation',
+          title: line.slice(0, 80),
+          content: line
+        });
+      } else {
+        // Default: task
+        await db.insert('tasks', {
+          title: line.slice(0, 100),
+          description: line.length > 100 ? line : null,
+          status: 'pending',
+          priority: 'normal',
+          project: 'project-percy-ph'
+        });
+      }
+      saved++;
+    } catch (err) {
+      console.error('[BrainDump] Failed to save line:', err.message);
+    }
+  }
+
+  // Log activity
+  await db.insert('agent_activity', {
+    agent: 'perci',
+    action: 'Brain Dump processed',
+    details: `${saved} items saved (tasks/decisions/intel auto-detected)`,
+    project: 'project-percy-ph',
+    status: 'done'
+  });
+
+  playSound('complete');
+  document.getElementById('brain-dump-text').value = '';
+  addActivityEntry('🧠', `Brain dump: ${saved} items saved to Supabase`, 'success');
+
+  // Refresh relevant tabs
+  renderTasksFromSupabase();
 }
 
 function fallbackCopy(text) {
@@ -2836,9 +2866,12 @@ async function renderCarouselTracker() {
       const color = CAROUSEL_STATUS_COLORS[c.status] || '#9CA3AF';
       const statusIdx = CAROUSEL_STATUSES.indexOf(c.status);
       const progress = ((statusIdx + 1) / CAROUSEL_STATUSES.length) * 100;
+      const approveBtn = c.status === 'review'
+        ? `<button class="carousel-approve-btn" onclick="event.stopPropagation(); approveCarousel('${c.id}', '${escHtml(c.topic).replace(/'/g, "\\'")}')">✅ Approve & Write Caption</button>`
+        : '';
 
       return `
-        <div class="carousel-card" onclick="advanceCarouselStatus('${c.id}', '${c.status}')" style="border-top: 3px solid ${color}">
+        <div class="carousel-card" onclick="advanceCarouselStatus('${c.id}', '${c.status}', '${escHtml(c.topic).replace(/'/g, "\\'")}')" style="border-top: 3px solid ${color}">
           <div class="carousel-card-header">
             <span class="carousel-day">Day ${c.day}</span>
             <span class="carousel-status-pill" style="background:${color}20;color:${color}">${escHtml(c.status)}</span>
@@ -2853,6 +2886,7 @@ async function renderCarouselTracker() {
             ${c.generated_at ? `<span>🎨 Generated: ${timeAgo(c.generated_at)}</span>` : ''}
             ${c.posted_at ? `<span>📸 Posted: ${timeAgo(c.posted_at)}</span>` : ''}
           </div>
+          ${approveBtn}
           <div class="carousel-advance-hint">Click to advance status →</div>
         </div>
       `;
@@ -2864,28 +2898,86 @@ async function renderCarouselTracker() {
   }
 }
 
-async function advanceCarouselStatus(id, currentStatus) {
+async function advanceCarouselStatus(id, currentStatus, topic) {
   const idx = CAROUSEL_STATUSES.indexOf(currentStatus);
   if (idx >= CAROUSEL_STATUSES.length - 1) {
-    addActivityEntry('📸', 'Carousel already posted!', 'info');
+    addActivityEntry('📸', `Day ${topic} already posted!`, 'info');
     return;
   }
+  const nextStatus = CAROUSEL_STATUSES[idx + 1];
 
-  const newStatus = CAROUSEL_STATUSES[idx + 1];
+  // Quick confirm
+  const confirmed = confirm(`Advance "${topic}" to: ${nextStatus}?`);
+  if (!confirmed) return;
+
   const now = new Date().toISOString();
-  const updateData = { status: newStatus, updated_at: now };
-
-  if (newStatus === 'copy-approved') updateData.copy_approved_at = now;
-  if (newStatus === 'generating' || newStatus === 'review') updateData.generated_at = now;
-  if (newStatus === 'posted') updateData.posted_at = now;
+  const updateData = { status: nextStatus, updated_at: now };
+  if (nextStatus === 'copy-approved') updateData.copy_approved_at = now;
+  if (nextStatus === 'generating' || nextStatus === 'review') updateData.generated_at = now;
+  if (nextStatus === 'posted') updateData.posted_at = now;
 
   try {
     await db.update('carousels', id, updateData);
+    await db.insert('agent_activity', {
+      agent: 'perci',
+      action: `Carousel status advanced: ${topic} → ${nextStatus}`,
+      details: `Was: ${currentStatus}`,
+      project: 'project-percy-ph',
+      status: 'done'
+    });
     playSound('complete');
-    addActivityEntry('📸', `Carousel advanced to: ${newStatus}`, 'success');
+    addActivityEntry('📸', `${topic} → ${nextStatus}`, 'success');
     renderCarouselTracker();
   } catch (err) {
     console.error('[Supabase] Carousel update failed:', err.message);
+  }
+}
+
+function showAddCarouselForm() {
+  document.getElementById('add-carousel-form').style.display = 'flex';
+}
+function hideAddCarouselForm() {
+  document.getElementById('add-carousel-form').style.display = 'none';
+}
+async function submitNewCarousel() {
+  const day = parseInt(document.getElementById('new-carousel-day').value);
+  const topic = document.getElementById('new-carousel-topic').value.trim();
+  if (!day || !topic) return;
+  try {
+    await db.insert('carousels', { day, topic, status: 'planning' });
+    hideAddCarouselForm();
+    document.getElementById('new-carousel-day').value = '';
+    document.getElementById('new-carousel-topic').value = '';
+    playSound('complete');
+    renderCarouselTracker();
+  } catch (err) {
+    console.error('[Supabase] Add carousel failed:', err.message);
+  }
+}
+
+async function approveCarousel(id, topic) {
+  const confirmed = confirm(`Approve "${topic}" and generate caption?`);
+  if (!confirmed) return;
+
+  try {
+    await db.update('carousels', id, {
+      status: 'approved',
+      updated_at: new Date().toISOString()
+    });
+
+    await db.insert('agent_activity', {
+      agent: 'carlo',
+      action: `Carousel approved: ${topic}`,
+      details: 'Caption generation queued for Perci',
+      project: 'project-percy-ph',
+      status: 'done'
+    });
+
+    playSound('complete');
+    addActivityEntry('✅', `"${topic}" approved! Perci will write caption.`, 'success');
+    renderCarouselTracker();
+  } catch (err) {
+    console.error('[Approval] Failed:', err.message);
   }
 }
 
