@@ -1703,6 +1703,12 @@ function renderAll() {
   if (currentTab === 'reviews') renderReviews();
   if (currentTab === 'vault') renderVault();
   if (currentTab === 'gallery') renderGallery();
+  // V6: Re-render Supabase tabs if active
+  if (currentTab === 'tasks') renderTasksFromSupabase();
+  if (currentTab === 'content') renderCarouselTracker();
+  if (currentTab === 'agents') renderAgentActivityFeed();
+  if (currentTab === 'intel') renderIntelFeed();
+  if (currentTab === 'decisions') renderDecisionsList();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -1750,24 +1756,27 @@ function switchTab(tab) {
     btn.classList.toggle('active', btn.dataset.tab === tab);
   });
 
-  // V4: All views including new ones
-  const views = ['dashboard', 'reviews', 'vault', 'gallery', 'tasks', 'content', 'agents', 'branding'];
+  // V6: All views including Supabase-powered ones
+  const views = ['dashboard', 'reviews', 'vault', 'gallery', 'tasks', 'content', 'agents', 'branding', 'intel', 'decisions'];
   views.forEach(v => {
     const el = document.getElementById('view-' + v);
     if (el) el.style.display = (v === tab) ? '' : 'none';
   });
 
   const fab = document.getElementById('fab-add');
-  fab.style.display = (tab === 'branding' || tab === 'vault' || tab === 'gallery') ? 'none' : '';
+  fab.style.display = (tab === 'branding' || tab === 'vault' || tab === 'gallery' || tab === 'intel') ? 'none' : '';
 
   // V4: Initialize views on switch
   if (tab === 'branding') initBrandingPage();
-  if (tab === 'tasks') renderTasksList();
-  if (tab === 'content') renderContentCalendar();
-  if (tab === 'agents') renderAgentsView();
+  if (tab === 'tasks') renderTasksFromSupabase();
+  if (tab === 'content') renderCarouselTracker();
+  if (tab === 'agents') { renderAgentsView(); renderAgentActivityFeed(); }
   if (tab === 'reviews') renderReviews();
   if (tab === 'vault') renderVault();
   if (tab === 'gallery') renderGallery();
+  // V6: Supabase tabs
+  if (tab === 'intel') renderIntelFeed();
+  if (tab === 'decisions') renderDecisionsList();
 }
 
 function renderTasksList() {
@@ -2566,4 +2575,444 @@ function refreshData() {
       isRefreshing = false;
     }, 2000);
   });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// V6: SUPABASE INTEGRATION — Tasks, Agent Activity, Carousels, Intel, Decisions
+// ═══════════════════════════════════════════════════════════════════════════
+
+const AGENT_COLORS = {
+  perci:  { emoji: '⚔️', color: '#3B82F6', name: 'Sir Percival' },
+  vesper: { emoji: '🌌', color: '#9333EA', name: 'Vesper' },
+  brigid: { emoji: '🔥', color: '#EF4444', name: 'Brigid' },
+  ethel:  { emoji: '🌿', color: '#22C55E', name: 'Ethel' }
+};
+
+const CAROUSEL_STATUSES = ['planning', 'copy-approved', 'generating', 'review', 'approved', 'posted'];
+const CAROUSEL_STATUS_COLORS = {
+  'planning': '#F59E0B',
+  'copy-approved': '#3B82F6',
+  'generating': '#9333EA',
+  'review': '#EC4899',
+  'approved': '#22C55E',
+  'posted': '#06B6D4'
+};
+
+const PRIORITY_MAP = { urgent: '🔥', high: '🔴', normal: '🟡', low: '🟢' };
+
+let sbTasksCache = [];
+let sbActivityCache = [];
+let sbCarouselsCache = [];
+let sbIntelCache = [];
+let sbDecisionsCache = [];
+let agentActivityInterval = null;
+
+// ─── TASKS TAB (Supabase-powered) ──────────────────────────────────────────
+
+async function renderTasksFromSupabase() {
+  const list = document.getElementById('tasks-list');
+  const empty = document.getElementById('tasks-empty');
+  if (!list) return;
+
+  // Also apply local task filters for backward compat
+  applyTaskFilters();
+
+  // Try loading from Supabase
+  if (!window.db) return;
+
+  try {
+    const status = document.getElementById('filter-status')?.value || 'all';
+    const priority = document.getElementById('filter-priority')?.value || 'all';
+    const project = document.getElementById('filter-project')?.value || 'all';
+
+    let query = 'order=created_at.desc';
+    if (status !== 'all') query += `&status=eq.${status}`;
+    if (priority !== 'all') query += `&priority=eq.${priority}`;
+    if (project !== 'all') query += `&project=eq.${project}`;
+
+    const sbTasks = await db.select('tasks', query);
+    sbTasksCache = sbTasks;
+
+    if (sbTasks.length === 0 && list.innerHTML === '') {
+      // No Supabase tasks and no local tasks showing — keep local display
+      return;
+    }
+
+    if (sbTasks.length > 0) {
+      if (empty) empty.style.display = 'none';
+
+      // Render Supabase tasks below local tasks
+      const sbSection = document.getElementById('sb-tasks-section') || document.createElement('div');
+      sbSection.id = 'sb-tasks-section';
+      sbSection.innerHTML = `
+        <div class="sb-section-divider">
+          <span class="sb-divider-label">☁️ Supabase Tasks (${sbTasks.length})</span>
+        </div>
+        ${sbTasks.map(t => renderSupabaseTaskCard(t)).join('')}
+      `;
+
+      // Insert after tasks-list if not already there
+      if (!document.getElementById('sb-tasks-section')) {
+        list.parentNode.insertBefore(sbSection, empty);
+      }
+    }
+  } catch (err) {
+    console.warn('[Supabase] Tasks load failed:', err.message);
+  }
+}
+
+function renderSupabaseTaskCard(t) {
+  const icon = PRIORITY_MAP[t.priority] || '⚪';
+  const projectBadge = t.project ? `<span class="badge" style="background:var(--orange-dim);color:var(--orange)">${escHtml(t.project)}</span>` : '';
+  const statusBadge = `<span class="badge sb-status-${t.status}">${escHtml(t.status)}</span>`;
+
+  return `
+    <div class="sb-task-card" data-sb-id="${t.id}">
+      <div class="sb-task-top">
+        <span class="task-priority">${icon}</span>
+        <span class="sb-task-title">${escHtml(t.title)}</span>
+        ${statusBadge}
+      </div>
+      ${t.description ? `<div class="sb-task-desc">${escHtml(t.description)}</div>` : ''}
+      <div class="sb-task-footer">
+        ${projectBadge}
+        <span class="sb-task-date">${timeAgo(t.created_at)}</span>
+        <div class="sb-task-actions">
+          <button class="sb-action-btn" onclick="toggleSupabaseTaskStatus('${t.id}', '${t.status}', event)" title="Toggle status">
+            ${t.status === 'done' ? '↩️' : '✅'}
+          </button>
+          <button class="sb-action-btn sb-delete" onclick="deleteSupabaseTask('${t.id}', event)" title="Delete">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitSupabaseTask() {
+  const titleEl = document.getElementById('sb-task-title');
+  const descEl = document.getElementById('sb-task-desc');
+  const priorityEl = document.getElementById('sb-task-priority');
+  const projectEl = document.getElementById('sb-task-project');
+
+  const title = titleEl?.value?.trim();
+  if (!title) { titleEl.focus(); return; }
+
+  const data = {
+    title,
+    description: descEl?.value?.trim() || null,
+    priority: priorityEl?.value || 'normal',
+    project: projectEl?.value || 'general',
+    status: 'pending'
+  };
+
+  try {
+    await db.insert('tasks', data);
+    titleEl.value = '';
+    descEl.value = '';
+    playSound('complete');
+    addActivityEntry('☁️', `Task added to Supabase: "${title}"`, 'success');
+    renderTasksFromSupabase();
+  } catch (err) {
+    console.error('[Supabase] Insert task failed:', err.message);
+    addActivityEntry('❌', `Failed to add task: ${err.message}`, 'error');
+  }
+}
+
+async function toggleSupabaseTaskStatus(id, currentStatus, e) {
+  if (e) e.stopPropagation();
+  const newStatus = currentStatus === 'done' ? 'pending' : 'done';
+  const updateData = { status: newStatus, updated_at: new Date().toISOString() };
+  if (newStatus === 'done') updateData.completed_at = new Date().toISOString();
+
+  try {
+    await db.update('tasks', id, updateData);
+    playSound(newStatus === 'done' ? 'complete' : 'pop');
+    renderTasksFromSupabase();
+  } catch (err) {
+    console.error('[Supabase] Toggle task failed:', err.message);
+  }
+}
+
+async function deleteSupabaseTask(id, e) {
+  if (e) e.stopPropagation();
+  try {
+    await db.delete('tasks', id);
+    playSound('pop');
+    addActivityEntry('🗑️', 'Task deleted from Supabase', 'info');
+    renderTasksFromSupabase();
+  } catch (err) {
+    console.error('[Supabase] Delete task failed:', err.message);
+  }
+}
+
+// ─── AGENT ACTIVITY TAB (Supabase-powered) ─────────────────────────────────
+
+async function renderAgentActivityFeed() {
+  const feed = document.getElementById('agent-activity-feed');
+  if (!feed || !window.db) return;
+
+  try {
+    const activities = await db.select('agent_activity', 'order=created_at.desc&limit=50');
+    sbActivityCache = activities;
+
+    if (!activities.length) {
+      feed.innerHTML = `
+        <div class="activity-empty">
+          <div class="empty-icon">📡</div>
+          <div class="empty-text">No agent activity yet</div>
+        </div>
+      `;
+      return;
+    }
+
+    feed.innerHTML = activities.map(a => {
+      const agent = AGENT_COLORS[a.agent] || { emoji: '🤖', color: '#9CA3AF', name: a.agent };
+      const statusClass = a.status === 'failed' ? 'sb-status-failed' : (a.status === 'running' ? 'sb-status-running' : 'sb-status-done');
+
+      return `
+        <div class="activity-entry" style="border-left: 3px solid ${agent.color}">
+          <div class="activity-entry-header">
+            <span class="activity-agent" style="color:${agent.color}">${agent.emoji} ${escHtml(agent.name)}</span>
+            <span class="badge ${statusClass}">${escHtml(a.status)}</span>
+          </div>
+          <div class="activity-action">${escHtml(a.action)}</div>
+          ${a.details ? `<div class="activity-details">${escHtml(a.details)}</div>` : ''}
+          ${a.project ? `<span class="badge" style="background:var(--orange-dim);color:var(--orange);font-size:10px">${escHtml(a.project)}</span>` : ''}
+          <div class="activity-time">${timeAgo(a.created_at)}</div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.warn('[Supabase] Agent activity load failed:', err.message);
+    feed.innerHTML = `<div class="activity-error">⚠️ Could not load activity: ${escHtml(err.message)}</div>`;
+  }
+
+  // Set up auto-refresh
+  if (!agentActivityInterval) {
+    agentActivityInterval = setInterval(() => {
+      if (currentTab === 'agents') renderAgentActivityFeed();
+    }, 60000);
+  }
+}
+
+// ─── CAROUSEL TRACKER TAB (Supabase-powered) ───────────────────────────────
+
+async function renderCarouselTracker() {
+  const grid = document.getElementById('carousel-grid');
+  if (!grid || !window.db) {
+    // Fallback to old calendar if no Supabase
+    renderCalendar();
+    return;
+  }
+
+  try {
+    const carousels = await db.select('carousels', 'order=day.asc');
+    sbCarouselsCache = carousels;
+
+    // Stats
+    const planning = carousels.filter(c => c.status === 'planning').length;
+    const generating = carousels.filter(c => ['generating', 'copy-approved'].includes(c.status)).length;
+    const posted = carousels.filter(c => c.status === 'posted').length;
+    const elPlanning = document.getElementById('stat-planning');
+    const elGenerating = document.getElementById('stat-generating');
+    const elPosted = document.getElementById('stat-posted');
+    if (elPlanning) elPlanning.textContent = planning;
+    if (elGenerating) elGenerating.textContent = generating;
+    if (elPosted) elPosted.textContent = posted;
+
+    if (!carousels.length) {
+      grid.innerHTML = `
+        <div class="carousel-empty">
+          <div class="empty-icon">📸</div>
+          <div class="empty-text">No carousels tracked yet</div>
+          <div class="empty-sub">Carousel data will appear here once seeded</div>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = carousels.map(c => {
+      const color = CAROUSEL_STATUS_COLORS[c.status] || '#9CA3AF';
+      const statusIdx = CAROUSEL_STATUSES.indexOf(c.status);
+      const progress = ((statusIdx + 1) / CAROUSEL_STATUSES.length) * 100;
+
+      return `
+        <div class="carousel-card" onclick="advanceCarouselStatus('${c.id}', '${c.status}')" style="border-top: 3px solid ${color}">
+          <div class="carousel-card-header">
+            <span class="carousel-day">Day ${c.day}</span>
+            <span class="carousel-status-pill" style="background:${color}20;color:${color}">${escHtml(c.status)}</span>
+          </div>
+          <div class="carousel-topic">${escHtml(c.topic)}</div>
+          <div class="carousel-progress">
+            <div class="carousel-progress-bar" style="width:${progress}%;background:${color}"></div>
+          </div>
+          ${c.notes ? `<div class="carousel-notes">${escHtml(c.notes)}</div>` : ''}
+          <div class="carousel-times">
+            ${c.copy_approved_at ? `<span>✅ Copy: ${timeAgo(c.copy_approved_at)}</span>` : ''}
+            ${c.generated_at ? `<span>🎨 Generated: ${timeAgo(c.generated_at)}</span>` : ''}
+            ${c.posted_at ? `<span>📸 Posted: ${timeAgo(c.posted_at)}</span>` : ''}
+          </div>
+          <div class="carousel-advance-hint">Click to advance status →</div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.warn('[Supabase] Carousels load failed:', err.message);
+    // Fallback to old calendar
+    renderCalendar();
+  }
+}
+
+async function advanceCarouselStatus(id, currentStatus) {
+  const idx = CAROUSEL_STATUSES.indexOf(currentStatus);
+  if (idx >= CAROUSEL_STATUSES.length - 1) {
+    addActivityEntry('📸', 'Carousel already posted!', 'info');
+    return;
+  }
+
+  const newStatus = CAROUSEL_STATUSES[idx + 1];
+  const now = new Date().toISOString();
+  const updateData = { status: newStatus, updated_at: now };
+
+  if (newStatus === 'copy-approved') updateData.copy_approved_at = now;
+  if (newStatus === 'generating' || newStatus === 'review') updateData.generated_at = now;
+  if (newStatus === 'posted') updateData.posted_at = now;
+
+  try {
+    await db.update('carousels', id, updateData);
+    playSound('complete');
+    addActivityEntry('📸', `Carousel advanced to: ${newStatus}`, 'success');
+    renderCarouselTracker();
+  } catch (err) {
+    console.error('[Supabase] Carousel update failed:', err.message);
+  }
+}
+
+// ─── INTEL FEED TAB (Supabase-powered) ─────────────────────────────────────
+
+async function renderIntelFeed() {
+  const list = document.getElementById('intel-feed-list');
+  const empty = document.getElementById('intel-empty');
+  if (!list || !window.db) return;
+
+  try {
+    const intel = await db.select('intel_feed', 'order=scraped_at.desc&limit=50');
+    sbIntelCache = intel;
+
+    if (!intel.length) {
+      list.style.display = 'none';
+      if (empty) empty.style.display = '';
+      return;
+    }
+
+    list.style.display = '';
+    if (empty) empty.style.display = 'none';
+
+    const TYPE_BADGES = {
+      post: { bg: '#EFF6FF', color: '#3B82F6', label: '📝 Post' },
+      product: { bg: '#F0FDF4', color: '#22C55E', label: '📦 Product' },
+      price: { bg: '#FFFBEB', color: '#F59E0B', label: '💰 Price' },
+      trend: { bg: '#F5F3FF', color: '#9333EA', label: '📈 Trend' }
+    };
+
+    list.innerHTML = intel.map(i => {
+      const badge = TYPE_BADGES[i.type] || { bg: '#F3F4F6', color: '#6B7280', label: i.type };
+      return `
+        <div class="intel-entry">
+          <div class="intel-entry-header">
+            <span class="intel-source">${escHtml(i.source)}</span>
+            <span class="badge" style="background:${badge.bg};color:${badge.color};font-size:11px">${badge.label}</span>
+          </div>
+          <div class="intel-title">${escHtml(i.title)}</div>
+          ${i.content ? `<div class="intel-content">${escHtml(i.content)}</div>` : ''}
+          <div class="intel-footer">
+            <span class="intel-time">${timeAgo(i.scraped_at)}</span>
+            ${i.url ? `<a href="${escHtml(i.url)}" target="_blank" class="intel-link">View source →</a>` : ''}
+            ${i.engagement ? `<span class="intel-engagement">👁️ ${i.engagement}</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.warn('[Supabase] Intel feed load failed:', err.message);
+    list.innerHTML = `<div class="activity-error">⚠️ Could not load intel: ${escHtml(err.message)}</div>`;
+  }
+}
+
+// ─── DECISIONS TAB (Supabase-powered) ──────────────────────────────────────
+
+async function renderDecisionsList() {
+  const list = document.getElementById('decisions-list');
+  const empty = document.getElementById('decisions-empty');
+  if (!list || !window.db) return;
+
+  try {
+    const decisions = await db.select('decisions', 'order=created_at.desc&limit=50');
+    sbDecisionsCache = decisions;
+
+    if (!decisions.length) {
+      list.style.display = 'none';
+      if (empty) empty.style.display = '';
+      return;
+    }
+
+    list.style.display = '';
+    if (empty) empty.style.display = 'none';
+
+    list.innerHTML = decisions.map(d => {
+      const projectLabel = d.project ? escHtml(d.project) : '';
+      return `
+        <div class="decision-entry">
+          <div class="decision-header">
+            <span class="decision-title">${escHtml(d.title)}</span>
+            ${projectLabel ? `<span class="badge" style="background:var(--orange-dim);color:var(--orange);font-size:10px">${projectLabel}</span>` : ''}
+          </div>
+          ${d.context ? `<div class="decision-context">${escHtml(d.context)}</div>` : ''}
+          <div class="decision-text">→ ${escHtml(d.decision)}</div>
+          <div class="decision-footer">
+            <span class="decision-by">${escHtml(d.made_by || 'carlo')}</span>
+            <span class="decision-date">${timeAgo(d.created_at)}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.warn('[Supabase] Decisions load failed:', err.message);
+    list.innerHTML = `<div class="activity-error">⚠️ Could not load decisions: ${escHtml(err.message)}</div>`;
+  }
+}
+
+async function submitDecision() {
+  const titleEl = document.getElementById('decision-title');
+  const contextEl = document.getElementById('decision-context');
+  const decisionEl = document.getElementById('decision-text');
+  const projectEl = document.getElementById('decision-project');
+
+  const title = titleEl?.value?.trim();
+  const decision = decisionEl?.value?.trim();
+  if (!title || !decision) {
+    if (!title) titleEl.focus();
+    else decisionEl.focus();
+    return;
+  }
+
+  try {
+    await db.insert('decisions', {
+      title,
+      context: contextEl?.value?.trim() || null,
+      decision,
+      project: projectEl?.value || null,
+      made_by: 'carlo'
+    });
+
+    titleEl.value = '';
+    contextEl.value = '';
+    decisionEl.value = '';
+    playSound('complete');
+    addActivityEntry('⚖️', `Decision logged: "${title}"`, 'success');
+    renderDecisionsList();
+  } catch (err) {
+    console.error('[Supabase] Insert decision failed:', err.message);
+    addActivityEntry('❌', `Failed to log decision: ${err.message}`, 'error');
+  }
 }

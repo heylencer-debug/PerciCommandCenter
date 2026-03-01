@@ -51,8 +51,10 @@
     <button class="nav-tab" data-tab="vault" onclick="switchTab('vault')">📁 Vault</button>
     <button class="nav-tab" data-tab="gallery" onclick="switchTab('gallery')">🖼️ Gallery</button>
     <button class="nav-tab" data-tab="tasks" onclick="switchTab('tasks')">📌 Tasks</button>
-    <button class="nav-tab" data-tab="content" onclick="switchTab('content')">📸 Content</button>
+    <button class="nav-tab" data-tab="content" onclick="switchTab('content')">📸 Carousels</button>
     <button class="nav-tab" data-tab="agents" onclick="switchTab('agents')">🤖 Agents</button>
+    <button class="nav-tab" data-tab="intel" onclick="switchTab('intel')">🔍 Intel</button>
+    <button class="nav-tab" data-tab="decisions" onclick="switchTab('decisions')">⚖️ Decisions</button>
     <button class="nav-tab" data-tab="branding" onclick="switchTab('branding')">🎨 Branding</button>
   </nav>
 
@@ -319,6 +321,28 @@
           </label>
         </div>
       </div>
+      <div class="tasks-add-form" id="tasks-add-form">
+        <div class="form-title">+ Add Task to Supabase</div>
+        <input type="text" class="form-input" id="sb-task-title" placeholder="Task title..." />
+        <textarea class="form-textarea" id="sb-task-desc" placeholder="Description (optional)"></textarea>
+        <div class="form-row">
+          <select class="form-select" id="sb-task-priority">
+            <option value="low">🟢 Low</option>
+            <option value="normal" selected>🟡 Normal</option>
+            <option value="high">🔴 High</option>
+            <option value="urgent">🔥 Urgent</option>
+          </select>
+          <select class="form-select" id="sb-task-project">
+            <option value="general">General</option>
+            <option value="projectperciph">🛍️ Project Percy PH</option>
+            <option value="instagram">📸 Instagram</option>
+            <option value="perci-system">⚔️ Perci System</option>
+            <option value="github-pages">🌐 GitHub Pages</option>
+          </select>
+        </div>
+        <button class="form-submit" onclick="submitSupabaseTask()">Add Task ⚔️</button>
+      </div>
+
       <div class="tasks-list" id="tasks-list"></div>
       <div class="tasks-empty" id="tasks-empty" style="display:none">
         <div class="empty-icon">📭</div>
@@ -333,36 +357,41 @@
   <div id="view-content" class="view-container" style="display:none">
     <div class="content-view">
       <div class="content-header">
-        <h2 class="view-title">📸 Content Calendar</h2>
-        <div class="content-nav">
-          <button class="content-nav-btn" onclick="prevMonth()">◀</button>
-          <span class="content-month" id="content-month">February 2026</span>
-          <button class="content-nav-btn" onclick="nextMonth()">▶</button>
-        </div>
+        <h2 class="view-title">📸 Carousel Tracker</h2>
+        <p class="content-subtitle">Track carousel status from planning to posted — click a card to advance its status</p>
       </div>
-      
+
       <div class="content-stats" id="content-stats">
         <div class="content-stat">
-          <span class="content-stat-value" id="stat-scheduled">0</span>
-          <span class="content-stat-label">Scheduled</span>
+          <span class="content-stat-value" id="stat-planning">0</span>
+          <span class="content-stat-label">Planning</span>
+        </div>
+        <div class="content-stat">
+          <span class="content-stat-value" id="stat-generating">0</span>
+          <span class="content-stat-label">Generating</span>
         </div>
         <div class="content-stat">
           <span class="content-stat-value" id="stat-posted">0</span>
           <span class="content-stat-label">Posted</span>
         </div>
-        <div class="content-stat">
-          <span class="content-stat-value" id="stat-drafts">0</span>
-          <span class="content-stat-label">Drafts</span>
-        </div>
       </div>
 
-      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="carousel-status-flow">
+        <span class="flow-step">planning</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">copy-approved</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">generating</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">review</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">approved</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">posted</span>
+      </div>
 
-      <div class="content-queue">
-        <div class="queue-header">
-          <span class="queue-title">📅 Upcoming Posts</span>
-        </div>
-        <div class="queue-list" id="queue-list"></div>
+      <div class="carousel-grid" id="carousel-grid">
+        <div class="activity-loading">Loading carousels from Supabase...</div>
       </div>
     </div>
   </div>
@@ -373,7 +402,8 @@
   <div id="view-agents" class="view-container" style="display:none">
     <div class="agents-view">
       <div class="agents-header">
-        <h2 class="view-title">🤖 Agent Control</h2>
+        <h2 class="view-title">🤖 Agent Activity</h2>
+        <p class="agents-subtitle">Live feed from all agents — auto-refreshes every 60s</p>
       </div>
 
       <div class="agents-grid" id="agents-grid">
@@ -381,15 +411,65 @@
       </div>
 
       <div class="agents-section">
-        <div class="section-title">Active Sessions</div>
-        <div class="sessions-list" id="sessions-list">
-          <div class="sessions-empty">No active sub-agent sessions</div>
+        <div class="section-title">📡 Activity Feed <span class="activity-auto-badge" id="activity-auto-badge">Auto-refresh ON</span></div>
+        <div class="agent-activity-feed" id="agent-activity-feed">
+          <div class="activity-loading">Loading activity from Supabase...</div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="agents-section">
-        <div class="section-title">Recent Activity</div>
-        <div class="agent-activity" id="agent-activity"></div>
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       INTEL FEED VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-intel" class="view-container" style="display:none">
+    <div class="intel-view">
+      <div class="intel-header">
+        <h2 class="view-title">🔍 Intel Feed</h2>
+        <p class="intel-subtitle">Competitive intelligence gathered by Ethel</p>
+      </div>
+      <div class="intel-feed-list" id="intel-feed-list">
+        <div class="activity-loading">Loading intel from Supabase...</div>
+      </div>
+      <div class="intel-empty" id="intel-empty" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Ethel hasn't run yet today</div>
+        <div class="empty-sub">Intel data will appear here once Ethel starts scraping</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       DECISIONS VIEW
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-decisions" class="view-container" style="display:none">
+    <div class="decisions-view">
+      <div class="decisions-header">
+        <h2 class="view-title">⚖️ Decisions Log</h2>
+        <p class="decisions-subtitle">Key decisions made for Project Percy PH</p>
+      </div>
+
+      <div class="decisions-add-form" id="decisions-add-form">
+        <div class="form-title">+ Log a Decision</div>
+        <input type="text" class="form-input" id="decision-title" placeholder="Decision title..." />
+        <textarea class="form-textarea" id="decision-context" placeholder="Context — why was this decided?"></textarea>
+        <input type="text" class="form-input" id="decision-text" placeholder="What was decided?" />
+        <select class="form-select" id="decision-project">
+          <option value="">No project</option>
+          <option value="projectperciph">🛍️ Project Percy PH</option>
+          <option value="instagram">📸 Instagram</option>
+          <option value="perci-system">⚔️ Perci System</option>
+          <option value="github-pages">🌐 GitHub Pages</option>
+        </select>
+        <button class="form-submit" onclick="submitDecision()">Log Decision ⚖️</button>
+      </div>
+
+      <div class="decisions-list" id="decisions-list">
+        <div class="activity-loading">Loading decisions from Supabase...</div>
+      </div>
+      <div class="decisions-empty" id="decisions-empty" style="display:none">
+        <div class="empty-icon">⚖️</div>
+        <div class="empty-text">No decisions logged yet</div>
       </div>
     </div>
   </div>
@@ -617,6 +697,8 @@
 
   <script src="data/tasks.js"></script>
   <script src="data/content.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
   <script src="app.js"></script>
   <script>
     // Sync mobile bottom nav with tab switching
@@ -634,7 +716,9 @@
         'reviews': 1,
         'tasks': 2,
         'content': 3,
-        'agents': 4
+        'agents': 4,
+        'intel': 4,
+        'decisions': 4
       };
       
       mobileNavItems.forEach((item, index) => {
