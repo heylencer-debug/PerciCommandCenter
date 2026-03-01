@@ -7,6 +7,7 @@ async function seed() {
   console.log('🔥 Brigid — Seeding Supabase with initial data...\n');
 
   // ─── TASKS (from data/tasks.js) ───────────────────────────────────────────
+  // PostgREST requires all objects in an array to have the same keys
   console.log('📌 Seeding tasks...');
   const tasks = [
     {
@@ -15,21 +16,26 @@ async function seed() {
       status: 'pending',
       priority: 'high',
       project: 'instagram',
-      assigned_to: 'carlo'
+      assigned_to: 'carlo',
+      completed_at: null
     },
     {
       title: 'Generate Day 2 Instagram Post',
       description: 'Generate & send carousel for Day 2 pre-launch content',
       status: 'pending',
       priority: 'normal',
-      project: 'instagram'
+      project: 'instagram',
+      assigned_to: null,
+      completed_at: null
     },
     {
       title: 'Set up Shopee store',
       description: 'Create Project Percy PH Shopee store for embroidery products',
       status: 'pending',
       priority: 'normal',
-      project: 'projectperciph'
+      project: 'projectperciph',
+      assigned_to: null,
+      completed_at: null
     },
     {
       title: 'Create Facebook Business Page',
@@ -37,7 +43,8 @@ async function seed() {
       status: 'blocked',
       priority: 'low',
       project: 'instagram',
-      assigned_to: 'carlo'
+      assigned_to: 'carlo',
+      completed_at: null
     },
     {
       title: 'Admin Security Tasks',
@@ -45,7 +52,8 @@ async function seed() {
       status: 'blocked',
       priority: 'low',
       project: 'perci-system',
-      assigned_to: 'carlo'
+      assigned_to: 'carlo',
+      completed_at: null
     },
     {
       title: 'BRAND.js — Expanded Product Catalog + Personalization Rules',
@@ -53,6 +61,7 @@ async function seed() {
       status: 'done',
       priority: 'high',
       project: 'perci-system',
+      assigned_to: null,
       completed_at: '2026-02-27T16:50:00+08:00'
     },
     {
@@ -61,6 +70,7 @@ async function seed() {
       status: 'done',
       priority: 'high',
       project: 'perci-system',
+      assigned_to: null,
       completed_at: '2026-02-27T04:54:00+08:00'
     },
     {
@@ -69,6 +79,7 @@ async function seed() {
       status: 'done',
       priority: 'high',
       project: 'projectperciph',
+      assigned_to: null,
       completed_at: '2026-02-27T16:39:00+08:00'
     },
     {
@@ -77,6 +88,7 @@ async function seed() {
       status: 'done',
       priority: 'high',
       project: 'projectperciph',
+      assigned_to: null,
       completed_at: '2026-02-27T04:54:00+08:00'
     },
     {
@@ -106,29 +118,44 @@ async function seed() {
       status: 'approved',
       notes: 'v12 carousel complete — 7 slides. A/B variants generated. Carlo approved v11.',
       copy_approved_at: '2026-02-27T14:00:00+08:00',
-      generated_at: '2026-02-27T16:39:00+08:00'
+      generated_at: '2026-02-27T16:39:00+08:00',
+      posted_at: null
     },
     {
       day: 2,
       topic: 'Why Embroidery Lasts — Durability, craftsmanship, emotional longevity',
       status: 'planning',
-      notes: 'Awaiting Carlo\'s go. Hook ideas ready.'
+      notes: 'Awaiting Carlo\'s go. Hook ideas ready.',
+      copy_approved_at: null,
+      generated_at: null,
+      posted_at: null
     },
     {
       day: 3,
       topic: 'Behind the Stitch — Process & craftsmanship reel',
       status: 'planning',
-      notes: '30s reel format. Draft outline ready.'
+      notes: '30s reel format. Draft outline ready.',
+      copy_approved_at: null,
+      generated_at: null,
+      posted_at: null
     },
     {
       day: 4,
       topic: 'Gift Ideas for Birthdays — Product showcase carousel',
-      status: 'planning'
+      status: 'planning',
+      notes: null,
+      copy_approved_at: null,
+      generated_at: null,
+      posted_at: null
     },
     {
       day: 5,
       topic: 'Wedding Souvenirs Preview — Premium personalized gifts',
-      status: 'planning'
+      status: 'planning',
+      notes: null,
+      copy_approved_at: null,
+      generated_at: null,
+      posted_at: null
     }
   ];
 
