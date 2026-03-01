@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-01T23:07:00.000+08:00';
+window.DATA_VERSION = '2026-03-01T23:12:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-03-01T23:07:00+08:00",
+  "lastUpdated": "2026-03-01T23:12:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-03-01T23:12:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 11:12 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
     "time": "2026-03-01T22:57:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 10:57 PM. Perci idle, no active subagents, standing by",
@@ -373,37 +379,7 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid live sync — 9:18 PM. Perci idle, no active subagents, standing by",
     "type": "info"
-  },
-  {
-    "time": "2026-03-01T21:13:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:13 PM. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-01T21:08:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:08 PM. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-01T21:03:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:03 PM. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-01T20:58:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:58 PM. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-01T20:53:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:53 PM. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
+  }
 ];
 
 
@@ -411,7 +387,7 @@ window.ACTIVITY_LOG = [
 window.STATS = {
   "tasksCompletedThisWeek": 15,
   "activeSubagents": 0,
-  "blockedTasks": 2,
+  "blockedTasks": 3,
   "daysWorkingTogether": 4,
   "lastSynced": "2026-03-01T22:57:00+08:00"
 };
