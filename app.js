@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTabBadge();
   renderCalendar();
   initFilterProjects();
+  initRealtime();
 
   // Refresh timestamps every 60 seconds
   setInterval(() => {
@@ -2886,6 +2887,65 @@ async function advanceCarouselStatus(id, currentStatus) {
   } catch (err) {
     console.error('[Supabase] Carousel update failed:', err.message);
   }
+}
+
+// ─── SUPABASE REALTIME ──────────────────────────────────────────────────────
+
+function initRealtime() {
+  if (!window.supabase || !window.SUPABASE_CONFIG) return;
+
+  const client = window.supabase.createClient(
+    window.SUPABASE_CONFIG.url,
+    window.SUPABASE_CONFIG.key
+  );
+
+  // Watch agent_activity — refresh feed on any insert
+  client
+    .channel('agent-activity')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'agent_activity' }, payload => {
+      console.log('[Realtime] New agent activity:', payload.new);
+      if (currentTab === 'agents') renderAgentActivityFeed();
+      flashTabBadge('agents');
+    })
+    .subscribe();
+
+  // Watch tasks — refresh on any change
+  client
+    .channel('tasks')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'tasks' }, payload => {
+      console.log('[Realtime] Task change:', payload);
+      if (currentTab === 'tasks') renderTasksFromSupabase();
+      flashTabBadge('tasks');
+    })
+    .subscribe();
+
+  // Watch carousels — refresh on any change
+  client
+    .channel('carousels')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'carousels' }, payload => {
+      console.log('[Realtime] Carousel change:', payload);
+      if (currentTab === 'content') renderCarouselTracker();
+    })
+    .subscribe();
+
+  // Watch intel_feed — refresh on insert
+  client
+    .channel('intel-feed')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'intel_feed' }, payload => {
+      console.log('[Realtime] New intel:', payload.new);
+      if (currentTab === 'intel') renderIntelFeed();
+      flashTabBadge('intel');
+    })
+    .subscribe();
+
+  console.log('[Realtime] All channels subscribed');
+}
+
+function flashTabBadge(tabName) {
+  const tab = document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+  if (!tab) return;
+  tab.style.boxShadow = '0 0 12px rgba(233,69,96,0.8)';
+  setTimeout(() => tab.style.boxShadow = '', 2000);
 }
 
 // ─── INTEL FEED TAB (Supabase-powered) ─────────────────────────────────────
