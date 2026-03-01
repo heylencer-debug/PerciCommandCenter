@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-01T22:10:00.000+08:00';
+window.DATA_VERSION = '2026-03-01T22:27:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
   "statusText": "Standing by — awaiting Carlo's next move",
   "mood": "ready",
-  "lastUpdated": "2026-03-01T22:10:00+08:00",
+  "lastUpdated": "2026-03-01T22:27:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -276,6 +276,42 @@ window.ACTIVITY_LOG = [
     "time": "2026-03-01T21:23:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 9:23 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T21:18:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 9:18 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T21:13:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:27 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T22:22:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:22 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T22:17:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:17 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T22:12:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:12 PM. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-01T22:10:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:10 PM. Perci idle, no active subagents, standing by",
     "type": "info"
   },
   {
