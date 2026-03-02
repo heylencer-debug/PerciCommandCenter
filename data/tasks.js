@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-03T06:01:00.000+08:00';
+window.DATA_VERSION = '2026-03-03T06:06:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (6:01 AM)",
+  "statusText": "Standing by — awaiting Carlo's next move (6:06 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-03T06:01:00+08:00",
+  "lastUpdated": "2026-03-03T06:06:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
