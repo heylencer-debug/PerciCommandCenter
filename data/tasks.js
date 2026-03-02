@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-02T20:10:00.000+08:00';
+window.DATA_VERSION = '2026-03-02T20:15:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (8:10 PM)",
+  "statusText": "Standing by — awaiting Carlo's next move (8:15 PM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-02T20:10:00+08:00",
+  "lastUpdated": "2026-03-02T20:15:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,12 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-03-02T20:15:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 8:15 PM Mon Mar 2. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
     "time": "2026-03-02T20:10:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 8:10 PM Mon Mar 2. Perci idle, no active subagents, standing by",
@@ -373,30 +379,6 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid live sync — 5:49 PM Mon Mar 2. Perci idle, no active subagents, standing by",
     "type": "info"
-  },
-  {
-    "time": "2026-03-02T17:44:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 5:44 PM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T17:39:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 5:39 PM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T17:34:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 5:34 PM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T17:29:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 5:29 PM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
   }
 ].slice(0, 25);
 
@@ -405,5 +387,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 4,
-  "lastSynced": "2026-03-02T20:10:00+08:00"
+  "lastSynced": "2026-03-02T20:15:00+08:00"
 };
