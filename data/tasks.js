@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-02T10:21:00.000+08:00';
+window.DATA_VERSION = '2026-03-02T10:26:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (10:21 AM)",
+  "statusText": "Standing by — awaiting Carlo's next move (10:26 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-02T10:21:00+08:00",
+  "lastUpdated": "2026-03-02T10:26:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,18 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-03-02T10:26:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:26 AM Mon Mar 2. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-02T10:21:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 10:21 AM Mon Mar 2. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
     "time": "2026-03-02T10:16:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 10:16 AM Mon Mar 2. Perci idle, no active subagents, standing by",
@@ -297,12 +309,6 @@ window.ACTIVITY_LOG = [
     "type": "info"
   },
   {
-    "time": "2026-03-02T10:21:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 10:21 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
     "time": "2026-03-02T09:21:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 9:21 AM Mon Mar 2. Perci idle, no active subagents, standing by",
@@ -336,12 +342,6 @@ window.ACTIVITY_LOG = [
     "time": "2026-03-02T08:53:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 8:53 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T10:06:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 10:06 AM Mon Mar 2. Perci idle, no active subagents, standing by",
     "type": "info"
   },
   {
@@ -379,42 +379,6 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid live sync — 8:23 AM Mon Mar 2. Perci idle, no active subagents, standing by",
     "type": "info"
-  },
-  {
-    "time": "2026-03-02T08:18:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:18 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T08:13:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:13 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T08:08:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:08 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T07:58:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 7:58 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T07:53:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 7:53 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-02T07:48:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 7:48 AM Mon Mar 2. Perci idle, no active subagents, standing by",
-    "type": "info"
   }
 ].slice(0, 25);
 
@@ -424,5 +388,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 4,
-  "lastSynced": "2026-03-02T10:21:00+08:00"
+  "lastSynced": "2026-03-02T10:26:00+08:00"
 };
