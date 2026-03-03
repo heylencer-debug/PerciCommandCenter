@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-03T23:18:00.000+08:00';
+window.DATA_VERSION = '2026-03-04T00:34:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (11:18 PM)",
+  "statusText": "Standing by — awaiting Carlo's next move (12:34 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-03T23:18:00+08:00",
+  "lastUpdated": "2026-03-04T00:34:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,6 +231,30 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-03-03T23:48:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 11:48 PM Tue Mar 3. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-03T23:38:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 11:38 PM Tue Mar 3. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-03T23:33:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 11:33 PM Tue Mar 3. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-03T23:23:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 11:23 PM Tue Mar 3. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
     "time": "2026-03-03T23:18:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 11:18 PM Tue Mar 3. Perci idle, no active subagents, standing by",
@@ -270,6 +294,18 @@ window.ACTIVITY_LOG = [
     "time": "2026-03-03T22:48:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 10:48 PM Tue Mar 3. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-04T00:34:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 12:34 AM Wed Mar 4. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-04T00:29:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 12:29 AM Wed Mar 4. Perci idle, no active subagents, standing by",
     "type": "info"
   },
   {
@@ -355,54 +391,6 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid live sync — 9:37 PM Tue Mar 3. Perci idle, no active subagents, standing by",
     "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:32:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:32 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:27:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:27 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:22:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:22 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:17:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:17 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:12:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:12 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:07:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:07 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T21:02:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 9:02 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-03T20:57:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 8:57 PM Tue Mar 3. Perci idle, no active subagents, standing by",
-    "type": "info"
   }
 ].slice(0, 25);
 
@@ -412,5 +400,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 5,
-  "lastSynced": "2026-03-03T23:18:00+08:00"
+  "lastSynced": "2026-03-04T00:34:00+08:00"
 };
