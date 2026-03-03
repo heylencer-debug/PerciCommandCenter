@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-04T04:24:00.000+08:00';
+window.DATA_VERSION = '2026-03-04T04:29:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (4:24 AM)",
+  "statusText": "Standing by — awaiting Carlo's next move (4:29 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-04T04:24:00+08:00",
+  "lastUpdated": "2026-03-04T04:29:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -231,9 +231,27 @@ window.TASKS = [
 
 window.ACTIVITY_LOG = [
   {
+    "time": "2026-03-04T04:29:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 4:29 AM Wed Mar 4. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
     "time": "2026-03-04T04:24:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 4:24 AM Wed Mar 4. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-04T04:19:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 4:19 AM Wed Mar 4. Perci idle, no active subagents, standing by",
+    "type": "info"
+  },
+  {
+    "time": "2026-03-04T04:14:00+08:00",
+    "emoji": "🔥",
+    "text": "Brigid live sync — 4:14 AM Wed Mar 4. Perci idle, no active subagents, standing by",
     "type": "info"
   },
   {
@@ -351,12 +369,6 @@ window.ACTIVITY_LOG = [
     "type": "info"
   },
   {
-    "time": "2026-03-04T03:39:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 3:39 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
     "time": "2026-03-04T01:54:00+08:00",
     "emoji": "🔥",
     "text": "Brigid live sync — 1:54 AM Wed Mar 4. Perci idle, no active subagents, standing by",
@@ -367,66 +379,6 @@ window.ACTIVITY_LOG = [
     "emoji": "🔥",
     "text": "Brigid live sync — 1:44 AM Wed Mar 4. Perci idle, no active subagents, standing by",
     "type": "info"
-  },
-  {
-    "time": "2026-03-04T01:29:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 1:29 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T04:19:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 4:19 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T04:14:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 4:14 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T03:34:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 3:34 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T01:24:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 1:24 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T01:14:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 1:14 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T01:09:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 1:09 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T01:04:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 1:04 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T00:59:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 12:59 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
-  },
-  {
-    "time": "2026-03-04T00:49:00+08:00",
-    "emoji": "🔥",
-    "text": "Brigid live sync — 12:49 AM Wed Mar 4. Perci idle, no active subagents, standing by",
-    "type": "info"
   }
 ].slice(0, 25);
 
@@ -436,5 +388,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 5,
-  "lastSynced": "2026-03-04T04:19:00+08:00"
+  "lastSynced": "2026-03-04T04:29:00+08:00"
 };
