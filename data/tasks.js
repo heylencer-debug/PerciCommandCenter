@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-05T01:15:00.000+08:00';
+window.DATA_VERSION = '2026-03-05T01:20:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (1:15 AM)",
+  "statusText": "Standing by — awaiting Carlo's next move (1:20 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-05T01:15:00+08:00",
+  "lastUpdated": "2026-03-05T01:20:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -230,6 +230,7 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {"id":"act-1772644200000","timestamp":"2026-03-05T01:20:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:20 AM","type":"sync"},
   {"id":"act-1772643910000","timestamp":"2026-03-05T01:15:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:15 AM","type":"sync"},
   {"id":"act-1772643610000","timestamp":"2026-03-05T01:10:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:10 AM","type":"sync"},
   {"id":"act-1772643337000","timestamp":"2026-03-05T00:55:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 12:55 AM","type":"sync"},
@@ -253,9 +254,7 @@ window.ACTIVITY_LOG = [
   {"time":"2026-03-04T23:20:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:20 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"},
   {"time":"2026-03-04T23:15:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:15 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"},
   {"time":"2026-03-04T23:10:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:10 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"},
-  {"time":"2026-03-04T23:05:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:05 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"},
-  {"time":"2026-03-04T23:00:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:00 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"},
-  {"time":"2026-03-04T23:00:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:00 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"}
+  {"time":"2026-03-04T23:05:00+08:00","emoji":"🔥","text":"Brigid live sync — 11:05 PM Wed Mar 4. Perci idle, no active subagents, standing by","type":"info"}
 ].slice(0, 25);
 
 window.STATS = {
@@ -263,5 +262,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 5,
-  "lastSynced": "2026-03-05T01:15:00+08:00"
+  "lastSynced": "2026-03-05T01:20:00+08:00"
 };
