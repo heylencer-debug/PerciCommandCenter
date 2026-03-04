@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-05T02:00:00.000+08:00';
+window.DATA_VERSION = '2026-03-05T02:05:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (2:00 AM)",
+  "statusText": "Standing by — awaiting Carlo's next move (2:05 AM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-05T02:00:00+08:00",
+  "lastUpdated": "2026-03-05T02:05:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -230,6 +230,7 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {"id":"act-1772646900000","timestamp":"2026-03-05T02:05:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:05 AM","type":"sync"},
   {"id":"act-1772646600000","timestamp":"2026-03-05T02:00:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:00 AM","type":"sync"},
   {"id":"act-1772646300000","timestamp":"2026-03-05T01:55:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:55 AM","type":"sync"},
   {"id":"act-1772646000000","timestamp":"2026-03-05T01:50:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:50 AM","type":"sync"},
@@ -264,5 +265,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 5,
-  "lastSynced": "2026-03-05T02:00:00+08:00"
+  "lastSynced": "2026-03-05T02:05:00+08:00"
 };
