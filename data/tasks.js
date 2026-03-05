@@ -1,10 +1,10 @@
-window.DATA_VERSION = '2026-03-05T15:26:00.000+08:00';
+window.DATA_VERSION = '2026-03-05T17:12:00.000+08:00';
 
 window.PERCI_STATUS = {
   "status": "idle",
-  "statusText": "Standing by — awaiting Carlo's next move (3:26 PM)",
+  "statusText": "Standing by — awaiting Carlo's next move (5:12 PM)",
   "mood": "ready",
-  "lastUpdated": "2026-03-05T15:26:00+08:00",
+  "lastUpdated": "2026-03-05T17:12:00+08:00",
   "currentTask": "Idle — awaiting Carlo's next direction",
   "currentStep": "Standing by",
   "totalSteps": 7,
@@ -230,31 +230,31 @@ window.TASKS = [
 ];
 
 window.ACTIVITY_LOG = [
+  {"id":"act-1772699520000","timestamp":"2026-03-05T17:12:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 5:12 PM","type":"sync"},
+  {"id":"act-1772699220000","timestamp":"2026-03-05T17:07:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 5:07 PM","type":"sync"},
+  {"id":"act-1772698860000","timestamp":"2026-03-05T17:01:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 5:01 PM","type":"sync"},
+  {"id":"act-1772698500000","timestamp":"2026-03-05T16:55:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:55 PM","type":"sync"},
+  {"id":"act-1772698200000","timestamp":"2026-03-05T16:50:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:50 PM","type":"sync"},
+  {"id":"act-1772697900000","timestamp":"2026-03-05T16:45:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:45 PM","type":"sync"},
+  {"id":"act-1772697600000","timestamp":"2026-03-05T16:40:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:40 PM","type":"sync"},
+  {"id":"act-1772697300000","timestamp":"2026-03-05T16:35:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:35 PM","type":"sync"},
+  {"id":"act-1772697000000","timestamp":"2026-03-05T16:30:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:30 PM","type":"sync"},
+  {"id":"act-1772696700000","timestamp":"2026-03-05T16:25:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:25 PM","type":"sync"},
+  {"id":"act-1772696280000","timestamp":"2026-03-05T16:18:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:18 PM","type":"sync"},
+  {"id":"act-1772695980000","timestamp":"2026-03-05T16:13:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 4:13 PM","type":"sync"},
+  {"id":"act-1772695020000","timestamp":"2026-03-05T15:57:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:57 PM","type":"sync"},
+  {"id":"act-1772694720000","timestamp":"2026-03-05T15:52:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:52 PM","type":"sync"},
+  {"id":"act-1772694420000","timestamp":"2026-03-05T15:47:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:47 PM","type":"sync"},
+  {"id":"act-1772694060000","timestamp":"2026-03-05T15:41:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:41 PM","type":"sync"},
+  {"id":"act-1772693760000","timestamp":"2026-03-05T15:36:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:36 PM","type":"sync"},
+  {"id":"act-1772693460000","timestamp":"2026-03-05T15:31:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:31 PM","type":"sync"},
   {"id":"act-1772693160000","timestamp":"2026-03-05T15:26:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:26 PM","type":"sync"},
   {"id":"act-1772692860000","timestamp":"2026-03-05T15:21:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:21 PM","type":"sync"},
   {"id":"act-1772692560000","timestamp":"2026-03-05T15:16:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:16 PM","type":"sync"},
   {"id":"act-1772692260000","timestamp":"2026-03-05T15:11:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:11 PM","type":"sync"},
   {"id":"act-1772691900000","timestamp":"2026-03-05T15:05:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:05 PM","type":"sync"},
   {"id":"act-1772691600000","timestamp":"2026-03-05T15:00:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 3:00 PM","type":"sync"},
-  {"id":"act-1772690640000","timestamp":"2026-03-05T14:54:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:54 PM","type":"sync"},
-  {"id":"act-1772690280000","timestamp":"2026-03-05T14:48:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:48 PM","type":"sync"},
-  {"id":"act-1772689980000","timestamp":"2026-03-05T14:43:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:43 PM","type":"sync"},
-  {"id":"act-1772688120000","timestamp":"2026-03-05T14:13:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:13 PM","type":"sync"},
-  {"id":"act-1772687820000","timestamp":"2026-03-05T14:08:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:08 PM","type":"sync"},
-  {"id":"act-1772687520000","timestamp":"2026-03-05T14:02:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:02 PM","type":"sync"},
-  {"id":"act-1772686620000","timestamp":"2026-03-05T13:57:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:57 PM","type":"sync"},
-  {"id":"act-1772686380000","timestamp":"2026-03-05T13:53:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:53 PM","type":"sync"},
-  {"id":"act-1772686080000","timestamp":"2026-03-05T13:48:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 1:48 PM","type":"sync"},
-  {"id":"act-1772664540000","timestamp":"2026-03-05T07:09:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 7:09 AM","type":"sync"},
-  {"id":"act-1772663920000","timestamp":"2026-03-05T06:52:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:52 AM","type":"sync"},
-  {"id":"act-1772663620000","timestamp":"2026-03-05T06:47:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:47 AM","type":"sync"},
-  {"id":"act-1772663320000","timestamp":"2026-03-05T06:42:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:42 AM","type":"sync"},
-  {"id":"act-1772663020000","timestamp":"2026-03-05T06:37:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:37 AM","type":"sync"},
-  {"id":"act-1772662180000","timestamp":"2026-03-05T06:23:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:23 AM","type":"sync"},
-  {"id":"act-1772662080000","timestamp":"2026-03-05T06:18:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:18 AM","type":"sync"},
-  {"id":"act-1772661780000","timestamp":"2026-03-05T06:13:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:13 AM","type":"sync"},
-  {"id":"act-1772661480000","timestamp":"2026-03-05T06:08:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:08 AM","type":"sync"},
-  {"id":"act-1772661180000","timestamp":"2026-03-05T06:03:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 6:03 AM","type":"sync"}
+  {"id":"act-1772690640000","timestamp":"2026-03-05T14:54:00+08:00","agent":"brigid","action":"Live sync","detail":"Command Center synced — no active subagents, Perci idle at 2:54 PM","type":"sync"}
 ];
 
 window.STATS = {
@@ -262,5 +262,5 @@ window.STATS = {
   "activeSubagents": 0,
   "blockedTasks": 3,
   "daysWorkingTogether": 5,
-  "lastSynced": "2026-03-05T15:26:00+08:00"
+  "lastSynced": "2026-03-05T17:12:00+08:00"
 };
